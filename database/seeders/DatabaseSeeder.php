@@ -14,12 +14,27 @@ class DatabaseSeeder extends Seeder
     {
         $this->call(RoleSeeder::class);
 
-        User::firstOrCreate([
-            'name' => 'Super Admin',
-            'email' => 'superadmin@gmail.com',
-            'username' => 'superadmin',
-            'password' => 'superadmin',
-            'role_id' => 1,
-        ]);
+        $users = [
+            [
+                'name' => 'Super Admin',
+                'email' => 'superadmin@gmail.com',
+                'username' => 'superadmin',
+                'password' => 'superadmin',
+                'role_id' => 1,
+            ],
+            [
+                'name' => 'Human Resource',
+                'email' => 'hr@gmail.com',
+                'username' => 'humanresource',
+                'password' => 'hr',
+                'role_id' => 2,
+            ],
+        ];
+
+        foreach ($users as $user) {
+            User::firstOrCreate($user);
+        }
+
+        $this->call(DummySeeder::class);
     }
 }

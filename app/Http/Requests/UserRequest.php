@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Requests\Admin;
+namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
@@ -28,6 +28,7 @@ class UserRequest extends FormRequest
             'email' => 'required|email|unique:users,email,' . $userId,
             'username' => 'required|unique:users,username,' . $userId,
             'password' => 'nullable|min:8|confirmed|regex:/^(?=.*[A-Z]).+$/',
+            'photo' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:5120',
         ];
 
         if ($this->isMethod('put') || $this->isMethod('patch')) {
@@ -35,6 +36,7 @@ class UserRequest extends FormRequest
             $rules['email'] = 'nullable|email';
             $rules['username'] = 'nullable';
             $rules['password'] = 'nullable|min:8|confirmed|regex:/^(?=.*[A-Z]).+$/';
+            $rules['photo'] = 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:5120';
         }
 
         return $rules;

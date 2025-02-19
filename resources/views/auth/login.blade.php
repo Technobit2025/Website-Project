@@ -24,9 +24,8 @@
                                 <div class="form-group">
                                     <label class="col-form-label">Email Address </label>
                                     <input id="email" type="email"
-                                        class="form-control @error('email') is-invalid @enderror" name="email"
-                                        value="superadmin@gmail.com" required autocomplete="email" autofocus
-                                        placeholder="test@gmail.com">
+                                        class="form-control @error('email') is-invalid @enderror" name="email" required
+                                        autocomplete="email" autofocus placeholder="test@gmail.com">
                                     @error('email')
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ $message }}</strong>
@@ -39,8 +38,7 @@
                                     <div class="form-input position-relative">
                                         <input id="password" type="password"
                                             class="form-control @error('password') is-invalid @enderror" name="password"
-                                            value="superadmin" required autocomplete="current-password"
-                                            placeholder="*********">
+                                            required autocomplete="current-password" placeholder="*********">
                                         <div class="show-hide"><span class="show"> </span></div>
                                         @error('password')
                                             <span class="invalid-feedback" role="alert">

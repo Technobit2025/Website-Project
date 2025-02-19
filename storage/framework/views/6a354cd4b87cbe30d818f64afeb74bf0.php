@@ -9,7 +9,7 @@
 <meta name="csrf-token" content="<?php echo e(csrf_token()); ?>">
 <link rel="icon" href="<?php echo e(asset('assets/images/favicon.png')); ?>" type="image/x-icon">
 <link rel="shortcut icon" href="<?php echo e(asset('assets/images/favicon.png')); ?>" type="image/x-icon">
-<title><?php echo $__env->yieldContent('title'); ?> | Cuba - Premium Admin Template By Pixelstrap</title>
+<title><?php echo $__env->yieldContent('title'); ?> | <?php echo e(ucwords(config('app.name'))); ?></title>
 <!-- Google font-->
 <link href="https://fonts.googleapis.com/css?family=Rubik:400,400i,500,500i,700,700i&amp;display=swap" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,500,500i,700,700i,900&amp;display=swap"

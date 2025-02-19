@@ -29,9 +29,8 @@ if (isset($message)) { $__messageOriginal = $message; }
 $message = $__bag->first($__errorArgs[0]); ?> is-invalid <?php unset($message);
 if (isset($__messageOriginal)) { $message = $__messageOriginal; }
 endif;
-unset($__errorArgs, $__bag); ?>" name="email"
-                                        value="superadmin@gmail.com" required autocomplete="email" autofocus
-                                        placeholder="test@gmail.com">
+unset($__errorArgs, $__bag); ?>" name="email" required
+                                        autocomplete="email" autofocus placeholder="test@gmail.com">
                                     <?php $__errorArgs = ['email'];
 $__bag = $errors->getBag($__errorArgs[1] ?? 'default');
 if ($__bag->has($__errorArgs[0])) :
@@ -58,8 +57,7 @@ $message = $__bag->first($__errorArgs[0]); ?> is-invalid <?php unset($message);
 if (isset($__messageOriginal)) { $message = $__messageOriginal; }
 endif;
 unset($__errorArgs, $__bag); ?>" name="password"
-                                            value="superadmin" required autocomplete="current-password"
-                                            placeholder="*********">
+                                            required autocomplete="current-password" placeholder="*********">
                                         <div class="show-hide"><span class="show"> </span></div>
                                         <?php $__errorArgs = ['password'];
 $__bag = $errors->getBag($__errorArgs[1] ?? 'default');

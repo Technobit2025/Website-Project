@@ -48,4 +48,21 @@ class User extends Authenticatable
     {
         return $this->belongsTo(Role::class);
     }
+    private function getConsistentColor()
+    {
+        $hash = md5($this->name ?? 'Guest');
+        $color = substr($hash, 0, 6);
+
+        return $color;
+    }
+    public function getPhotoAttribute($value)
+    {
+        if (!empty($value) && !is_null($value)) {
+            return $value;
+        }
+        $color = $this->getConsistentColor();
+        $name = $this->name ?? 'Guest';
+
+        return "https://api.dicebear.com/6.x/initials/svg?seed=" . urlencode($name) . "&backgroundColor=" . $color;
+    }
 }

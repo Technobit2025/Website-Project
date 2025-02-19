@@ -1,6 +1,6 @@
 
 
-<?php $__env->startSection('title', 'Dark Layout'); ?>
+<?php $__env->startSection('title', 'Human Resource Dashboard'); ?>
 
 <?php $__env->startSection('css'); ?>
     <link rel="stylesheet" type="text/css" href="<?php echo e(asset('assets/css/vendors/prism.css')); ?>">

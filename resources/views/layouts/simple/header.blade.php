@@ -1,26 +1,14 @@
 @php
-    // $role = Auth::user()->role->code;
-    $role = 'humanresource';
+    $role = Auth::user()->role->code;
 @endphp
 <!-- Page Header Start-->
 <div class="page-header">
     <div class="header-wrapper row m-0">
-        <form class="form-inline search-full col" action="#" method="get">
-            <div class="form-group w-100">
-                <div class="Typeahead Typeahead--twitterUsers">
-                    <div class="u-posRelative"><input class="demo-input Typeahead-input form-control-plaintext w-100"
-                            type="text" placeholder="Search Anything Here..." name="q" title="" autofocus>
-                        <div class="spinner-border Typeahead-spinner" role="status"><span
-                                class="sr-only">Loading...</span></div><i class="close-search" data-feather="x"></i>
-                    </div>
-                    <div class="Typeahead-menu"></div>
-                </div>
-            </div>
-        </form>
         <div class="header-logo-wrapper col-auto p-0">
-            <div class="logo-wrapper"><a href="{{ route($role . '.home') }}"><img class="img-fluid for-light"
-                        src="{{ asset('assets/images/logo/logo.png') }}" alt=""><img class="img-fluid for-dark"
-                        src="{{ asset('assets/images/logo/logo_dark.png') }}" alt=""></a></div>
+            <div class="logo-wrapper"><a href="{{ route(str_replace('_', '', $role) . '.home') }}"><img
+                        class="img-fluid for-light" src="{{ asset('assets/images/logo/logo.png') }}" alt=""><img
+                        class="img-fluid for-dark" src="{{ asset('assets/images/logo/logo_dark.png') }}"
+                        alt=""></a></div>
             <div class="toggle-sidebar"><i class="status_toggle middle sidebar-toggle" data-feather="align-center"></i>
             </div>
         </div>
@@ -54,7 +42,7 @@
                 <li class="fullscreen-body"> <span><svg id="maximize-screen">
                             <use href="{{ asset('assets/svg/icon-sprite.svg#full-screen') }}"></use>
                         </svg></span></li>
-           
+
                 <li class="onhover-dropdown"><svg>
                         <use href="{{ asset('assets/svg/icon-sprite.svg#star') }}"></use>
                     </svg>
@@ -110,7 +98,7 @@
                             <use href="{{ asset('assets/svg/icon-sprite.svg#moon') }}"></use>
                         </svg></div>
                 </li>
-             
+
                 <li class="onhover-dropdown">
                     <div class="notification-box"><svg>
                             <use href="{{ asset('assets/svg/icon-sprite.svg#notification') }}"></use>
@@ -158,14 +146,15 @@
                     </div>
                 </li>
                 <li class="profile-nav onhover-dropdown pe-0 py-0">
-                    <div class="d-flex profile-media"><img class="b-r-10"
-                            src="{{ asset('assets/images/dashboard/profile.png') }}" alt="">
-                        <div class="flex-grow-1"><span>NAMA</span>
-                            <p class="mb-0">ROLE<i class="middle fa-solid fa-angle-down"></i></p>
+                    <div class="d-flex profile-media"><img class="b-r-10" src="{{ Auth::user()->photo }}"
+                            alt="" width="40" height="40">
+                        <div class="flex-grow-1"><span>{{ Auth::user()->name }}</span>
+                            <p class="mb-0">{{ Auth::user()->role->name }}<i
+                                    class="middle fa-solid fa-angle-down"></i></p>
                         </div>
                     </div>
-                    {{-- <ul class="profile-dropdown onhover-show-div">
-                        <li><a href="{{ route('admin.user.edit-profile', auth()->user()->role->name) }}"><i
+                    <ul class="profile-dropdown onhover-show-div">
+                        {{-- <li><a href="{{ route('admin.user.edit-profile', auth()->user()->role->name) }}"><i
                                     data-feather="user"></i><span>My Profile </span></a></li>
                         <li><a href="{{ route('admin.mail_box') }}"><i data-feather="mail"></i><span>Inbox</span></a>
                         </li>
@@ -174,14 +163,14 @@
                         </li>
                         <li><a href="{{ route('admin.add_user') }}"><i
                                     data-feather="settings"></i><span>Settings</span></a>
-                        </li>
+                        </li> --}}
                         <li><a href="{{ route('logout') }}"
                                 onclick="event.preventDefault(); document.getElementById('logout-form').submit();"><i
                                     data-feather="log-in"> </i><span>Log out</span></a></li>
                         <form action="{{ route('logout') }}" method="POST" class="d-none" id="logout-form">
                             @csrf
                         </form>
-                    </ul> --}}
+                    </ul>
                 </li>
             </ul>
         </div>

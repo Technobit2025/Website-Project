@@ -1,3 +1,6 @@
+@php
+    $role = Auth::user()->role->code;
+@endphp
 <!-- Page Sidebar Start-->
 <div class="sidebar-wrapper" data-sidebar-layout="stroke-svg">
     <div>
@@ -19,26 +22,49 @@
                         <div class="mobile-back text-end"><span>Back</span><i class="fa-solid fa-angle-right ps-2"
                                 aria-hidden="true"></i></div>
                     </li>
+                    {{-- Pinned --}}
                     <li class="pin-title sidebar-main-title">
                         <div>
                             <h6>Pinned</h6>
                         </div>
                     </li>
+                    {{-- Dashboard --}}
                     <li class="sidebar-list">
                         <i class="fa-solid fa-thumbtack"></i>
-                        <label class="badge badge-light-primary">13</label>
-                        <a class="sidebar-link sidebar-title" href="javascript:void(0)">
+                        <a class="sidebar-link sidebar-title" href="{{ route(str_replace('_', '', $role) . '.home') }}">
                             <svg class="stroke-icon">
-                                <use href="{{ asset('assets/svg/icon-sprite.svg#stroke-home') }}"></use>
+                                <use href="{{ asset('assets/svg/icon-sprite.svg#stroke-home') }}">
+                                </use>
                             </svg><svg class="fill-icon">
-                                <use href="{{ asset('assets/svg/icon-sprite.svg#fill-home') }}"></use>
+                                <use href="{{ asset('assets/svg/icon-sprite.svg#fill-home') }}">
+                                </use>
                             </svg><span class="lan-3">Dashboard </span></a>
-                        <ul class="sidebar-submenu">
-                            <li><a class="lan-4" href="#">Default</a></li>
-                            <li><a class="lan-5" href="">Ecommerce</a></li>
-                            <li><a href="">Online course</a></li>
-                        </ul>
                     </li>
+                    {{-- 
+                    /**
+                    * Dokumentasi Penyertaan Sidebar Otomatis
+                    *
+                    * Bagian kode ini secara dinamis menyertakan sidebar
+                    * berdasarkan peran pengguna. Sidebar dibangun menggunakan
+                    * komponen Blade, yang memungkinkan pendekatan modular dan
+                    * mudah dipelihara untuk merender menu navigasi.
+                    *
+                    * Sidebar disertakan menggunakan baris berikut:
+                    * @include('layouts.simple.sidebar_menu.' . $role)
+                    *
+                    * 'Role' pengguna yang terautentikasi menentukan komponen
+                    * sidebar mana yang dimuat. Komponen sidebar yang tersedia adalah:
+                    *
+                    * - layouts.simple.sidebar_menu.human_resource
+                    *
+                    * Pastikan membuat role dan nama sidebar yang sama (GUNAKAN PENULISAN SNAKE CASE)
+                    * Pendekatan ini memastikan bahwa pengguna hanya melihat item menu
+                    * yang relevan dengan izin dan peran mereka dalam aplikasi.
+                    */
+                    --}}
+                    @include('layouts.simple.sidebar_menu.' . $role)
+
+
                 </ul>
             </div>
             <div class="right-arrow" id="right-arrow"><i data-feather="arrow-right"></i></div>

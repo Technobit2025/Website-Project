@@ -1,6 +1,6 @@
 @extends('layouts.simple.master')
 
-@section('title', 'Dark Layout')
+@section('title', 'Human Resource Dashboard')
 
 @section('css')
     <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/vendors/prism.css') }}">
