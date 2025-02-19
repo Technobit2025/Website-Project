@@ -13,32 +13,15 @@ return new class extends Migration
     {
         Schema::create('users', function (Blueprint $table) {
             $table->id();
-            $table->string('password');
-            $table->string('gender')->nullable();
-            $table->string('dob')->nullable();
+            $table->string('name');
+            $table->string('username')->unique();
             $table->string('email')->unique();
-            $table->string('location')->nullable();
-            $table->string('country_code')->nullable();
-            $table->String('phone')->nullable();
-            $table->string('skills')->nullable();
             $table->timestamp('email_verified_at')->nullable();
-            $table->integer('status')->default(1);
-            $table->text('about_me')->nullable();
-            $table->string('first_name')->nullable();
-            $table->string('last_name')->nullable();
-            $table->string('postal_code')->nullable();
-            $table->string('address')->nullable();
-            $table->unsignedBigInteger('country_id')->nullable();
-            $table->unsignedBigInteger('state_id')->nullable();
-            $table->text('bio')->nullable();
-            $table->integer('system_reserve')->default(0);
-            $table->bigInteger('created_by_id')->unsigned()->nullable();
+            $table->string('password');
+            $table->string('photo')->nullable();
             $table->rememberToken();
-            $table->softDeletes();
             $table->timestamps();
-            // $table->foreign('country_id')->references('id')->on('countries')->onDelete('cascade');
-            // $table->foreign('state_id')->references('id')->on('states')->onDelete('cascade');
-            $table->foreign('created_by_id')->references('id')->on('users')->onDelete('cascade');
+            $table->softDeletes();
         });
 
         Schema::create('password_reset_tokens', function (Blueprint $table) {

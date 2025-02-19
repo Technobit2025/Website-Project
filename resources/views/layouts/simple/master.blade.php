@@ -6,7 +6,7 @@
     @include('layouts.simple.css')
 </head>
 
-@switch(Route::currentRouteName())
+{{-- @switch(Route::currentRouteName())
     @case('admin.default_dashboard')
         <body onload="startTime()">
         @break
@@ -25,7 +25,7 @@
 
     @default
         <body>
-@endswitch
+@endswitch --}}
     <!-- loader starts-->
     <div class="loader-wrapper">
         <div class="loader-index"><span></span></div>
@@ -59,7 +59,7 @@
         </div>
     </div>
     @include('layouts.simple.scripts')
-    @include('admin.inc.alerts')
+    {{-- @include('admin.inc.alerts') --}}
 </body>
 
 </html>
