@@ -26,11 +26,11 @@
                                     <input id="email" type="email"
                                         class="form-control @error('email') is-invalid @enderror" name="email" required
                                         autocomplete="email" autofocus placeholder="test@gmail.com">
-                                    @error('email')
+                                    {{-- @error('email')
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ $message }}</strong>
                                         </span>
-                                    @enderror
+                                    @enderror --}}
                                 </div>
 
                                 <div class="form-group">
@@ -40,11 +40,11 @@
                                             class="form-control @error('password') is-invalid @enderror" name="password"
                                             required autocomplete="current-password" placeholder="*********">
                                         <div class="show-hide"><span class="show"> </span></div>
-                                        @error('password')
+                                        {{-- @error('password')
                                             <span class="invalid-feedback" role="alert">
                                                 <strong>{{ $message }}</strong>
                                             </span>
-                                        @enderror
+                                        @enderror --}}
                                     </div>
                                 </div>
                                 <div class="form-group mb-0">

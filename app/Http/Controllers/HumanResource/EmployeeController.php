@@ -14,7 +14,13 @@ class EmployeeController extends Controller
     public function index()
     {
         $employees = Employee::all();
-        return view('human_resource.employee.index', compact('employees'));
+        $roles = Role::all()->where('code', '!=', 'super_admin');
+        return view('human_resource.employee.index', compact('employees', 'roles'));
+    }
+
+    public function show(Employee $employee)
+    {
+        return view('human_resource.employee.show', compact('employee'));
     }
 
     public function create()
@@ -36,6 +42,30 @@ class EmployeeController extends Controller
             'user_id' => $user->id,
         ]));
 
-        return redirect()->route('human_resource.employee.index')->with('success', 'Karyawan berhasil ditambahkan!');
+        return redirect()->route('humanresource.employee.index')->with('success', 'Karyawan berhasil ditambahkan!');
+    }
+
+    public function edit(Employee $employee)
+    {
+        $roles = Role::all()->where('code', '!=', 'super_admin');
+        return view('human_resource.employee.edit', compact('employee', 'roles'));
+    }
+
+    public function update(EmployeeRequest $employeeRequest, UserRequest $userRequest, Employee $employee)
+    {
+        $validatedUser = $userRequest->validated();
+        $validatedEmployee = $employeeRequest->validated();
+
+        $employee->user->update($validatedUser);
+        $employee->update($validatedEmployee);
+
+        return redirect()->route('humanresource.employee.index')->with('success', 'Karyawan berhasil diubah!');
+    }
+
+    public function destroy(Employee $employee)
+    {
+        $employee->user->delete();
+        $employee->delete();
+        return redirect()->route('humanresource.employee.index')->with('success', 'Karyawan berhasil dihapus!');
     }
 }

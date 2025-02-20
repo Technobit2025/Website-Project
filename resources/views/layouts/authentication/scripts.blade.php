@@ -15,3 +15,4 @@
  <script src="{{ asset('assets/js/script.js') }}"></script>
  <script src="{{ asset('assets/js/script1.js') }}"></script>
  <!-- Theme js-->
+ <script src="{{ asset('assets/js/sweet-alert/sweetalert.min.js') }}"></script>

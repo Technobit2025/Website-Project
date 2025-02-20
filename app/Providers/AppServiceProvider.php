@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\ServiceProvider;
+use Illuminate\Support\Facades\Blade;
 use App\Models\Role;
 
 class AppServiceProvider extends ServiceProvider
@@ -23,6 +24,34 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
+         /**
+         * Dokumentasi Penggunaan Direktif Blade @errorFeedback
+         *
+         * Direktif ini digunakan untuk menampilkan umpan balik kesalahan
+         * pada form input. Jika ada kesalahan validasi untuk field tertentu,
+         * direktif ini akan menampilkan pesan kesalahan di bawah input.
+         *
+         * Cara menggunakan:
+         * 1. Pastikan Kamu telah menambahkan validasi pada controller
+         *    sebelum mengembalikan tampilan.
+         * 2. Di dalam file Blade Kamu, gunakan direktif ini dengan
+         *    menyertakan nama field yang ingin Kamu periksa.
+         *
+         * Contoh penggunaan:
+         *
+         * <input type="text" name="username" class="form-control @error('username') is-invalid @enderror">
+         * @errorFeedback('username')
+         *
+         * Dalam contoh di atas, jika ada kesalahan validasi untuk field
+         * 'username', maka pesan kesalahan akan ditampilkan di bawah input
+         * dengan kelas 'invalid-feedback'.
+         */
+        Blade::directive('errorFeedback', function ($field) {
+            return "<?php if(\$errors->has($field)): ?>
+                <div class='invalid-feedback'>{{ \$errors->first($field) }}</div>
+            <?php endif; ?>";
+        });
+
         /**
          * Dokumentasi Gate Otomatis
          *

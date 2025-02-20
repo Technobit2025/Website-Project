@@ -59,7 +59,7 @@
         </div>
     </div>
     @include('layouts.simple.scripts')
-    {{-- @include('admin.inc.alerts') --}}
+    @include('layouts.components.alert')
 </body>
 
 </html>

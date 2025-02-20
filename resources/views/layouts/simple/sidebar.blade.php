@@ -25,7 +25,7 @@
                     {{-- Pinned --}}
                     <li class="pin-title sidebar-main-title">
                         <div>
-                            <h6>Pinned</h6>
+                            <h6>Di Pin</h6>
                         </div>
                     </li>
                     {{-- Dashboard --}}
@@ -33,12 +33,11 @@
                         <i class="fa-solid fa-thumbtack"></i>
                         <a class="sidebar-link sidebar-title" href="{{ route(str_replace('_', '', $role) . '.home') }}">
                             <svg class="stroke-icon">
-                                <use href="{{ asset('assets/svg/icon-sprite.svg#stroke-home') }}">
-                                </use>
-                            </svg><svg class="fill-icon">
-                                <use href="{{ asset('assets/svg/icon-sprite.svg#fill-home') }}">
-                                </use>
-                            </svg><span class="lan-3">Dashboard </span></a>
+                                <use href="{{ asset('assets/svg/icon-sprite.svg#stroke-home') }}"></use>
+                            </svg>
+                            <svg class="fill-icon">
+                                <use href="{{ asset('assets/svg/icon-sprite.svg#fill-home') }}"></use>
+                            </svg><span>Beranda </span></a>
                     </li>
                     {{-- 
                     /**
@@ -64,7 +63,17 @@
                     --}}
                     @include('layouts.simple.sidebar_menu.' . $role)
 
-
+                     {{-- Profile --}}
+                     <li class="sidebar-list">
+                        <i class="fa-solid fa-thumbtack"></i>
+                        <a class="sidebar-link sidebar-title" href="{{ route('profile.index') }}">
+                            <svg class="stroke-icon">
+                                <use href="{{ asset('assets/svg/icon-sprite.svg#stroke-user') }}"></use>
+                            </svg>
+                            <svg class="fill-icon">
+                                <use href="{{ asset('assets/svg/icon-sprite.svg#fill-user') }}"></use>
+                            </svg><span>Profile </span></a>
+                    </li>
                 </ul>
             </div>
             <div class="right-arrow" id="right-arrow"><i data-feather="arrow-right"></i></div>
