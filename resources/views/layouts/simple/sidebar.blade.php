@@ -31,7 +31,7 @@
                     {{-- Dashboard --}}
                     <li class="sidebar-list">
                         <i class="fa-solid fa-thumbtack"></i>
-                        <a class="sidebar-link sidebar-title" href="{{ route(str_replace('_', '', $role) . '.home') }}">
+                        <a class="sidebar-link sidebar-title link-nav" href="{{ route(str_replace('_', '', $role) . '.home') }}">
                             <svg class="stroke-icon">
                                 <use href="{{ asset('assets/svg/icon-sprite.svg#stroke-home') }}"></use>
                             </svg>
@@ -66,7 +66,7 @@
                      {{-- Profile --}}
                      <li class="sidebar-list">
                         <i class="fa-solid fa-thumbtack"></i>
-                        <a class="sidebar-link sidebar-title" href="{{ route('profile.index') }}">
+                        <a class="sidebar-link sidebar-title link-nav" href="{{ route('profile.index') }}">
                             <svg class="stroke-icon">
                                 <use href="{{ asset('assets/svg/icon-sprite.svg#stroke-user') }}"></use>
                             </svg>
