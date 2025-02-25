@@ -1,6 +1,6 @@
 <?php
 
-/**
+/** 
  * Dokumentasi dan Aturan Penulisan Route
  *
  * 1. Penulisan nama alias Class Controller
@@ -36,24 +36,24 @@
 use Illuminate\Support\Facades\Route;
 
 // AUTHENTICATION
-use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\Web\Auth\AuthController;
 
 // GLOBAL
-use App\Http\Controllers\MainController;
-use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\Web\MainController;
+use App\Http\Controllers\Web\ProfileController;
 
 // HUMAN RESOURCE
-use App\Http\Controllers\HumanResource\HomeController as HumanResourceHome;
-use App\Http\Controllers\HumanResource\EmployeeController as HumanResourceEmployee;
+use App\Http\Controllers\Web\HumanResource\HomeController as HumanResourceHome;
+use App\Http\Controllers\Web\HumanResource\EmployeeController as HumanResourceEmployee;
 
 Route::get('/', function () {
     return redirect()->route('login');
 });
 
 // AUTHENTICATION
-Route::get('/login', [LoginController::class, 'index'])->middleware('guest')->name('login');
-Route::post('/login', [LoginController::class, 'login'])->middleware('guest')->name('login.login');
-Route::post('/logout', [LoginController::class, 'logout'])->middleware('auth')->name('logout');
+Route::get('/login', [AuthController::class, 'index'])->middleware('guest')->name('login');
+Route::post('/login', [AuthController::class, 'login'])->middleware('guest')->name('login.login');
+Route::post('/logout', [AuthController::class, 'logout'])->middleware('auth')->name('logout');
 
 // GLOBAL
 Route::get('/dashboard', [MainController::class, 'index'])->middleware('auth')->name('dashboard');
