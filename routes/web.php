@@ -46,6 +46,14 @@ use App\Http\Controllers\Web\ProfileController;
 use App\Http\Controllers\Web\HumanResource\HomeController as HumanResourceHome;
 use App\Http\Controllers\Web\HumanResource\EmployeeController as HumanResourceEmployee;
 
+// SUPER ADMIN
+use App\Http\Controllers\Web\SuperAdmin\HomeController as SuperAdminHome;
+use App\Http\Controllers\Web\SuperAdmin\LogViewerController as SuperAdminLogViewer;
+use App\Http\Controllers\Web\SuperAdmin\RouteListController as SuperAdminRouteList;
+use App\Http\Controllers\Web\SuperAdmin\PerformanceController as SuperAdminPerformance;
+use App\Http\Controllers\Web\SuperAdmin\DatabaseController as SuperAdminDatabase;
+
+
 Route::get('/', function () {
     return redirect()->route('login');
 });
@@ -64,6 +72,34 @@ Route::group(['prefix' => 'profile', 'as' => 'profile.', 'middleware' => ['auth'
     Route::put('/update', [ProfileController::class, 'update'])->name('update');
 });
 
+// HUMAN RESOURCE
+Route::group(['prefix' => 'superadmin', 'as' => 'superadmin.', 'middleware' => ['auth', 'can:isSuperAdmin']], function () {
+    Route::get('/', [SuperAdminHome::class, 'index'])->name('home');
+
+    Route::prefix('logviewer')->name('logs.')->group(function () {
+        Route::get('/', [SuperAdminLogViewer::class, 'index'])->name('index');
+        Route::get('/show/{filename}', [SuperAdminLogViewer::class, 'show'])->name('show');
+        Route::delete('/delete/{filename}', [SuperAdminLogViewer::class, 'destroy'])->name('destroy');
+        Route::get('/download/{filename}', [SuperAdminLogViewer::class, 'download'])->name('download');
+    });
+    Route::prefix('routelist')->name('routelist.')->group(function () {
+        Route::get('/', [SuperAdminRouteList::class, 'index'])->name('index');
+    });
+    Route::prefix('performance')->name('performance.')->group(function () {
+        Route::get('/', [SuperAdminPerformance::class, 'index'])->name('index');
+    });
+    Route::prefix('database')->name('database.')->group(function () {
+        Route::get('/', [SuperAdminDatabase::class, 'index'])->name('index');
+        Route::get('/database', [SuperAdminDatabase::class, 'indexDatabase'])->name('index-database');
+        Route::get('/indexsql', [SuperAdminDatabase::class, 'indexSql'])->name('index-sql');
+        Route::post('/sql', [SuperAdminDatabase::class, 'sql'])->name('sql');
+        Route::get('/show/{tableName}', [SuperAdminDatabase::class, 'showTable'])->name('show');
+        Route::post('/store/{tableName}', [SuperAdminDatabase::class, 'store'])->name('store');
+        Route::put('/update/{tableName}/{id}', [SuperAdminDatabase::class, 'update'])->name('update');
+        Route::delete('/destroy/{tableName}/{id}', [SuperAdminDatabase::class, 'destroy'])->name('destroy');
+        Route::delete('/empty/{tableName}', [SuperAdminDatabase::class, 'empty'])->name('empty');
+    });
+});
 
 // HUMAN RESOURCE
 Route::group(['prefix' => 'humanresource', 'as' => 'humanresource.', 'middleware' => ['auth', 'can:isHumanResource']], function () {

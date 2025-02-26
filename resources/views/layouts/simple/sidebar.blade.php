@@ -23,11 +23,11 @@
                                 aria-hidden="true"></i></div>
                     </li>
                     {{-- Pinned --}}
-                    <li class="pin-title sidebar-main-title">
+                    {{-- <li class="pin-title sidebar-main-title">
                         <div>
                             <h6>Di Pin</h6>
                         </div>
-                    </li>
+                    </li> --}}
                     {{-- Dashboard --}}
                     <li class="sidebar-list">
                         {{-- <i class="fa-solid fa-thumbtack"></i> --}}

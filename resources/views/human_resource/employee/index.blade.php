@@ -138,34 +138,11 @@
                                                                 <i class="fa-regular fa-pen-to-square"></i>
                                                             </a>
                                                         </li>
-                                                        <li class="delete">
-                                                            <button type="button" class="btn btn-link" data-bs-toggle="modal" data-bs-target="#deleteModal{{ $employee->id }}" style="border:none; background:none; padding:0;">
-                                                                <i class="fa-solid fa-trash-can"></i>
-                                                            </button>
-
-                                                            <!-- Modal -->
-                                                            <div class="modal fade" id="deleteModal{{ $employee->id }}" tabindex="-1" aria-labelledby="deleteModalLabel{{ $employee->id }}" aria-hidden="true">
-                                                                <div class="modal-dialog">
-                                                                    <div class="modal-content">
-                                                                        <div class="modal-header">
-                                                                            <h5 class="modal-title" id="deleteModalLabel{{ $employee->id }}">Confirm Delete</h5>
-                                                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                                                        </div>
-                                                                        <div class="modal-body">
-                                                                            Are you sure you want to delete this employee?
-                                                                        </div>
-                                                                        <div class="modal-footer">
-                                                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                                                                            <form action="{{ route('humanresource.employee.destroy', $employee->id) }}" method="POST" style="display:inline;">
-                                                                                @csrf
-                                                                                @method('DELETE')
-                                                                                <button type="submit" class="btn btn-danger">Delete</button>
-                                                                            </form>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </li>
+                                                        @include('layouts.components.delete', [
+                                                            'route' => route('humanresource.employee.destroy', $employee->id),
+                                                            'title' => 'Hapus Karyawan',
+                                                            'message' => 'Apakah kamu yakin ingin menghapus karyawan ini?',
+                                                        ])
                                                     </ul>
                                                 </td>
                                             </tr>

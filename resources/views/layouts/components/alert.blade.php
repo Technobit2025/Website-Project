@@ -1,38 +1,34 @@
 <script>
     // Fungsi untuk mengatur opsi SweetAlert berdasarkan tema sistem
     function getSwalOptions(icon, title, text) {
-        const htmlStyle = document.documentElement.getAttribute('data-style');
-        const isDarkMode = htmlStyle === 'dark' || (htmlStyle !== 'light' && window.matchMedia(
-            '(prefers-color-scheme: dark)').matches);
-
         return {
             icon: icon,
             title: title,
             text: text,
             confirmButtonColor: 'var(--theme-default)',
-            background: isDarkMode ? '#262932' : '#fff',
-            color: isDarkMode ? '#b2b2c4' : '#000',
+            background: $('body').hasClass('dark-only') ? '#262932' : '#fff',
+            color: $('body').hasClass('dark-only') ? '#b2b2c4' : '#000',
         };
     }
 </script>
 
 @if (session('success'))
     <script>
-        Swal.fire(getSwalOptions('success', 'Success!', '{{ session('success') }}'));
+        Swal.fire(getSwalOptions('success', 'Berhasil!', '{{ session('success') }}'));
     </script>
 @elseif (session('error'))
     <script>
-        Swal.fire(getSwalOptions('error', 'Error!', '{{ session('error') }}'));
+        Swal.fire(getSwalOptions('error', 'Terjadi Kesalahan!', '{{ session('error') }}'));
     </script>
 @endif
 @if (session('info'))
     <script>
-        Swal.fire(getSwalOptions('info', 'Info!', '{{ session('info') }}'));
+        Swal.fire(getSwalOptions('info', 'Informasi!', '{{ session('info') }}'));
     </script>
 @endif
 @if (session('warning'))
     <script>
-        Swal.fire(getSwalOptions('warning', 'Warning!', '{{ session('warning') }}'));
+        Swal.fire(getSwalOptions('warning', 'Peringatan!', '{{ session('warning') }}'));
     </script>
 @endif
 

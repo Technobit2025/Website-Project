@@ -34,11 +34,11 @@ Route::name('api.')->group(function () {
 
         // user routes (harus login)
         Route::name('user.')->group(function () {
-            Route::get('user', [UserController::class, 'show']); // ambil user yang login
-            Route::get('users', [UserController::class, 'index']); // ambil semua user
-            Route::post('user', [UserController::class, 'store']); // buat user baru
-            Route::put('user/{id}', [UserController::class, 'update']); // update user
-            Route::delete('user/{id}', [UserController::class, 'destroy']); // hapus user
+            Route::get('user', [UserController::class, 'show'])->name('show'); // ambil user yang login
+            Route::get('users', [UserController::class, 'index'])->name('index'); // ambil semua user
+            Route::post('user', [UserController::class, 'store'])->name('store'); // buat user baru
+            Route::put('user/{id}', [UserController::class, 'update'])->name('update'); // update user
+            Route::delete('user/{id}', [UserController::class, 'destroy'])->name('destroy'); // hapus user
         });
     });
 
