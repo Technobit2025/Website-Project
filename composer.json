@@ -7,17 +7,10 @@
     "license": "MIT",
     "require": {
         "php": "^8.2",
-        "cviebrock/eloquent-sluggable": "^11.0",
-        "laravel/framework": "^11.31",
+        "laravel/framework": "^12.0",
         "laravel/sanctum": "^4.0",
         "laravel/tinker": "^2.9",
-        "laravel/ui": "^4.6",
-        "prettus/l5-repository": "^2.9",
-        "spatie/laravel-medialibrary": "^11.6",
-        "spatie/laravel-permission": "^6.7",
-        "webpatser/laravel-countries": "dev-master",
-        "yajra/laravel-datatables": "^11.0",
-        "yajra/laravel-datatables-oracle": "^11.0"
+        "laravel/ui": "^4.6"
     },
     "require-dev": {
         "barryvdh/laravel-debugbar": "^3.15",
