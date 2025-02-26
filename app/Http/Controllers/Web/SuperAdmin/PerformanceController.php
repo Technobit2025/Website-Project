@@ -5,37 +5,19 @@ namespace App\Http\Controllers\Web\SuperAdmin;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\DB;
-use Symfony\Component\Process\Process;
 
 class PerformanceController extends Controller
 {
     public function index()
     {
-        $cpuUsage = $this->getCpuUsage();
-        $memoryUsage = $this->getMemoryUsage();
-        $diskUsage = $this->getDiskUsage();
-        $systemInfo = $this->getSystemInfo();
-
-        // Get Database Performance (query log)
-        DB::enableQueryLog();
-        DB::table('users')->get(); // Example query to generate log
-        $queryLog = DB::getQueryLog();
-
-        // Active Sessions
-        $activeUsers = DB::table('sessions')->count();
-
-        // Queue Jobs
-        $jobsPending = DB::table('jobs')->count();
-
-        // Compile all data
         $performanceData = [
-            'cpuUsage' => $cpuUsage,
-            'memoryUsage' => $memoryUsage,
-            'diskUsage' => $diskUsage,
-            'queryLog' => $queryLog,
-            'activeUsers' => $activeUsers,
-            'jobsPending' => $jobsPending,
-            'systemInfo' => $systemInfo,
+            'cpuUsage' => $this->getCpuUsage(),
+            'memoryUsage' => $this->getMemoryUsage(),
+            'diskUsage' => $this->getDiskUsage(),
+            'queryLog' => $this->getQueryLog(),
+            'activeUsers' => DB::table('sessions')->count(),
+            'jobsPending' => DB::table('jobs')->count(),
+            'systemInfo' => $this->getSystemInfo(),
         ];
 
         return view('super_admin.performance.index', compact('performanceData'));
@@ -43,230 +25,81 @@ class PerformanceController extends Controller
 
     private function getCpuUsage()
     {
-        if (strtoupper(substr(PHP_OS, 0, 3)) === 'WIN') {
-            // Command untuk Windows
-            $cmd = 'wmic cpu get loadpercentage';
-            @exec($cmd, $output);
-            return isset($output[1]) ? (int) trim($output[1]) : null;
+        if (PHP_OS_FAMILY === 'Windows') {
+            $output = shell_exec('wmic cpu get loadpercentage 2>&1');
+            preg_match('/\d+/', $output, $matches);
+            return $matches[0] ?? null;
         } else {
-            // Command untuk Linux
-            $cpuLoad = sys_getloadavg();
-            $cpuCores = function_exists('proc_open') ? $this->getCpuCoreCount() : 1; // Default ke 1 jika gagal
-            $cpuUsage = ($cpuLoad[0] / $cpuCores) * 100;
-            return round($cpuUsage, 2);
+            $cpuLoad = sys_getloadavg()[0] ?? 0;
+            $cpuCores = $this->getCpuCoreCount();
+            return round(($cpuLoad / $cpuCores) * 100, 2);
         }
     }
 
     private function getCpuCoreCount()
     {
-        if (function_exists('proc_open')) {
-            $process = proc_open('nproc', [
-                1 => ['pipe', 'w'],
-                2 => ['pipe', 'w']
-            ], $pipes);
-
-            if (is_resource($process)) {
-                $output = stream_get_contents($pipes[1]);
-                fclose($pipes[1]);
-                fclose($pipes[2]);
-                proc_close($process);
-
-                return intval(trim($output));
-            }
-        }
-        return 1; // Default ke 1 jika gagal
+        return PHP_OS_FAMILY === 'Windows' ? intval(shell_exec('wmic cpu get NumberOfCores 2>&1')) : intval(shell_exec('nproc'));
     }
 
     private function getMemoryUsage()
     {
-        if (strtoupper(substr(PHP_OS, 0, 3)) === 'WIN') {
-            // Command untuk Windows
-            $cmd = 'wmic os get freephysicalmemory, totalvisiblememorysize /value';
-            @exec($cmd, $output);
-            $memoryData = [];
-            foreach ($output as $line) {
-                if (strpos($line, '=') !== false) {
-                    [$key, $value] = explode('=', $line);
-                    $memoryData[trim($key)] = trim($value);
-                }
+        if (PHP_OS_FAMILY === 'Windows') {
+            $output = shell_exec('wmic os get freephysicalmemory, totalvisiblememorysize /value');
+            preg_match_all('/\d+/', $output, $matches);
+            if (isset($matches[0][0], $matches[0][1])) {
+                $freeMemory = (int)$matches[0][0] * 1024;
+                $totalMemory = (int)$matches[0][1] * 1024;
+                return round((($totalMemory - $freeMemory) / $totalMemory) * 100, 2);
             }
-
-            $totalMemory = isset($memoryData['TotalVisibleMemorySize']) ? $memoryData['TotalVisibleMemorySize'] * 1024 : 0;
-            $freeMemory = isset($memoryData['FreePhysicalMemory']) ? $memoryData['FreePhysicalMemory'] * 1024 : 0;
-            $usedMemory = $totalMemory - $freeMemory;
-
-            return $totalMemory > 0 ? round(($usedMemory / $totalMemory) * 100, 2) : null;
+            return null;
         } else {
-            // Command untuk Linux
-            if (is_readable('/proc/meminfo')) {
-                $memInfo = file('/proc/meminfo');
-                $totalMemory = (int) filter_var($memInfo[0], FILTER_SANITIZE_NUMBER_INT);
-                $freeMemory = (int) filter_var($memInfo[1], FILTER_SANITIZE_NUMBER_INT);
-                $usedMemory = $totalMemory - $freeMemory;
-
-                return round(($usedMemory / $totalMemory) * 100, 2);
-            }
+            return (float)trim(shell_exec("free -m | awk 'NR==2{printf \"%.2f\", $3*100/$2 }'"));
         }
-
-        return null; // Jika tidak bisa membaca data
     }
 
     private function getDiskUsage()
     {
-        $totalSpace = disk_total_space('/');
-        $freeSpace = disk_free_space('/');
-        $usedSpace = $totalSpace - $freeSpace;
-
-        return $totalSpace > 0 ? round(($usedSpace / $totalSpace) * 100, 2) : null;
+        $hostPath = env('HOST_PATH', '/');
+        $totalSpace = disk_total_space($hostPath);
+        $freeSpace = disk_free_space($hostPath);
+        return round((($totalSpace - $freeSpace) / $totalSpace) * 100, 2);
     }
-    public function getSystemInfo()
+
+    private function getQueryLog()
     {
-        $info = [];
+        DB::enableQueryLog();
+        DB::table('users')->get();
+        return DB::getQueryLog();
+    }
 
-        if (strtoupper(substr(PHP_OS, 0, 3)) === 'WIN') {
-            // Get system info for Windows
-            $info = array_merge($info, $this->getSystemInfoWindows());
-        } else {
-            // Get system info for Linux
-            $info = array_merge($info, $this->getSystemInfoLinux());
-        }
-
-        return $info;
+    private function getSystemInfo()
+    {
+        return PHP_OS_FAMILY === 'Windows' ? $this->getSystemInfoWindows() : $this->getSystemInfoLinux();
     }
 
     private function getSystemInfoWindows()
     {
-        $info = [];
+        $cpu = shell_exec('wmic cpu get name 2>&1');
+        preg_match('/\w.*/', $cpu, $matches);
 
-        // Get CPU Name
-        @exec('wmic cpu get name', $cpuOutput);
-        $info['cpu'] = isset($cpuOutput[1]) ? trim($cpuOutput[1]) : 'Unknown CPU';
+        $ram = shell_exec('wmic memorychip get capacity 2>&1');
+        preg_match_all('/\d+/', $ram, $ramMatches);
+        $totalMemory = array_sum(array_map('intval', $ramMatches[0])) / (1024 ** 3);
 
-        // Get RAM Size, Manufacturer, and Speed
-        @exec('wmic memorychip get capacity, manufacturer, speed', $ramOutput);
-        $totalMemory = 0;
-        $ramDetails = [];
-        if (!empty($ramOutput)) {
-            foreach ($ramOutput as $line) {
-                if (preg_match('/\d+/', trim($line), $matches)) {
-                    $ramDetails[] = $matches[0];
-                }
-            }
-        }
-
-        // Extract total memory and details
-        $totalMemory = array_sum($ramDetails);
-        $info['memory'] = $totalMemory > 0
-            ? round($totalMemory / (1024 ** 3), 2) . ' GB ' . $this->getMemoryDetails($ramOutput)
-            : 'Unknown RAM';
-
-        return $info;
+        return [
+            'cpu' => $matches[0] ?? 'Unknown CPU',
+            'memory' => round($totalMemory, 2) . ' GB',
+        ];
     }
 
     private function getSystemInfoLinux()
     {
-        $info = [];
+        $cpu = trim(shell_exec("grep -m1 'model name' /proc/cpuinfo | cut -d ':' -f2"));
+        $mem = (int)trim(shell_exec("grep 'MemTotal' /proc/meminfo | awk '{print $2}'")) / (1024 ** 2);
 
-        // Get CPU Name
-        if (is_readable('/proc/cpuinfo')) {
-            $cpuInfo = file('/proc/cpuinfo');
-            foreach ($cpuInfo as $line) {
-                if (strpos($line, 'model name') === 0) {
-                    $info['cpu'] = trim(explode(':', $line)[1]);
-                    break;
-                }
-            }
-        } else {
-            $info['cpu'] = 'Unknown CPU';
-        }
-
-        // Get RAM Size and Type
-        if (is_readable('/proc/meminfo')) {
-            $memInfo = file('/proc/meminfo');
-            $totalMemory = (int) filter_var($memInfo[0], FILTER_SANITIZE_NUMBER_INT); // Total memory in KB
-            $info['memory'] = round($totalMemory / 1024 / 1024, 2) . ' GB ' . $this->getMemoryTypeLinux(); // Convert to GB
-        } else {
-            $info['memory'] = 'Unknown RAM';
-        }
-
-        return $info;
-    }
-
-    private function getMemoryTypeWindows()
-    {
-        $memoryTypes = [
-            0 => ' ',
-            1 => 'Other',
-            2 => 'DRAM',
-            3 => 'Synchronous DRAM',
-            4 => 'Cache DRAM',
-            5 => 'EDO',
-            6 => 'EDRAM',
-            7 => 'VRAM',
-            8 => 'SRAM',
-            9 => 'RAM',
-            10 => 'ROM',
-            11 => 'Flash',
-            12 => 'EEPROM',
-            13 => 'FEPROM',
-            14 => 'EPROM',
-            15 => 'CDRAM',
-            16 => '3DRAM',
-            17 => 'SDRAM',
-            18 => 'SGRAM',
-            19 => 'RDRAM',
-            20 => 'DDR',
-            21 => 'DDR2',
-            22 => 'DDR2 FB-DIMM',
-            24 => 'DDR3',
-            26 => 'DDR4',
-            27 => 'LPDDR4',
-            28 => 'LPDDR5',
-            29 => 'DDR5'
+        return [
+            'cpu' => $cpu ?: 'Unknown CPU',
+            'memory' => round($mem, 2) . ' GB',
         ];
-
-        @exec('wmic memorychip get memorytype', $output);
-        $type = isset($output[1]) ? (int) trim($output[1]) : 0;
-
-        return $memoryTypes[$type] ?? ' ';
-    }
-
-    private function getMemoryDetails($output)
-    {
-        $details = '';
-        // Get Memory Manufacturer and Speed
-        @exec('wmic memorychip get manufacturer, speed', $outputDetails);
-        if (isset($outputDetails[1])) {
-            $details .= ' ' . trim($outputDetails[1]); // Manufacturer
-            $details .= ' ' . trim($outputDetails[2]) . ' MHz'; // Speed
-        }
-
-        return $details;
-    }
-
-    private function getMemoryTypeLinux()
-    {
-        $process = proc_open(
-            "sudo dmidecode --type memory | grep -m1 'Type:'",
-            [
-                1 => ["pipe", "w"], // stdout
-                2 => ["pipe", "w"], // stderr
-            ],
-            $pipes
-        );
-
-        if (is_resource($process)) {
-            $output = stream_get_contents($pipes[1]);
-            fclose($pipes[1]);
-            fclose($pipes[2]);
-
-            $returnCode = proc_close($process);
-
-            if ($output) {
-                $line = trim($output);
-                return str_replace('Type:', '', $line);
-            }
-        }
-        return ' ';
     }
 }
