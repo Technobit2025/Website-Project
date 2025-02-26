@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Pagination\Paginator;
 use App\Http\Controllers\Controller;
 
-class ApiController extends Controller
+class APIController extends Controller
 {
     public $result = [
         'success' => true,

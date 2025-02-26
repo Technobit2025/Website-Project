@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\API\ApiController;
 use App\Models\User;
 
-class AuthController extends ApiController
+class AuthController extends APIController
 {
     public function login(Request $request)
     {
