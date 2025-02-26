@@ -12,10 +12,9 @@
  * - POST api/login             [AuthController][email, password]
  * - POST api/logout            [AuthController][token]
  *
- * // GLOBAL
- * 
- * 
- * // HUMAN RESOURCE
+ * // USER
+ * - GET api/user               [AuthController][token]
+ * - GET api/users              [AuthController][token]
  * 
  **/
 
@@ -23,15 +22,23 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\API\Auth\AuthController;
-
-Route::get('/user', function (Request $request) {
-    return $request->user();
-})->middleware('auth:sanctum');
+use App\Models\User;
 
 Route::name('api.')->group(function () {
     // AUTHENTICATION
     Route::post('login', [AuthController::class, 'login'])->middleware('guest')->name('login');
-    Route::post('logout', [AuthController::class, 'logout'])->middleware('auth:sanctum')->name('logout');
+
+    // WITH MIDDLEWARE
+    Route::middleware('auth:sanctum')->group(function () {
+        Route::post('logout', [AuthController::class, 'logout'])->name('logout');
+
+        Route::get('/user', function (Request $request) {
+            return $request->user();
+        });
+        Route::get('users', function (Request $request) {
+            return User::all();
+        });
+    });
 
     // GLOBAL
     // Route::get('/profile', [ApiController::class, 'profile'])->middleware('auth:sanctum');

@@ -32,7 +32,7 @@
 @section('main_content')
     <div class="container-fluid">
         @include('layouts.components.breadcrumb', ['header' => 'Tambah Karyawan'])
-    </div><!-- Container-fluid starts-->
+    </div>
     <div class="container-fluid">
         <div class="row">
             <form action="{{ route('humanresource.employee.store') }}" method="POST">

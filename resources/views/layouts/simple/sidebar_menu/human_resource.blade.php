@@ -1,5 +1,5 @@
 <li class="sidebar-list">
-    <i class="fa-solid fa-thumbtack"></i>
+    {{-- <i class="fa-solid fa-thumbtack"></i> --}}
     <a class="sidebar-link sidebar-title" href="javascript:void(0)">
         <svg class="stroke-icon">
             <use href="{{ asset('assets/svg/icon-sprite.svg#stroke-user') }}"></use>

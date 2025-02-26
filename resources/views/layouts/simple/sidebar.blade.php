@@ -30,14 +30,22 @@
                     </li>
                     {{-- Dashboard --}}
                     <li class="sidebar-list">
-                        <i class="fa-solid fa-thumbtack"></i>
-                        <a class="sidebar-link sidebar-title link-nav" href="{{ route(str_replace('_', '', $role) . '.home') }}">
+                        {{-- <i class="fa-solid fa-thumbtack"></i> --}}
+                        <a class="sidebar-link sidebar-title link-nav"
+                            href="{{ route(str_replace('_', '', $role) . '.home') }}">
                             <svg class="stroke-icon">
                                 <use href="{{ asset('assets/svg/icon-sprite.svg#stroke-home') }}"></use>
                             </svg>
                             <svg class="fill-icon">
                                 <use href="{{ asset('assets/svg/icon-sprite.svg#fill-home') }}"></use>
-                            </svg><span>Beranda </span></a>
+                            </svg>
+                            <span>Beranda </span>
+                        </a>
+                    </li>
+                    <li class="sidebar-main-title">
+                        <div>
+                            <h6 class="">Menu</h6>
+                        </div>
                     </li>
                     {{-- 
                     /**
@@ -61,17 +69,21 @@
                     * yang relevan dengan izin dan peran mereka dalam aplikasi.
                     */
                     --}}
-                    @include('layouts.simple.sidebar_menu.' . $role)
+                    @include("layouts.simple.sidebar_menu.$role")
 
-                     {{-- Profile --}}
-                     <li class="sidebar-list">
-                        <i class="fa-solid fa-thumbtack"></i>
+                    {{-- Profile --}}
+                    <li class="sidebar-main-title">
+                        <div>
+                            <h6 class="">Pengaturan</h6>
+                        </div>
+                    </li>
+                    <li class="sidebar-list">
                         <a class="sidebar-link sidebar-title link-nav" href="{{ route('profile.index') }}">
                             <svg class="stroke-icon">
-                                <use href="{{ asset('assets/svg/icon-sprite.svg#stroke-user') }}"></use>
+                                <use href="{{ asset('assets/svg/icon-sprite.svg#setting') }}"></use>
                             </svg>
                             <svg class="fill-icon">
-                                <use href="{{ asset('assets/svg/icon-sprite.svg#fill-user') }}"></use>
+                                <use href="{{ asset('assets/svg/icon-sprite.svg#setting') }}"></use>
                             </svg><span>Profile </span></a>
                     </li>
                 </ul>
