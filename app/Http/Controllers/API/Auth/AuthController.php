@@ -4,7 +4,7 @@ namespace App\Http\Controllers\API\Auth;
 
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
-use App\Http\Controllers\API\ApiController;
+use App\Http\Controllers\API\APIController;
 use App\Models\User;
 
 class AuthController extends APIController
