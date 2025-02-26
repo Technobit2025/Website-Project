@@ -2,31 +2,13 @@
 
 namespace App\Http\Controllers\API\Auth;
 
-use App\Http\Controllers\Controller;
-use App\Models\User;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Http\Request;
+use App\Http\Controllers\API\ApiController;
+use App\Models\User;
 
-class AuthController extends Controller
+class AuthController extends ApiController
 {
-    protected function successResponse($data, $message = 'Success', $code = 200)
-    {
-        return response()->json([
-            'status' => $code,
-            'message' => $message,
-            'data' => $data
-        ], $code);
-    }
-
-    protected function clientErrorResponse($data = null, $message = 'Client Error', $code = 400)
-    {
-        return response()->json([
-            'status' => $code,
-            'message' => $message,
-            'data' => $data
-        ], $code);
-    }
-
     public function login(Request $request)
     {
         $request->validate([

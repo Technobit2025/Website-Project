@@ -8,14 +8,14 @@ use App\Http\Controllers\Controller;
 
 class ApiController extends Controller
 {
-    protected $result = [
+    public $result = [
         'success' => true,
         'message' => null,
         'data' => null,
         'exceptions' => null
     ];
 
-    protected function paginateResponse(Request $request, $query)
+    public function paginateResponse(Request $request, $query)
     {
         //Paginate settings if available
         if ($request->has('limit') && !empty($request->input('limit')) && $request->has('page') && !empty($request->input('page'))) {
@@ -37,10 +37,10 @@ class ApiController extends Controller
 
     /**
      * List json individual response with paginate
-     * @param type $data
-     * @return type
+     * @param $data
+     * @return
      */
-    protected function listResponse($data)
+    public function listResponse($data)
     {
         $response = [
             'success' => true,
@@ -58,10 +58,10 @@ class ApiController extends Controller
 
     /**
      * Show json individual response
-     * @param type $data
-     * @return type
+     * @param $data
+     * @return
      */
-    protected function showResponse($data)
+    public function showResponse($data)
     {
         $response = [
             'success' => true,
@@ -73,10 +73,10 @@ class ApiController extends Controller
 
     /**
      * Show json individual response
-     * @param type $data
-     * @return type
+     * @param $data
+     * @return
      */
-    protected function createdResponse($data, $message = '')
+    public function createdResponse($data, $message = '')
     {
         $response = [
             'success' => true,
@@ -89,9 +89,9 @@ class ApiController extends Controller
 
     /**
      * Not found response
-     * @return type
+     * @return
      */
-    protected function successResponse($data = null, $message = '')
+    public function successResponse($data = null, $message = '')
     {
         $response = [
             'success' => true,
@@ -104,9 +104,9 @@ class ApiController extends Controller
 
     /**
      * Not found response
-     * @return type
+     * @return
      */
-    protected function notFoundResponse($message = '', $code = 200)
+    public function notFoundResponse($message = '', $code = 200)
     {
         $response = [
             'success' => false,
@@ -119,10 +119,10 @@ class ApiController extends Controller
 
     /**
      * Client error response
-     * @param type $data
-     * @return type
+     * @param $data
+     * @return
      */
-    protected function clientErrorResponse($data = null, $message = '', $code = 422)
+    public function clientErrorResponse($data = null, $message = '', $code = 422)
     {
         $response = [
             'success' => false,
@@ -135,10 +135,10 @@ class ApiController extends Controller
 
     /**
      * Client error response
-     * @param type $data
-     * @return type
+     * @param $data
+     * @return
      */
-    protected function exceptionResponse($message = '', $exceptions = null, $code = 422)
+    public function exceptionResponse($message = '', $exceptions = null, $code = 422)
     {
         $response = [
             'success' => false,

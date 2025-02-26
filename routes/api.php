@@ -16,13 +16,13 @@
  * - GET api/user               [AuthController][token]
  * - GET api/users              [AuthController][token]
  * 
+ * 
  **/
 
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\API\Auth\AuthController;
-use App\Models\User;
+use App\Http\Controllers\API\User\UserController;
 
 Route::name('api.')->group(function () {
     // AUTHENTICATION
@@ -32,11 +32,13 @@ Route::name('api.')->group(function () {
     Route::middleware('auth:sanctum')->group(function () {
         Route::post('logout', [AuthController::class, 'logout'])->name('logout');
 
-        Route::get('/user', function (Request $request) {
-            return $request->user();
-        });
-        Route::get('users', function (Request $request) {
-            return User::all();
+        // user routes (harus login)
+        Route::name('user.')->group(function () {
+            Route::get('user', [UserController::class, 'show']); // ambil user yang login
+            Route::get('users', [UserController::class, 'index']); // ambil semua user
+            Route::post('user', [UserController::class, 'store']); // buat user baru
+            Route::put('user/{id}', [UserController::class, 'update']); // update user
+            Route::delete('user/{id}', [UserController::class, 'destroy']); // hapus user
         });
     });
 
