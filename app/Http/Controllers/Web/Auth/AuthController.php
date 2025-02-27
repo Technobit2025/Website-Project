@@ -20,6 +20,7 @@ class AuthController extends Controller
         $request->validate([
             'email' => 'required|email',
             'password' => 'required',
+            'remember' => 'boolean', // Add validation for remember me
         ], [
             'email.required' => 'Email harus diisi',
             'email.email' => 'Email tidak valid',
@@ -39,12 +40,12 @@ class AuthController extends Controller
                 ])->withInput($request->except('password'));
             }
 
-            Auth::login($user);
+            Auth::login($user, $request->filled('remember')); // Use remember me
             $request->session()->regenerate();
             return app(MainController::class)->index();
         }
 
-        if (Auth::attempt($credentials)) {
+        if (Auth::attempt($credentials, $request->filled('remember'))) { // Use remember me
             session()->regenerate();
             return app(MainController::class)->index();
         }

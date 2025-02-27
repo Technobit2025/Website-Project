@@ -18,19 +18,15 @@
                         <div class="login-main">
                             <form class="theme-form" method="POST" action="{{ route('login.login') }}">
                                 @csrf
-                                <h4>Sign in to account</h4>
-                                <p>Enter your email & password to login</p>
-
+                                <h4>Masuk ke akunmu</h4>
+                                <p>Masukkan email dan password untuk login</p>
                                 <div class="form-group">
-                                    <label class="col-form-label">Email Address </label>
+                                    <label class="col-form-label">Email</label>
                                     <input id="email" type="email"
                                         class="form-control @error('email') is-invalid @enderror" name="email" required
-                                        autocomplete="email" autofocus placeholder="test@gmail.com">
-                                    {{-- @error('email')
-                                        <span class="invalid-feedback" role="alert">
-                                            <strong>{{ $message }}</strong>
-                                        </span>
-                                    @enderror --}}
+                                        autocomplete="email" autofocus placeholder="test@gmail.com"
+                                        value="{{ old('email') }}">
+                                    @errorFeedback('email')
                                 </div>
 
                                 <div class="form-group">
@@ -40,31 +36,30 @@
                                             class="form-control @error('password') is-invalid @enderror" name="password"
                                             required autocomplete="current-password" placeholder="*********">
                                         <div class="show-hide"><span class="show"> </span></div>
-                                        {{-- @error('password')
-                                            <span class="invalid-feedback" role="alert">
-                                                <strong>{{ $message }}</strong>
-                                            </span>
-                                        @enderror --}}
+                                        @errorFeedback('password')
                                     </div>
                                 </div>
+
                                 <div class="form-group mb-0">
                                     <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" name="remember" id="remember"
+                                            value="1" {{ old('remember') ? 'checked' : '' }}>
+                                        <label class="form-check-label" for="remember">Ingat saya</label>
                                     </div>
-                                    {{-- @if (Route::has('password.request'))
-                                        <a class="link" href="{{ route('password.request') }}">Forgot password?</a>
-                                    @endif --}}
+                                    @if (Route::has('password.request'))
+                                        <a class="link" href="{{ route('password.request') }}">Lupa password?</a>
+                                    @endif
                                     <div class="text-end">
-                                        <button class="btn btn-primary btn-block w-100 mt-3 spinner-btn" type="submit">Sign
-                                            in</button>
+                                        <button class="btn btn-primary btn-block w-100 mt-3 spinner-btn"
+                                            type="submit">Masuk</button>
                                     </div>
                                 </div>
+                            </form>
                         </div>
-                        </form>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
     </div>
 @endsection
 
