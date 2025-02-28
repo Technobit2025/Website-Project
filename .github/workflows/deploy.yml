@@ -2,7 +2,7 @@ name: Auto Deploy 🚀
 
 on:
   push:
-    branches: [prod]
+    branches: [main]
 
 jobs:
   deploy:
@@ -16,7 +16,7 @@ jobs:
 
       - name: Deploy files via SCP 📡
         run: |
-          sshpass -p "${{ secrets.SSH_PASSWORD }}" scp -P 8288 -r . arunikaprawira@103.82.240.20:/home/arunikaprawira/httpdocs/app.arunikaprawira.com/
+          sshpass -p "${{ secrets.SSH_PASSWORD }}" scp -P 8288 -r . arunikaprawira@103.82.240.20:/var/www/vhosts/arunikaprawira.com/httpdocs/app.arunikaprawira.com/
 
       - name: ✅ Deployment Success
         run: echo "Deployment completed successfully!"
