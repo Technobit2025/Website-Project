@@ -11,8 +11,11 @@ jobs:
       - name: Checkout code 📤
         uses: actions/checkout@v3
 
-      - name: Install sshpass 🛠️
+      - name: Install dependencies 🛠️
         run: sudo apt-get update && sudo apt-get install -y sshpass
+
+      - name: Add SSH host to known_hosts 🔑
+        run: ssh-keyscan -p 8288 103.82.240.20 >> ~/.ssh/known_hosts
 
       - name: Deploy files via SCP 📡
         run: |
