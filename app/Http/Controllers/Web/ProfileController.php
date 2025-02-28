@@ -2,9 +2,14 @@
 
 namespace App\Http\Controllers\Web;
 
+use App\Http\Requests\UserRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\EmployeeRequest;
+use App\Models\Employee;
+use Illuminate\Support\Facades\Hash;
+use App\Models\User;
 
 class ProfileController extends Controller
 {
@@ -14,31 +19,30 @@ class ProfileController extends Controller
         return view('global.profile', compact('user'));
     }
 
-    /**
-     * Update the user's profile.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    // public function update(Request $request)
-    // {
-    //     $user = Auth::user();
+    public function update(UserRequest $request)
+    {
+        $user = User::find(Auth::user()->id);
 
-    //     $validated = $request->validate([
-    //         'name' => 'required|string|max:255',
-    //         'email' => 'required|string|email|max:255|unique:users,email,' . $user->id,
-    //         'password' => 'nullable|string|min:8|confirmed',
-    //     ]);
+        $validated = $request->validated();
 
-    //     // Only update password if it's provided
-    //     if (isset($validated['password'])) {
-    //         $user->password = $validated['password'];
-    //     }
+        // Cek password lama kalau user mau ganti password
+        if (!empty($validated['password'])) {
+            if (empty($validated['current_password']) || !Hash::check($validated['current_password'], $user->password)) {
+                return back()->withErrors(['current_password' => 'Password lama salah.'])->withInput($request->all());
+            }
+        } else {
+            unset($validated['password']); // Jangan update kalau kosong
+        }
 
-    //     $user->name = $validated['name'];
-    //     $user->email = $validated['email'];
-    //     $user->save();
+        $user->update($validated);
 
-    //     return redirect()->route('profile.index')->with('success', 'Profile updated successfully.');
-    // }
+        return redirect()->route('profile.index')->with('success', 'Profile updated successfully.');
+    }
+
+    public function updateEmployee(EmployeeRequest $request, Employee $employee)
+    {
+        $validated = $request->validated();
+        $employee->update($validated);
+        return redirect()->route('profile.index')->with('success', 'Profile updated successfully.');
+    }
 }

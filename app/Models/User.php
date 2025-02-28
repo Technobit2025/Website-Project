@@ -63,4 +63,9 @@ class User extends Authenticatable
 
         return "https://api.dicebear.com/6.x/initials/svg?seed=" . urlencode($name) . "&backgroundColor=" . $color;
     }
+
+    public function employee()
+    {
+        return $this->hasOne(Employee::class);
+    }
 }

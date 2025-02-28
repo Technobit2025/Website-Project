@@ -29,14 +29,17 @@ class UserRequest extends FormRequest
             'username' => 'required|unique:users,username,' . $userId,
             'password' => 'nullable|min:8|confirmed|regex:/^(?=.*[A-Z]).+$/',
             'photo' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:5120',
+            'role_id' => 'nullable|exists:roles,id',
         ];
 
         if ($this->isMethod('put') || $this->isMethod('patch')) {
             $rules['name'] = 'sometimes|string|max:255';
             $rules['email'] = 'nullable|email';
             $rules['username'] = 'nullable';
+            $rules['current_password'] = 'nullable|string|min:8';
             $rules['password'] = 'nullable|min:8|confirmed|regex:/^(?=.*[A-Z]).+$/';
             $rules['photo'] = 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:5120';
+            $rules['role_id'] = 'nullable';
         }
 
         return $rules;

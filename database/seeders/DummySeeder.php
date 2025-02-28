@@ -22,7 +22,7 @@ class DummySeeder extends Seeder
                 'username' => $faker->userName,
                 'email' => $faker->email,
                 'password' => 'password',
-                'role_id' => 2,
+                'role_id' => rand(2, 4),
             ]);
 
             Employee::create([

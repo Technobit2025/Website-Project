@@ -55,6 +55,12 @@ use App\Http\Controllers\Web\SuperAdmin\EmployeeController as SuperAdminEmployee
 use App\Http\Controllers\Web\HumanResource\HomeController as HumanResourceHome;
 use App\Http\Controllers\Web\HumanResource\EmployeeController as HumanResourceEmployee;
 
+// EMPLOYEE
+use App\Http\Controllers\Web\Employee\HomeController as EmployeeHome;
+
+// SECURITY
+use App\Http\Controllers\Web\Security\HomeController as SecurityHome;
+
 Route::get('/', function () {
     return redirect()->route('login');
 });
@@ -71,11 +77,13 @@ Route::post('/reset-password', [ForgotPasswordController::class, 'update'])->mid
 
 // GLOBAL
 Route::get('/dashboard', [MainController::class, 'index'])->middleware('auth')->name('dashboard');
+
 // PROFILE
 Route::group(['prefix' => 'profile', 'as' => 'profile.', 'middleware' => ['auth']], function () {
     Route::get('/', [ProfileController::class, 'index'])->name('index');
-    Route::get('/edit', [ProfileController::class, 'edit'])->name('edit');
     Route::put('/update', [ProfileController::class, 'update'])->name('update');
+    
+    Route::put('/update-employee', [ProfileController::class, 'updateEmployee'])->name('update-employee');
 });
 
 // SUPER ADMIN
@@ -132,4 +140,14 @@ Route::group(['prefix' => 'humanresource', 'as' => 'humanresource.', 'middleware
         Route::put('/update/{employee}', [HumanResourceEmployee::class, 'update'])->name('update');
         Route::delete('/destroy/{employee}', [HumanResourceEmployee::class, 'destroy'])->name('destroy');
     });
+});
+
+// EMPLOYEE
+Route::group(['prefix' => 'employee', 'as' => 'employee.', 'middleware' => ['auth', 'can:isEmployee']], function () {
+    Route::get('/', [EmployeeHome::class, 'index'])->name('home');
+});
+
+// SECURITY
+Route::group(['prefix' => 'security', 'as' => 'security.', 'middleware' => ['auth', 'can:isSecurity']], function () {
+    Route::get('/', [SecurityHome::class, 'index'])->name('home');
 });
