@@ -1,31 +1,13 @@
 <!DOCTYPE html>
-<html lang="en" @if (Route::currentRouteName() == 'admin.rtl_layout') dir="rtl" @endif>
+<html lang="en">
+<!-- @ 2025 kenndeclouv https://kenndeclouv.my.id -->
 
 <head>
     @include('layouts.simple.head')
     @include('layouts.simple.css')
 </head>
 
-{{-- @switch(Route::currentRouteName())
-    @case('admin.default_dashboard')
-        <body onload="startTime()">
-        @break
-
-    @case('admin.box_layout')
-        <body class="box-layout">
-        @break
-
-    @case('admin.rtl_layout')
-        <body class="rtl">
-        @break
-
-    @case('admin.dark_layout')
-        <body class="dark-only">
-        @break
-
-    @default
-        <body>
-@endswitch --}}
+<body>
     <!-- loader starts-->
     <div class="loader-wrapper">
         <div class="loader-index"><span></span></div>
@@ -54,7 +36,7 @@
             <div class="page-body">
                 @yield('main_content')
             </div>
-            
+
             @include('layouts.simple.footer')
         </div>
     </div>
