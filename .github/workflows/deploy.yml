@@ -11,16 +11,9 @@ jobs:
       - name: Checkout code 📤
         uses: actions/checkout@v3
 
-      - name: Setup SSH Key 🔑
-        run: |
-          mkdir -p ~/.ssh
-          echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/deploy_key.pem
-          chmod 600 ~/.ssh/deploy_key.pem
-          ssh-keyscan -H 103.82.240.20 > ~/.ssh/known_hosts
-
       - name: Deploy files via SCP 📡
         run: |
-          scp -i ~/.ssh/deploy_key.pem -r * arunikaprawira@103.82.240.20:httpdocs/app.arunikaprawira.com/
+          scp -i /var/www/vhosts/arunikaprawira.com/.ssh/deploy_key.pem -r * arunikaprawira@103.82.240.20:httpdocs/app.arunikaprawira.com/
 
       - name: ✅ Deployment Success
         run: echo "Deployment completed successfully!"
