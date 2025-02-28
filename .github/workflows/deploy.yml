@@ -11,15 +11,16 @@ jobs:
       - name: Checkout code 📤
         uses: actions/checkout@v3
 
-      - name: Install dependencies 🛠️
-        run: sudo apt-get update && sudo apt-get install -y sshpass
-
-      - name: Add SSH host to known_hosts 🔑
-        run: ssh-keyscan -p 8288 103.82.240.20 >> ~/.ssh/known_hosts
+      - name: Setup SSH Key 🔑
+        run: |
+          mkdir -p ~/.ssh
+          echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/deploy_key.pem
+          chmod 600 ~/.ssh/deploy_key.pem
+          ssh-keyscan -H 103.82.240.20 > ~/.ssh/known_hosts
 
       - name: Deploy files via SCP 📡
         run: |
-          sshpass -p "${{ secrets.SSH_PASSWORD }}" scp -P 8288 -r . arunikaprawira@103.82.240.20:/var/www/vhosts/arunikaprawira.com/httpdocs/app.arunikaprawira.com/
+          scp -i ~/.ssh/deploy_key.pem -r * arunikaprawira@103.82.240.20:httpdocs/app.arunikaprawira.com/
 
       - name: ✅ Deployment Success
         run: echo "Deployment completed successfully!"
