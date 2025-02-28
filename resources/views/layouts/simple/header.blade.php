@@ -14,31 +14,6 @@
         </div>
         <div class="nav-right col-xxl-7 col-xl-6 col-md-7 col-8 pull-right right-header p-0 ms-auto">
             <ul class="nav-menus">
-                <li class="language-nav">
-                    <div class="translate_wrapper">
-                        <div class="current_lang">
-                            <div class="lang"><i class="flag-icon flag-icon-us"></i><span class="lang-txt">EN
-                                </span></div>
-                        </div>
-                        <div class="more_lang">
-                            <div class="lang selected" data-value="en"><i class="flag-icon flag-icon-us"></i><span
-                                    class="lang-txt">English<span>
-                                        (US)</span></span></div>
-                            <div class="lang" data-value="de"><i class="flag-icon flag-icon-de"></i><span
-                                    class="lang-txt">Deutsch</span></div>
-                            <div class="lang" data-value="es"><i class="flag-icon flag-icon-es"></i><span
-                                    class="lang-txt">Español</span></div>
-                            <div class="lang" data-value="fr"><i class="flag-icon flag-icon-fr"></i><span
-                                    class="lang-txt">Français</span></div>
-                            <div class="lang" data-value="pt"><i class="flag-icon flag-icon-pt"></i><span
-                                    class="lang-txt">Português<span> (BR)</span></span></div>
-                            <div class="lang" data-value="cn"><i class="flag-icon flag-icon-cn"></i><span
-                                    class="lang-txt">简体中文</span></div>
-                            <div class="lang" data-value="ae"><i class="flag-icon flag-icon-ae"></i><span
-                                    class="lang-txt">لعربية <span> (ae)</span></span></div>
-                        </div>
-                    </div>
-                </li>
                 <li class="fullscreen-body"> <span><svg id="maximize-screen">
                             <use href="{{ asset('assets/svg/icon-sprite.svg#full-screen') }}"></use>
                         </svg></span></li>
@@ -147,7 +122,7 @@
                 </li>
                 <li class="profile-nav onhover-dropdown pe-0 py-0">
                     <div class="d-flex profile-media"><img class="b-r-10" src="{{ Auth::user()->photo }}"
-                            alt="" width="40" height="40">
+                            alt="" width="35" height="35">
                         <div class="flex-grow-1"><span>{{ Auth::user()->name }}</span>
                             <p class="mb-0">{{ Auth::user()->role->name }}<i
                                     class="middle fa-solid fa-angle-down"></i></p>
@@ -160,10 +135,10 @@
                         </li>
                         <li><a href="{{ route('admin.task') }}"><i
                                     data-feather="file-text"></i><span>Taskboard</span></a>
-                        </li>
-                        <li><a href="{{ route('admin.add_user') }}"><i
-                                    data-feather="settings"></i><span>Settings</span></a>
                         </li> --}}
+                        <li><a href="{{ route('profile.index') }}"><i
+                                    data-feather="user"></i><span>Profile</span></a>
+                        </li>
                         <li><a href="{{ route('logout') }}"
                                 onclick="event.preventDefault(); document.getElementById('logout-form').submit();"><i
                                     data-feather="log-in"> </i><span>Log out</span></a></li>

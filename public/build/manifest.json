@@ -1,0 +1,162 @@
+{
+  "public/assets/images/chats/chat-bg.png": {
+    "file": "assets/chat-bg-m9qKy7G3.png",
+    "src": "public/assets/images/chats/chat-bg.png"
+  },
+  "public/assets/images/dashboard-10/light-bg.jpg": {
+    "file": "assets/light-bg-CyxmlIWo.jpg",
+    "src": "public/assets/images/dashboard-10/light-bg.jpg"
+  },
+  "public/assets/images/dashboard-11/bg.png": {
+    "file": "assets/bg-BrbsF5Ym.png",
+    "src": "public/assets/images/dashboard-11/bg.png"
+  },
+  "public/assets/images/dashboard-11/ring.png": {
+    "file": "assets/ring-CVj7dt3a.png",
+    "src": "public/assets/images/dashboard-11/ring.png"
+  },
+  "public/assets/images/dashboard-11/user/10.jpg": {
+    "file": "assets/10-8XP9vX3f.jpg",
+    "src": "public/assets/images/dashboard-11/user/10.jpg"
+  },
+  "public/assets/images/dashboard-12/light-bg.png": {
+    "file": "assets/light-bg-PWVwx4Sx.png",
+    "src": "public/assets/images/dashboard-12/light-bg.png"
+  },
+  "public/assets/images/dashboard-2/balance-bg.png": {
+    "file": "assets/balance-bg-C2SYizjF.png",
+    "src": "public/assets/images/dashboard-2/balance-bg.png"
+  },
+  "public/assets/images/dashboard-3/bg.jpg": {
+    "file": "assets/bg-BuiJoAsi.jpg",
+    "src": "public/assets/images/dashboard-3/bg.jpg"
+  },
+  "public/assets/images/dashboard-4/bg-balance.png": {
+    "file": "assets/bg-balance-STyCeT3I.png",
+    "src": "public/assets/images/dashboard-4/bg-balance.png"
+  },
+  "public/assets/images/dashboard-5/profile-bg.png": {
+    "file": "assets/profile-bg-8g9UAqfb.png",
+    "src": "public/assets/images/dashboard-5/profile-bg.png"
+  },
+  "public/assets/images/dashboard-6/1.gif": {
+    "file": "assets/1-BP2UXPCp.gif",
+    "src": "public/assets/images/dashboard-6/1.gif"
+  },
+  "public/assets/images/dashboard-6/bg-1.png": {
+    "file": "assets/bg-1-CIucZ9OC.png",
+    "src": "public/assets/images/dashboard-6/bg-1.png"
+  },
+  "public/assets/images/dashboard-6/bg-2.png": {
+    "file": "assets/bg-2-DAKzzgoA.png",
+    "src": "public/assets/images/dashboard-6/bg-2.png"
+  },
+  "public/assets/images/dashboard-6/bg-3.png": {
+    "file": "assets/bg-3-C2kOBhPE.png",
+    "src": "public/assets/images/dashboard-6/bg-3.png"
+  },
+  "public/assets/images/dashboard-9/bg.jpg": {
+    "file": "assets/bg-Bb8WlTeR.jpg",
+    "src": "public/assets/images/dashboard-9/bg.jpg"
+  },
+  "public/assets/images/dashboard/user/13.jpg": {
+    "file": "assets/13-CP9ch1n2.jpg",
+    "src": "public/assets/images/dashboard/user/13.jpg"
+  },
+  "public/assets/images/dashboard/widget-bg.png": {
+    "file": "assets/widget-bg-DNshFGSM.png",
+    "src": "public/assets/images/dashboard/widget-bg.png"
+  },
+  "public/assets/images/details_close.png": {
+    "file": "assets/details_close-BB9JpovZ.png",
+    "src": "public/assets/images/details_close.png"
+  },
+  "public/assets/images/details_open.png": {
+    "file": "assets/details_open-DsXtJwpt.png",
+    "src": "public/assets/images/details_open.png"
+  },
+  "public/assets/images/forms/flags.png": {
+    "file": "assets/flags-DDO3guPO.png",
+    "src": "public/assets/images/forms/flags.png"
+  },
+  "public/assets/images/forms/user.png": {
+    "file": "assets/user-OpLGgxBl.png",
+    "src": "public/assets/images/forms/user.png"
+  },
+  "public/assets/images/landing/footer.jpg": {
+    "file": "assets/footer-Ct3b_9uC.jpg",
+    "src": "public/assets/images/landing/footer.jpg"
+  },
+  "public/assets/images/landing/home-bg.jpg": {
+    "file": "assets/home-bg-UGDrQHWK.jpg",
+    "src": "public/assets/images/landing/home-bg.jpg"
+  },
+  "public/assets/images/landing/icon/minus.svg": {
+    "file": "assets/minus-bzE1D_f-.svg",
+    "src": "public/assets/images/landing/icon/minus.svg"
+  },
+  "public/assets/images/landing/icon/plus.svg": {
+    "file": "assets/plus-gixFKKcr.svg",
+    "src": "public/assets/images/landing/icon/plus.svg"
+  },
+  "public/assets/images/login/login_bg.jpg": {
+    "file": "assets/login_bg-CVyl50oD.jpg",
+    "src": "public/assets/images/login/login_bg.jpg"
+  },
+  "public/assets/images/masonry/6.jpg": {
+    "file": "assets/6-Ci7QeVAW.jpg",
+    "src": "public/assets/images/masonry/6.jpg"
+  },
+  "public/assets/images/other-images/bg-profile.png": {
+    "file": "assets/bg-profile-D8h2fp09.png",
+    "src": "public/assets/images/other-images/bg-profile.png"
+  },
+  "public/assets/images/other-images/boxbg.jpg": {
+    "file": "assets/boxbg-DiXbhIxX.jpg",
+    "src": "public/assets/images/other-images/boxbg.jpg"
+  },
+  "public/assets/images/other-images/coming-soon-bg.jpg": {
+    "file": "assets/coming-soon-bg-DjuFjndb.jpg",
+    "src": "public/assets/images/other-images/coming-soon-bg.jpg"
+  },
+  "public/assets/images/other-images/comingsoon.png": {
+    "file": "assets/comingsoon-8cqiBFJa.png",
+    "src": "public/assets/images/other-images/comingsoon.png"
+  },
+  "public/assets/images/other-images/maintenance-bg.jpg": {
+    "file": "assets/maintenance-bg-BXsJOB5m.jpg",
+    "src": "public/assets/images/other-images/maintenance-bg.jpg"
+  },
+  "public/assets/images/other-images/success.svg": {
+    "file": "assets/success-Cb4DqZnp.svg",
+    "src": "public/assets/images/other-images/success.svg"
+  },
+  "public/assets/images/project/widget-bg.png": {
+    "file": "assets/widget-bg-EjburbMk.png",
+    "src": "public/assets/images/project/widget-bg.png"
+  },
+  "public/assets/images/switch/square-gray.png": {
+    "file": "assets/square-gray-Dmlkvrnm.png",
+    "src": "public/assets/images/switch/square-gray.png"
+  },
+  "public/assets/images/switch/square.svg": {
+    "file": "assets/square-ZCXWNvnM.svg",
+    "src": "public/assets/images/switch/square.svg"
+  },
+  "public/assets/scss/style.scss": {
+    "file": "assets/style-zhrInr06.css",
+    "src": "public/assets/scss/style.scss",
+    "isEntry": true
+  },
+  "resources/js/app.js": {
+    "file": "assets/app-DCF3fk7r.js",
+    "name": "app",
+    "src": "resources/js/app.js",
+    "isEntry": true
+  },
+  "resources/sass/app.scss": {
+    "file": "assets/app-BaVMVknW.css",
+    "src": "resources/sass/app.scss",
+    "isEntry": true
+  }
+}

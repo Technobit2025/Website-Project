@@ -13,8 +13,6 @@ class EmployeeRequest extends FormRequest
 
     public function rules()
     {
-        $employeeId = $this->route('employee')?->id ?? $this->user()?->id ?? 'NULL';
-
         $rules = [
             'fullname' => 'required|string|max:255',
             'nickname' => 'nullable|string|max:50',
@@ -58,7 +56,7 @@ class EmployeeRequest extends FormRequest
 
         if ($this->isMethod('put') || $this->isMethod('patch')) {
             $rules['fullname'] = 'sometimes|string|max:255';
-            $rules['id_number'] = 'sometimes|string|max:50|unique:employees,id_number,' . $this->route('employee');
+            $rules['id_number'] = 'sometimes|string|max:50';
             $rules['hire_date'] = 'sometimes|date';
             $rules['employment_status'] = 'sometimes|in:permanent,contract,internship,freelance';
         }

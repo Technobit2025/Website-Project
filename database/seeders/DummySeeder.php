@@ -4,7 +4,6 @@ namespace Database\Seeders;
 
 use App\Models\Employee;
 use App\Models\User;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Faker\Factory as Faker;
 
@@ -18,13 +17,12 @@ class DummySeeder extends Seeder
         $faker = Faker::create();
 
         for ($i = 0; $i < 10; $i++) {
-
             $user = User::create([
                 'name' => $faker->name,
                 'username' => $faker->userName,
                 'email' => $faker->email,
                 'password' => 'password',
-                'role_id' => 2,
+                'role_id' => rand(2, 4),
             ]);
 
             Employee::create([

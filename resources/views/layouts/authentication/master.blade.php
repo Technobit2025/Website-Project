@@ -18,6 +18,7 @@
   <body>
     @yield('main_content')
     @include('layouts.authentication.scripts')
+    @include('layouts.components.alert')
 </body>
 
 </html>

@@ -1,37 +1,32 @@
 <?php
+if (! function_exists('getJsonResponse')) {
+  function getJsonResponse($params = null, $status = 200, array $headers = [], $options = 0)
+  {
+    $responses = [
+      'status' => $status,
+      'success' => isset($params['success']) ? $params['success'] : true,
+      'message' => isset($params['message']) ? $params['message'] : null,
+      'data' => isset($params['data']) ? $params['data'] : null,
+      'exceptions' => isset($params['exceptions']) ? $params['exceptions'] : null
+    ];
 
-namespace App\Helpers;
-
-use App\Models\User;
-use App\Models\Country;
-use App\Models\Attachment;
-
-class Helpers
-{
-    public static function isUserLogin()
-    {
-        return auth()?->check();
+    if (isset($params['metadata'])) {
+      $responses['metadata'] = $params['metadata'];
     }
 
-    public static function getCurrentUserId()
-    {
-      if (self::isUserLogin()) {
-        return auth()?->user()?->id;
-      }
-    }
+    return response()->json($responses, $status);
+  }
+}
+if (! function_exists('formatDate')) {
+  function formatDate($date, $format = 'd F Y')
+  {
+    return \Carbon\Carbon::parse($date)->translatedFormat($format);
+  }
+}
 
-    public static function getMedia($id)
-    {
-      return Attachment::find($id);
-    }
-
-    public static function getCountryCode(){
-      return Country::get(["calling_code", "id", "iso_3166_2", 'flag'])->unique('calling_code');
-    }
-
-    public static function getUser()
-    {
-        $user = User::with('roles')->where('system_reserve' ,'!=', 1)->latest()->take(5)->get();
-        return $user;
-    }
+if (! function_exists('formatRupiah')) {
+  function formatRupiah($amount)
+  {
+    return 'Rp ' . number_format($amount, 0, ',', '.');
+  }
 }
