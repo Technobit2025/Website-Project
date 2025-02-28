@@ -39,7 +39,7 @@ class UserRequest extends FormRequest
             $rules['current_password'] = 'nullable|string|min:8';
             $rules['password'] = 'nullable|min:8|confirmed|regex:/^(?=.*[A-Z]).+$/';
             $rules['photo'] = 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:5120';
-            $rules['role_id'] = 'nullable';
+            $rules['role_id'] = 'nullable|exists:roles,id';
         }
 
         return $rules;
