@@ -105,7 +105,7 @@ Route::group(['prefix' => 'superadmin', 'as' => 'superadmin.', 'middleware' => [
         Route::put('/update/{employee}', [SuperAdminEmployee::class, 'update'])->name('update');
         Route::delete('/destroy/{employee}', [SuperAdminEmployee::class, 'destroy'])->name('destroy');
     });
-
+    
     // EMPLOYEE SALARY
     Route::prefix('employee-salary')->name('employeesalary.')->group(function () {
         Route::get('/', [SuperAdminEmployee::class, 'salaryIndex'])->name('index');
@@ -160,6 +160,7 @@ Route::group(['prefix' => 'humanresource', 'as' => 'humanresource.', 'middleware
     // EMPLOYEE SALARY
     Route::prefix('employee-salary')->name('employeesalary.')->group(function () {
         Route::get('/', [HumanResourceEmployee::class, 'salaryIndex'])->name('index');
+        Route::get('/show/{employee}', [HumanResourceEmployee::class, 'salaryShow'])->name('show');
     });
 });
 
