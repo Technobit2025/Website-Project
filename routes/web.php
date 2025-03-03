@@ -34,6 +34,7 @@
  */
 
 use Illuminate\Support\Facades\Route;
+use Illuminate\Http\Response;
 
 // AUTHENTICATION
 use App\Http\Controllers\Web\Auth\AuthController;
@@ -63,6 +64,10 @@ use App\Http\Controllers\Web\Security\HomeController as SecurityHome;
 
 Route::get('/', function () {
     return redirect()->route('login');
+});
+
+Route::get('/error-test/{code}', function ($code) {
+    return abort($code);
 });
 
 // AUTHENTICATION
