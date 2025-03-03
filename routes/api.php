@@ -23,6 +23,10 @@ use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\API\Auth\AuthController;
 use App\Http\Controllers\API\User\UserController;
+use App\Http\Controllers\API\Auth\AndroidForgotPasswordController;
+use App\Http\Controllers\API\Auth\AndroidResetPasswordController;
+use App\Http\Controllers\API\Auth\AndroidVerifyOtpController;
+
 
 Route::name('api.')->group(function () {
     // AUTHENTICATION
@@ -41,6 +45,23 @@ Route::name('api.')->group(function () {
             Route::delete('user/{id}', [UserController::class, 'destroy'])->name('destroy'); // hapus user
         });
     });
+
+    // --- Mulai Baris Kode Android -----
+
+    Route::post('/android/forgot-password', [AndroidForgotPasswordController::class, 'forgotPassword']);
+    Route::post('/android/reset-password', [AndroidResetPasswordController::class, 'resetPassword']);
+    Route::post('/android/request-otp', [AndroidForgotPasswordController::class, 'requestOtp']);
+    Route::post('/android/verify-otp', [AndroidVerifyOtpController::class, 'verifyOtp']);
+
+
+
+
+
+
+
+
+
+
 
     // GLOBAL
     // Route::get('/profile', [ApiController::class, 'profile'])->middleware('auth:sanctum');
