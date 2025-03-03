@@ -1,6 +1,6 @@
 @extends('layouts.simple.master')
 
-@section('title', 'Human Resource Dashboard')
+@section('title', 'Super Admin Dashboard')
 
 @section('css')
     <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/vendors/prism.css') }}">
@@ -20,7 +20,7 @@
                             <div class="flex-grow-1">
                                 <div class="greeting-user">
                                     <h2 class="f-w-600">Selamat Datang <br> {{ $user->name }}!</h2>
-                                    <p>Cek Profile Anda Sekarang!</p>
+                                    <p>Anda Login Sebagai {{ $user->role->name }}</p>
                                     <div class="whatsnew-btn"><a class="btn btn-outline-white"
                                             href="{{ route('profile.index') }}">
                                             Profile</a></div>

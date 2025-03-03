@@ -11,6 +11,7 @@
     <script src="{{ asset('assets/js/datatable/datatables/jquery.dataTables.min.js') }}"></script>
     <script src="{{ asset('assets/js/datatable/datatables/dataTables1.js') }}"></script>
     <script src="{{ asset('assets/js/datatable/datatables/dataTables.bootstrap5.js') }}"></script>
+    <script src="{{ asset('assets/js/tooltip-init.js') }}"></script>
     <script src="{{ asset('assets/js/sweet-alert/sweetalert.min.js') }}"></script>
     <script>
         $(document).ready(function() {
@@ -80,20 +81,18 @@
                                         <td>{{ $webRoute->uri }}</td>
                                         <td>{{ $webRoute->getName() }}</td>
                                         <td>
-                                            <ul class="action gap-2">
-                                                <li class="view" data-clipboard-text="{{ $webRoute->uri }}"
-                                                    data-bs-toggle="tooltip" data-bs-placement="top" title="Copy URI">
-                                                    <a href="javascript:void(0) ">
-                                                        <i class="fa-solid fa-clipboard"></i>
-                                                    </a>
-                                                </li>
-                                                <li class="edit" data-clipboard-text="{{ $webRoute->getName() }}"
-                                                    data-bs-toggle="tooltip" data-bs-placement="top" title="Copy Name">
-                                                    <a href="javascript:void(0)">
-                                                        <i class="fa-solid fa-clipboard"></i>
-                                                    </a>
-                                                </li>
-                                            </ul>
+                                            <div class="d-flex gap-2">
+                                                <a href="javascript:void(0) " class="btn btn-info btn-sm px-3"
+                                                    data-bs-toggle="tooltip" data-bs-placement="top" title="Copy URI"
+                                                    data-clipboard-text="{{ $webRoute->uri }}">
+                                                    <i class="fa-solid fa-clipboard"></i>
+                                                </a>
+                                                <a href="javascript:void(0) " class="btn btn-warning btn-sm px-3"
+                                                    data-bs-toggle="tooltip" data-bs-placement="top" title="Copy Name"
+                                                    data-clipboard-text="{{ $webRoute->getName() }}">
+                                                    <i class="fa-solid fa-clipboard"></i>
+                                                </a>
+                                            </div>
                                         </td>
                                     </tr>
                                 @endforeach
@@ -131,20 +130,18 @@
                                         <td>{{ $apiRoute->uri }}</td>
                                         <td>{{ $apiRoute->getName() }}</td>
                                         <td>
-                                            <ul class="action gap-2">
-                                                <li class="view" data-clipboard-text="{{ $apiRoute->uri }}"
-                                                    data-bs-toggle="tooltip" data-bs-placement="top" title="Copy URI">
-                                                    <a href="javascript:void(0) ">
-                                                        <i class="fa-solid fa-clipboard"></i>
-                                                    </a>
-                                                </li>
-                                                <li class="edit" data-clipboard-text="{{ $apiRoute->getName() }}"
-                                                    data-bs-toggle="tooltip" data-bs-placement="top" title="Copy Name">
-                                                    <a href="javascript:void(0)">
-                                                        <i class="fa-solid fa-clipboard"></i>
-                                                    </a>
-                                                </li>
-                                            </ul>
+                                            <div class="d-flex gap-2">
+                                                <a href="javascript:void(0) " class="btn btn-info btn-sm px-3"
+                                                    data-bs-toggle="tooltip" data-bs-placement="top" title="Copy URI"
+                                                    data-clipboard-text="{{ $apiRoute->uri }}">
+                                                    <i class="fa-solid fa-clipboard"></i>
+                                                </a>
+                                                <a href="javascript:void(0) " class="btn btn-warning btn-sm px-3"
+                                                    data-bs-toggle="tooltip" data-bs-placement="top" title="Copy Name"
+                                                    data-clipboard-text="{{ $apiRoute->getName() }}">
+                                                    <i class="fa-solid fa-clipboard"></i>
+                                                </a>
+                                            </div>
                                         </td>
                                     </tr>
                                 @endforeach

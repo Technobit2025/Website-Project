@@ -87,7 +87,7 @@ Route::get('/dashboard', [MainController::class, 'index'])->middleware('auth')->
 Route::group(['prefix' => 'profile', 'as' => 'profile.', 'middleware' => ['auth']], function () {
     Route::get('/', [ProfileController::class, 'index'])->name('index');
     Route::put('/update', [ProfileController::class, 'update'])->name('update');
-    
+
     Route::put('/update-employee', [ProfileController::class, 'updateEmployee'])->name('update-employee');
 });
 
@@ -106,6 +106,16 @@ Route::group(['prefix' => 'superadmin', 'as' => 'superadmin.', 'middleware' => [
         Route::delete('/destroy/{employee}', [SuperAdminEmployee::class, 'destroy'])->name('destroy');
     });
 
+    // EMPLOYEE SALARY
+    Route::prefix('employee-salary')->name('employeesalary.')->group(function () {
+        Route::get('/', [SuperAdminEmployee::class, 'salaryIndex'])->name('index');
+        Route::get('/show/{employee}', [SuperAdminEmployee::class, 'salaryShow'])->name('show');
+        Route::get('/create/{employee}', [SuperAdminEmployee::class, 'salaryCreate'])->name('create');
+        Route::post('/store/{employee}', [SuperAdminEmployee::class, 'salaryStore'])->name('store');
+        Route::get('/edit/{employee}', [SuperAdminEmployee::class, 'salaryEdit'])->name('edit');
+        Route::put('/update/{employee}', [SuperAdminEmployee::class, 'salaryUpdate'])->name('update');
+        Route::delete('/destroy/{employee}', [SuperAdminEmployee::class, 'salaryDestroy'])->name('destroy');
+    });
     // TOOLS
     Route::prefix('logviewer')->name('logs.')->group(function () {
         Route::get('/', [SuperAdminLogViewer::class, 'index'])->name('index');
@@ -136,6 +146,7 @@ Route::group(['prefix' => 'superadmin', 'as' => 'superadmin.', 'middleware' => [
 Route::group(['prefix' => 'humanresource', 'as' => 'humanresource.', 'middleware' => ['auth', 'can:isHumanResource']], function () {
     Route::get('/', [HumanResourceHome::class, 'index'])->name('home');
 
+    // EMPLOYEE
     Route::prefix('employee')->name('employee.')->group(function () {
         Route::get('/', [HumanResourceEmployee::class, 'index'])->name('index');
         Route::get('/show/{employee}', [HumanResourceEmployee::class, 'show'])->name('show');
@@ -144,6 +155,11 @@ Route::group(['prefix' => 'humanresource', 'as' => 'humanresource.', 'middleware
         Route::get('/edit/{employee}', [HumanResourceEmployee::class, 'edit'])->name('edit');
         Route::put('/update/{employee}', [HumanResourceEmployee::class, 'update'])->name('update');
         Route::delete('/destroy/{employee}', [HumanResourceEmployee::class, 'destroy'])->name('destroy');
+    });
+
+    // EMPLOYEE SALARY
+    Route::prefix('employee-salary')->name('employeesalary.')->group(function () {
+        Route::get('/', [HumanResourceEmployee::class, 'salaryIndex'])->name('index');
     });
 });
 

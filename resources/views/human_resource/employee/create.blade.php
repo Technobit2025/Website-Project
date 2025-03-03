@@ -11,8 +11,8 @@
                 $('#name').val('Karyawan ' + Math.floor(now.getTime() / 1000));
                 $('#email').val('karyawan' + Math.floor(now.getTime() / 1000) + '@example.com');
                 $('#role').val('3');
-                $('#password').val('Password123');
-                $('#password_confirmation').val('Password123');
+                $('#password').val('Password');
+                $('#password_confirmation').val('Password');
 
                 $('#fullname').val('Karyawan ' + Math.floor(now.getTime() / 1000));
                 $('#nickname').val('Karyawan ' + Math.floor(now.getTime() / 1000));
@@ -267,12 +267,12 @@
                                     value="{{ old('contract_end_date') }}">
                                 @errorFeedback('contract_end_date')
                             </div>
-                            <div class="mb-3">
+                            {{-- <div class="mb-3">
                                 <label for="salary" class="form-label">Gaji</label>
                                 <input type="number" class="form-control @error('salary') is-invalid @enderror"
                                     id="salary" name="salary" step="0.01" value="{{ old('salary') }}">
                                 @errorFeedback('salary')
-                            </div>
+                            </div> --}}
                             <div class="mb-3">
                                 <label for="bank_name" class="form-label">Nama Bank</label>
                                 <input type="text" class="form-control @error('bank_name') is-invalid @enderror"

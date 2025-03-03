@@ -156,7 +156,7 @@
                                 <a href="{{ route('superadmin.employee.edit', $employee->id) }}"
                                     class="btn btn-warning">
                                     <i class="fa-solid fa-pen-to-square"></i>
-                                    Edit
+                                    Ubah
                                 </a>
                                 <a href="{{ route('superadmin.employee.index') }}" class="btn btn-secondary">
                                     <i class="fa-solid fa-arrow-left"></i>

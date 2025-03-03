@@ -20,7 +20,7 @@
         });
 
         pathArray.forEach(function(path, index) {
-            if (index === 0) return; // Skip the first link
+            if (index === 0) return;
             var li = document.createElement('li');
             li.classList.add('breadcrumb-item');
             if (index === pathArray.length - 1) {

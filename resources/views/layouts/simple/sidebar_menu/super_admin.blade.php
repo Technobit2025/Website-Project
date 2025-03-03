@@ -18,7 +18,17 @@
         </li>
     </ul>
 </li>
-
+<li class="sidebar-list">
+    <a class="sidebar-link sidebar-title link-nav" href="{{ route('superadmin.employeesalary.index') }}">
+        <svg class="stroke-icon">
+            <use href="{{ asset('assets/svg/icon-sprite.svg#stroke-price') }}"></use>
+        </svg>
+        <svg class="fill-icon">
+            <use href="{{ asset('assets/svg/icon-sprite.svg#fill-price') }}"></use>
+        </svg>
+        <span class="">Gaji Karyawan</span>
+    </a>
+</li>
 <li class="sidebar-main-title">
     <div>
         <h6 class="">Tools</h6>

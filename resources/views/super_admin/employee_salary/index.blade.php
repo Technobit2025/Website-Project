@@ -26,10 +26,10 @@
 
 @section('main_content')
     <div class="container-fluid">
-        @include('layouts.components.breadcrumb', ['header' => 'Data Karyawan'])
+        @include('layouts.components.breadcrumb', ['header' => 'Gaji Karyawan'])
     </div>
     <div class="container-fluid">
-        <div class="row">
+        {{-- <div class="row">
             <div class="col-12 col-lg-3">
                 <div class="card user-management">
                     <div class="card-body bg-primary rounded-4">
@@ -63,12 +63,12 @@
                                 <div class="total-num counter">
                                     <div class="d-flex by-role custom-scrollbar">
                                         @foreach ($roles as $role)
-                                            <div>
-                                                <div class="total-user bg-light-primary">
-                                                    <h5> {{ $role->name }} </h5>
-                                                    <span class="total-num counter">{{ $role->users->count() }}</span>
-                                                </div>
+                                        <div>
+                                            <div class="total-user bg-light-primary">
+                                                <h5> {{ $role->name }} </h5>
+                                                <span class="total-num counter">{{ $role->users->count() }}</span>
                                             </div>
+                                        </div>
                                         @endforeach
                                     </div>
                                 </div>
@@ -96,12 +96,14 @@
                     </div>
                 </div>
             </div>
-        </div>
+        </div> --}}
         <div class="row">
             <div class="col-sm-12">
                 <div class="card">
-                    <div class="card-header">
-                        <h5>Data Karyawan</h5>
+                    <div class="card-header d-flex justify-content-between">
+                        <h5>Gaji Karyawan</h5>
+                        {{-- <a href="{{ route('superadmin.employeesalary.create') }}" class="btn btn-primary">Tambah Gaji
+                            Karyawan</a> --}}
                     </div>
                     <div class="card-body">
                         <div class="table-responsive custom-scrollbar table-striped">
@@ -111,47 +113,55 @@
 
                                     <thead>
                                         <tr>
-                                            {{-- <th style="width: 5% !important;">ID</th> --}}
-                                            <th>Full Name</th>
-                                            <th>Email</th>
+                                            {{-- <th>No</th> --}}
+                                            {{-- <th colspan="2">Nama Lengkap</th> --}}
+                                            <th>Nama Lengkap</th>
                                             <th>Role</th>
-                                            <th>Status</th>
-                                            <th>Action</th>
+                                            <th>Gaji</th>
+                                            <th>Aksi</th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         @foreach ($employees as $employee)
                                             <tr>
-                                                {{-- <td style="width: 5% !important;">{{ $employee->id }}</td> --}}
+                                                {{-- <td>{{ $loop->iteration }}</td> --}}
+                                                {{-- <td colspan="2">{{ $employee->fullname }}</td> --}}
                                                 <td>{{ $employee->fullname }}</td>
-                                                <td>{{ $employee->user->email }}</td>
                                                 <td>{{ $employee->user->role->name }}</td>
-                                                <td><span
-                                                        class="badge {{ $employee->active ? 'badge-success' : 'badge-danger' }}">{{ $employee->active ? 'Aktif' : 'Tidak Aktif' }}</span>
+                                                <td>{{ $employee->salary !== null ? formatRupiah($employee->salary) : '-' }}
                                                 </td>
                                                 <td>
                                                     <div class="d-flex gap-2">
-                                                        <a href="{{ route('superadmin.employee.show', $employee->id) }}"
-                                                            class="btn btn-info btn-sm px-3" data-bs-toggle="tooltip"
-                                                            data-bs-placement="top" data-bs-title="Lihat Karyawan">
-                                                            <i class="fa-regular fa-eye"></i>
-                                                        </a>
+                                                        @if ($employee->salary !== null)
+                                                            <a href="{{ route('superadmin.employeesalary.show', $employee->id) }}"
+                                                                class="btn btn-info btn-sm px-3" data-bs-toggle="tooltip"
+                                                                data-bs-placement="top" data-bs-title="Lihat Gaji Karyawan">
+                                                                <i class="fa-regular fa-eye"></i>
+                                                            </a>
 
-                                                        <a href="{{ route('superadmin.employee.edit', $employee->id) }}"
-                                                            class="btn btn-warning btn-sm px-3" data-bs-toggle="tooltip"
-                                                            data-bs-placement="top" data-bs-title="Ubah Karyawan">
-                                                            <i class="fa-regular fa-pen-to-square"></i>
-                                                        </a>
-                                                        @include('layouts.components.delete', [
-                                                            'route' => route(
-                                                                'superadmin.employee.destroy',
-                                                                $employee->id),
-                                                            'title' => 'Hapus Karyawan',
-                                                            'message' =>
-                                                                'Apakah kamu yakin ingin menghapus karyawan ini?',
-                                                        ])
+                                                            <a href="{{ route('superadmin.employeesalary.edit', $employee->id) }}"
+                                                                class="btn btn-warning btn-sm px-3" data-bs-toggle="tooltip"
+                                                                data-bs-placement="top" data-bs-title="Ubah Gaji Karyawan">
+                                                                <i class="fa-regular fa-pen-to-square"></i>
+                                                            </a>
+
+                                                            @include('layouts.components.delete', [
+                                                                'route' => route(
+                                                                    'superadmin.employeesalary.destroy',
+                                                                    $employee->id),
+                                                                'title' => 'Hapus Gaji Karyawan',
+                                                                'message' =>
+                                                                    'Apakah kamu yakin ingin menghapus gaji karyawan ini?',
+                                                            ])
+                                                        @else
+                                                            <a href="{{ route('superadmin.employeesalary.create', $employee->id) }}"
+                                                                class="btn btn-success btn-sm px-3" data-bs-toggle="tooltip"
+                                                                data-bs-placement="top"
+                                                                data-bs-title="Tentukan Gaji Karyawan">
+                                                                <i class="fa-regular fa-plus"></i> Tentukan Gaji
+                                                            </a>
+                                                        @endif
                                                     </div>
-
                                                 </td>
                                             </tr>
                                         @endforeach
