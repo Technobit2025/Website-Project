@@ -33,9 +33,9 @@ class AuthController extends APIController
             $user = Auth::user();
         }
         // FILTER ROLE
-        // if ($user->role_id != 3 || $user->role_id != 4) {
-        //     return $this->clientErrorResponse(null, 'Anda tidak diizinkan untuk login di aplikasi ini, silahkan login di website arunikaprawira.com', 403);
-        // }
+        if ($user->role_id != 4) {
+            return $this->clientErrorResponse(null, 'Anda tidak diizinkan untuk login di aplikasi ini, silahkan login di website arunikaprawira.com', 403);
+        }
         $token = $user->createToken('auth_token')->plainTextToken;
         return $this->successResponse([
             'user' => $user,
