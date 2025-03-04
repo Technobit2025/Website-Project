@@ -22,7 +22,14 @@
  <script src="{{ asset('assets/js/script1.js') }}"></script>
  <script src="{{ asset('assets/js/theme-customizer/customizer.js') }}"></script>
  <script src="{{ asset('assets/js/toastr.min.js') }}"></script>
-
+ 
+ @if (Auth::user()->role->code != 'super_admin')
+ <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        document.querySelector('.sidebar-panel-main').style.display = 'none';
+    });
+ </script>
+ @endif
  <!-- Status Update-->
  <script>
      $(document).ready(function() {

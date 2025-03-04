@@ -3,6 +3,16 @@
 @section('title', 'Login')
 
 @section('css')
+    <style>
+        .form-check-input:checked {
+            background-color: var(--theme-default) !important;
+            color: #fff !important;
+        }
+
+        .form-check-input {
+            border-color: var(--theme-default) !important;
+        }
+    </style>
 @endsection
 
 @section('main_content')
@@ -12,8 +22,9 @@
                 <div class="login-card login-dark">
                     <div>
                         <div><a class="logo" href=""><img class="img-fluid for-light"
-                                    src="{{ asset('assets/images/logo/logo.png') }}" alt="looginpage"><img
-                                    class="img-fluid for-dark" src="{{ asset('assets/images/logo/logo_dark.png') }}"
+                                    src="{{ asset('assets/images/logo/logo.png') }}" style="width: 176px;"
+                                    alt="looginpage"><img class="img-fluid for-dark"
+                                    src="{{ asset('assets/images/logo/logo_dark.png') }}" style="width: 176px;"
                                     alt="looginpage"></a></div>
                         <div class="login-main">
                             <form class="theme-form" method="POST" action="{{ route('login.login') }}">
@@ -33,7 +44,7 @@
                                     <label class="col-form-label">Password</label>
                                     <div class="form-input position-relative">
                                         <input id="password" type="password"
-                                            class="form-control @error('password') is-invalid @enderror" name="password"
+                                            class="form-control" name="password"
                                             required autocomplete="current-password" placeholder="*********">
                                         <div class="show-hide"><span class="show"> </span></div>
                                         @errorFeedback('password')
@@ -43,7 +54,7 @@
                                 <div class="form-group mb-0">
                                     <div class="form-check">
                                         <input class="form-check-input" type="checkbox" name="remember" id="remember"
-                                            value="1" {{ old('remember') ? 'checked' : '' }}>
+                                            value="1" {{ old('remember') ? 'checked' : '' }} class="form-check-input">
                                         <label class="form-check-label" for="remember">Ingat saya</label>
                                     </div>
                                     @if (Route::has('password.request'))
