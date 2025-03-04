@@ -16,24 +16,31 @@ class DummySeeder extends Seeder
     {
         $faker = Faker::create();
 
-        for ($i = 0; $i < 10; $i++) {
+        $employees = [
+            ['name' => 'HR', 'role_id' => 2],
+            ['name' => 'Employee', 'role_id' => 3],
+            ['name' => 'Security', 'role_id' => 4],
+            ['name' => 'Bendahara', 'role_id' => 5],
+        ];
+
+        foreach ($employees as $employee) {
             $user = User::create([
-                'name' => $faker->name,
-                'username' => $faker->userName,
-                'email' => $faker->email,
-                'password' => 'password',
-                'role_id' => rand(2, 4),
+                'name' => $employee['name'],
+                'username' => strtolower($employee['name']),
+                'email' => strtolower($employee['name']) . '@gmail.com',
+                'password' => strtolower($employee['name']),
+                'role_id' => $employee['role_id'],
             ]);
 
             Employee::create([
                 'user_id' => $user->id,
-                'fullname' => $faker->name,
-                'nickname' => $faker->userName,
+                'fullname' => $employee['name'],
+                'nickname' => strtolower($employee['name']),
                 'phone' => $faker->phoneNumber,
                 'emergency_contact' => $faker->name,
                 'emergency_phone' => $faker->phoneNumber,
                 'gender' => $faker->randomElement(['male', 'female']),
-                'birth_date' => $faker->date,
+                'birth_date' => $faker->date(),
                 'birth_place' => $faker->city,
                 'marital_status' => $faker->randomElement(['single', 'married', 'divorced']),
                 'nationality' => 'Indonesia',
@@ -50,8 +57,8 @@ class DummySeeder extends Seeder
                 'department' => $faker->randomElement(['HR', 'Finance', 'IT', 'Marketing']),
                 'position' => $faker->jobTitle,
                 'employment_status' => $faker->randomElement(['permanent', 'contract', 'internship', 'freelance']),
-                'hire_date' => $faker->date,
-                'contract_end_date' => $faker->optional()->date,
+                'hire_date' => $faker->date(),
+                'contract_end_date' => $faker->optional()->date(),
                 'salary' => $faker->randomFloat(2, 3000000, 10000000),
                 'bank_name' => $faker->randomElement(['BCA', 'Mandiri', 'BNI', 'BRI']),
                 'bank_account_number' => $faker->bankAccountNumber,

@@ -21,7 +21,7 @@ return new class extends Migration
             $table->string('photo')->nullable();
             $table->rememberToken();
             $table->timestamps();
-            $table->softDeletes();
+            // $table->softDeletes();
         });
 
         Schema::create('password_reset_tokens', function (Blueprint $table) {

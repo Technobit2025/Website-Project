@@ -65,8 +65,8 @@ class EmployeeController extends Controller
 
     public function destroy(Employee $employee)
     {
+        $employee->user->delete();
         $employee->delete();
-        User::where('id', $employee->user->id)->delete();
         return redirect()->route('superadmin.employee.index')->with('success', 'Karyawan berhasil dihapus!');
     }
 
