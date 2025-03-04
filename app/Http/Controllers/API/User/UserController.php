@@ -20,14 +20,19 @@ class UserController extends APIController
     }
 
     // Get a single user by ID
-    public function show($id)
-    {
+    public function show($id = null)
+{
+    if ($id === null) {
+        $user = auth()->user();
+    } else {
         $user = User::find($id);
-        if (!$user) {
-            return $this->notFoundResponse('User not found');
-        }
-        return $this->successResponse($user);
     }
+    
+    if (!$user) {
+        return $this->notFoundResponse('User not found');
+    }
+    return $this->successResponse($user);
+}
 
     // Create a new user
     public function store(Request $request)
