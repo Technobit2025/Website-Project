@@ -62,22 +62,17 @@
                                         <td>{{ $log['size'] }}</td>
                                         <td>{{ date('Y-m-d H:i:s', $log['modified']) }}</td>
                                         <td>
-                                            <ul class="action gap-2">
-
-                                                <li class="view">
-                                                    <a href="{{ route('superadmin.logs.show', ['filename' => $log['name']]) }}"
-                                                        class="" data-bs-toggle="tooltip" data-bs-placement="top"
-                                                        data-bs-title="Lihat Log">
-                                                        <i class="fa fa-eye"></i>
-                                                    </a>
-                                                </li>
-                                                <li class="edit"data-bs-toggle="tooltip" data-bs-placement="top"
-                                                    data-bs-title="Download Log">
-                                                    <a href="{{ route('superadmin.logs.download', ['filename' => $log['name']]) }}"
-                                                        class="">
-                                                        <i class="fa fa-download"></i>
-                                                    </a>
-                                                </li>
+                                            <div class="d-flex gap-2">
+                                                <a href="{{ route('superadmin.logs.show', ['filename' => $log['name']]) }}"
+                                                    class="btn btn-info btn-sm px-3" data-bs-toggle="tooltip"
+                                                    data-bs-placement="top" data-bs-title="Lihat Log">
+                                                    <i class="fa fa-eye"></i>
+                                                </a>
+                                                <a href="{{ route('superadmin.logs.download', ['filename' => $log['name']]) }}"
+                                                    class="btn btn-warning btn-sm px-3" data-bs-toggle="tooltip"
+                                                    data-bs-placement="top" data-bs-title="Download Log">
+                                                    <i class="fa fa-download"></i>
+                                                </a>
                                                 @include('layouts.components.delete', [
                                                     'route' => route('superadmin.logs.destroy', [
                                                         'filename' => $log['name'],
@@ -85,7 +80,7 @@
                                                     'title' => 'Hapus Log',
                                                     'message' => 'Apakah kamu yakin ingin menghapus log ini?',
                                                 ])
-                                            </ul>
+                                            </div>
                                         </td>
                                     </tr>
                                 @endforeach

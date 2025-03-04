@@ -9,6 +9,7 @@
 @endsection
 
 @section('scripts')
+    <script src="{{ asset('assets/js/tooltip-init.js') }}"></script>
     <script src="{{ asset('assets/js/datatable/datatables/jquery.dataTables.min.js') }}"></script>
     <script src="{{ asset('assets/js/datatable/datatables/dataTables1.js') }}"></script>
     <script src="{{ asset('assets/js/datatable/datatables/dataTables.bootstrap5.js') }}"></script>
@@ -62,12 +63,12 @@
                                 <div class="total-num counter">
                                     <div class="d-flex by-role custom-scrollbar">
                                         @foreach ($roles as $role)
-                                        <div>
-                                            <div class="total-user bg-light-primary">
-                                                <h5> {{ $role->name }} </h5>
-                                                <span class="total-num counter">{{ $role->users->count() }}</span>
+                                            <div>
+                                                <div class="total-user bg-light-primary">
+                                                    <h5> {{ $role->name }} </h5>
+                                                    <span class="total-num counter">{{ $role->users->count() }}</span>
+                                                </div>
                                             </div>
-                                        </div>
                                         @endforeach
                                     </div>
                                 </div>
@@ -125,25 +126,32 @@
                                                 <td>{{ $employee->fullname }}</td>
                                                 <td>{{ $employee->user->email }}</td>
                                                 <td>{{ $employee->user->role->name }}</td>
-                                                <td><span class="badge {{ $employee->active ? 'badge-success' : 'badge-danger' }}">{{ $employee->active ? 'Aktif' : 'Tidak Aktif' }}</span></td>
+                                                <td><span
+                                                        class="badge {{ $employee->active ? 'badge-success' : 'badge-danger' }}">{{ $employee->active ? 'Aktif' : 'Tidak Aktif' }}</span>
+                                                </td>
                                                 <td>
-                                                    <ul class="action gap-2">
-                                                        <li class="view">
-                                                            <a href="{{ route('humanresource.employee.show', $employee->id) }}">
-                                                                <i class="fa-regular fa-eye"></i>
-                                                            </a>
-                                                        </li>
-                                                        <li class="edit">
-                                                            <a href="{{ route('humanresource.employee.edit', $employee->id) }}">
-                                                                <i class="fa-regular fa-pen-to-square"></i>
-                                                            </a>
-                                                        </li>
+                                                    <div class="d-flex gap-2">
+                                                        <a href="{{ route('humanresource.employee.show', $employee->id) }}"
+                                                            class="btn btn-info btn-sm px-3" data-bs-toggle="tooltip"
+                                                            data-bs-placement="top" data-bs-title="Lihat Karyawan">
+                                                            <i class="fa-regular fa-eye"></i>
+                                                        </a>
+
+                                                        <a href="{{ route('humanresource.employee.edit', $employee->id) }}"
+                                                            class="btn btn-warning btn-sm px-3" data-bs-toggle="tooltip"
+                                                            data-bs-placement="top" data-bs-title="Ubah Karyawan">
+                                                            <i class="fa-regular fa-pen-to-square"></i>
+                                                        </a>
+
                                                         @include('layouts.components.delete', [
-                                                            'route' => route('humanresource.employee.destroy', $employee->id),
+                                                            'route' => route(
+                                                                'humanresource.employee.destroy',
+                                                                $employee->id),
                                                             'title' => 'Hapus Karyawan',
-                                                            'message' => 'Apakah kamu yakin ingin menghapus karyawan ini?',
+                                                            'message' =>
+                                                                'Apakah kamu yakin ingin menghapus karyawan ini?',
                                                         ])
-                                                    </ul>
+                                                    </div>
                                                 </td>
                                             </tr>
                                         @endforeach

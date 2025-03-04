@@ -5,13 +5,13 @@
     'icon' => 'fa-solid fa-trash',
 ])
 
-<li class="delete">
-    <button type="button" class="btn btn-link" data-bs-toggle="tooltip" data-bs-placement="top"
-        style="border:none; background:none; padding:0;"
-        onclick="confirmDelete('{{ $route }}', '{{ $title }}', '{{ $message }}')">
-        <i class="fa-solid fa-trash-can"></i>
-    </button>
-</li>
+
+<button type="button" class="btn btn-danger btn-sm px-3" data-bs-toggle="tooltip" data-bs-placement="top"
+    data-bs-title="{{ $title }}"
+    onclick="confirmDelete('{{ $route }}', '{{ $title }}', '{{ $message }}')">
+    <i class="{{ $icon }}"></i>
+</button>
+
 
 <script>
     function confirmDelete(route, title, message) {

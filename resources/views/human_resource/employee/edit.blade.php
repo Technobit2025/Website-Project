@@ -1,10 +1,10 @@
 @extends('layouts.simple.master')
 
-@section('title', 'Edit Karyawan')
+@section('title', 'Ubah Karyawan')
 
 @section('main_content')
     <div class="container-fluid">
-        @include('layouts.components.breadcrumb', ['header' => 'Edit Karyawan'])
+        @include('layouts.components.breadcrumb', ['header' => 'Ubah Karyawan'])
     </div><!-- Container-fluid starts-->
     <div class="container-fluid">
         <div class="row">
@@ -262,13 +262,13 @@
                                     value="{{ old('contract_end_date', $employee->contract_end_date) }}">
                                 @errorFeedback('contract_end_date')
                             </div>
-                            <div class="mb-3">
+                            {{-- <div class="mb-3">
                                 <label for="salary" class="form-label">Gaji</label>
                                 <input type="number" class="form-control @error('salary') is-invalid @enderror"
                                     id="salary" name="salary" step="0.01"
                                     value="{{ old('salary', $employee->salary) }}">
                                 @errorFeedback('salary')
-                            </div>
+                            </div> --}}
                             <div class="mb-3">
                                 <label for="bank_name" class="form-label">Nama Bank</label>
                                 <input type="text" class="form-control @error('bank_name') is-invalid @enderror"
@@ -295,7 +295,7 @@
                                 </select>
                                 @errorFeedback('active')
                             </div>
-                            <button type="submit" class="btn btn-warning">Edit</button>
+                            <button type="submit" class="btn btn-warning">Simpan</button>
                         </div>
                     </div>
                 </div>

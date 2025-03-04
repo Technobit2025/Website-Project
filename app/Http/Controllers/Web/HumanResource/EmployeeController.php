@@ -8,6 +8,8 @@ use App\Models\User;
 use App\Models\Role;
 use App\Http\Requests\EmployeeRequest;
 use App\Http\Requests\UserRequest;
+use Illuminate\Http\Request;
+
 
 class EmployeeController extends Controller
 {
@@ -67,5 +69,17 @@ class EmployeeController extends Controller
         $employee->user->delete();
         $employee->delete();
         return redirect()->route('humanresource.employee.index')->with('success', 'Karyawan berhasil dihapus!');
+    }
+
+    // EMPLOYEE SALARY
+    public function salaryIndex()
+    {
+        $employees = Employee::all();
+        return view('human_resource.employee_salary.index', compact('employees'));
+    }
+
+    public function salaryShow(Employee $employee)
+    {
+        return view('human_resource.employee_salary.show', compact('employee'));
     }
 }

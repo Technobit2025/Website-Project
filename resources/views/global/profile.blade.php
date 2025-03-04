@@ -313,8 +313,10 @@
                                                                         name="bank_account_number"
                                                                         value="{{ $user->employee->bank_account_number }}">
                                                                 </div>
-                                                                <button class="btn btn-primary"
-                                                                    type="submit">Simpan</button>
+                                                                <div class="form-group col-12 mt-3">
+                                                                    <button class="btn btn-primary"
+                                                                        type="submit">Simpan</button>
+                                                                </div>
                                                             </div>
                                                         </div>
                                                     </div>
