@@ -92,6 +92,13 @@
                 localStorage.getItem("primary")
             );
         }
+        if (localStorage.getItem("primary") != null) {
+            document.documentElement.style.setProperty(
+                "--theme-default-label",
+                localStorage.getItem("primary") + "1a"
+            );
+        }
+
         if (localStorage.getItem("secondary") != null) {
             document.documentElement.style.setProperty(
                 "--theme-secondary",
