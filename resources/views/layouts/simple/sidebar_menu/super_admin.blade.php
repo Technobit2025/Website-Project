@@ -69,3 +69,11 @@
         <span class="">Database</span>
     </a>
 </li>
+<li class="sidebar-list">
+    <a class="sidebar-link sidebar-title link-nav" href="{{ route('superadmin.apitest.index') }}">
+        <svg class="stroke-icon">
+            <use href="{{ asset('assets/svg/icon-sprite.svg#stroke-learning') }}"></use>
+        </svg>
+        <span class="">API Test</span>
+    </a>
+</li>

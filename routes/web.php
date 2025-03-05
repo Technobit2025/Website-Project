@@ -51,6 +51,7 @@ use App\Http\Controllers\Web\SuperAdmin\RouteListController as SuperAdminRouteLi
 use App\Http\Controllers\Web\SuperAdmin\PerformanceController as SuperAdminPerformance;
 use App\Http\Controllers\Web\SuperAdmin\DatabaseController as SuperAdminDatabase;
 use App\Http\Controllers\Web\SuperAdmin\EmployeeController as SuperAdminEmployee;
+use App\Http\Controllers\Web\SuperAdmin\ApiTestController as SuperAdminApiTest;
 
 // HUMAN RESOURCE
 use App\Http\Controllers\Web\HumanResource\HomeController as HumanResourceHome;
@@ -109,7 +110,7 @@ Route::group(['prefix' => 'superadmin', 'as' => 'superadmin.', 'middleware' => [
         Route::put('/update/{employee}', [SuperAdminEmployee::class, 'update'])->name('update');
         Route::delete('/destroy/{employee}', [SuperAdminEmployee::class, 'destroy'])->name('destroy');
     });
-    
+
     // EMPLOYEE SALARY
     Route::prefix('employee-salary')->name('employeesalary.')->group(function () {
         Route::get('/', [SuperAdminEmployee::class, 'salaryIndex'])->name('index');
@@ -143,6 +144,11 @@ Route::group(['prefix' => 'superadmin', 'as' => 'superadmin.', 'middleware' => [
         Route::put('/update/{tableName}/{id}', [SuperAdminDatabase::class, 'update'])->name('update');
         Route::delete('/destroy/{tableName}/{id}', [SuperAdminDatabase::class, 'destroy'])->name('destroy');
         Route::delete('/empty/{tableName}', [SuperAdminDatabase::class, 'empty'])->name('empty');
+    });
+    // API TEST
+    Route::prefix('api-test')->name('apitest.')->group(function () {
+        Route::get('/', [SuperAdminApiTest::class, 'index'])->name('index');
+        Route::post('/test', [SuperAdminApiTest::class, 'test'])->name('test');
     });
 });
 

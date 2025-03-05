@@ -7,8 +7,9 @@
                 <div class="login-card login-dark">
                     <div>
                         <div><a class="logo" href="{{ route('login') }}"><img class="img-fluid for-light"
-                                    src="{{ asset('assets/images/logo/logo.png') }}" alt="looginpage"><img
-                                    class="img-fluid for-dark" src="{{ asset('assets/images/logo/logo_dark.png') }}"
+                                    src="{{ asset('assets/images/logo/logo.png') }}" style="width: 176px;"
+                                    alt="looginpage"><img class="img-fluid for-dark"
+                                    src="{{ asset('assets/images/logo/logo_dark.png') }}" style="width: 176px;"
                                     alt="looginpage"></a></div>
                         <div class="login-main">
                             <form class="theme-form" method="POST" action="{{ route('password.update') }}">

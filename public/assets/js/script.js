@@ -137,19 +137,19 @@
 
     if (!bodyModeDark) {
       $(".mode").addClass("active");
-      localStorage.setItem("mode-cuba", "dark-only");
+      localStorage.setItem("mode-arunika", "dark-only");
       $("body").addClass("dark-only");
       $("body").removeClass("light");
     }
     if (bodyModeDark) {
       $(".mode").removeClass("active");
-      localStorage.setItem("mode-cuba", "light");
+      localStorage.setItem("mode-arunika", "light");
       $("body").removeClass("dark-only");
       $("body").addClass("light");
     }
   });
-  $("body").addClass(localStorage.getItem("mode-cuba") ? localStorage.getItem("mode-cuba") : "light");
-  $(".mode").addClass(localStorage.getItem("mode-cuba") === "dark-only" ? "active" : " ");
+  $("body").addClass(localStorage.getItem("mode-arunika") ? localStorage.getItem("mode-arunika") : "light");
+  $(".mode").addClass(localStorage.getItem("mode-arunika") === "dark-only" ? "active" : " ");
 
   // sidebar filter
   $(".md-sidebar .md-sidebar-toggle ").on("click", function (e) {

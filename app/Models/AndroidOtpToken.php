@@ -8,7 +8,7 @@ use Carbon\Carbon;
 class AndroidOtpToken extends Model
 {
     protected $table = 'otps';
-    protected $fillable = ['email', 'otp', 'created_at'];
+    protected $fillable = ['email', 'otp', 'created_at', 'expires_at'];
     public $timestamps = false;
 
     public function isExpired()

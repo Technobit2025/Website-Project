@@ -20,7 +20,7 @@ class AndroidOtpService
         $otp = rand(1000, 9999);
         AndroidOtpToken::updateOrCreate(
             ['email' => $email], 
-            ['otp' => $otp, 'created_at' => now()]
+            ['otp' => $otp, 'created_at' => now(), 'expires_at' => now()->addMinutes(5)]
         );
 
         $user->notify(new AndroidOtpNotification($otp));

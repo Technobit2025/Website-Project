@@ -10,8 +10,8 @@
     <meta name="keywords"
         content="admin template, Cuba admin template, dashboard template, flat admin template, responsive admin template, web app">
     <meta name="author" content="pixelstrap">
-    <link rel="icon" href="{{ asset('assets/images/favicon.png') }}" type="image/x-icon">
-    <link rel="shortcut icon" href="{{ asset('assets/images/favicon.png') }}" type="image/x-icon">
+    <link rel="icon" href="{{ asset('assets/images/logo/logo-icon.png') }}" type="image/x-icon">
+    <link rel="shortcut icon" href="{{ asset('assets/images/logo/logo-icon.png') }}" type="image/x-icon">
     <title>Reset Password | {{ env('APP_NAME') }}</title>
     <link href="https://fonts.googleapis.com/css?family=Work+Sans:100,200,300,400,500,600,700,800,900" rel="stylesheet">
     <link
@@ -97,8 +97,8 @@
                                             <tr class="logo-sec"
                                                 style="display: flex; align-items: center; justify-content: space-between; width: 650px;">
                                                 <td><img class="img-fluid"
-                                                        src="{{ asset('assets/images/other-images/logo-login.png') }}"
-                                                        alt=""></td>
+                                                        src="{{ asset('assets/images/logo/logo.png') }}"
+                                                        style="width: 176px;" alt=""></td>
                                                 {{-- <td style="text-align: right; color:#999"><span>Some Description</span>
                                                 </td> --}}
                                             </tr>

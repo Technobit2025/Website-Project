@@ -27,7 +27,9 @@ use App\Http\Controllers\API\Auth\AndroidForgotPasswordController;
 use App\Http\Controllers\API\Auth\AndroidResetPasswordController;
 use App\Http\Controllers\API\Auth\AndroidVerifyOtpController;
 
+use App\Http\Controllers\API\User\ProfileController;
 
+// API Route
 Route::name('api.')->group(function () {
     // AUTHENTICATION
     Route::post('login', [AuthController::class, 'login'])->middleware('guest')->name('login');
@@ -41,13 +43,20 @@ Route::name('api.')->group(function () {
             Route::get('user', [UserController::class, 'show'])->name('show'); // ambil user yang login
             Route::get('users', [UserController::class, 'index'])->name('index'); // ambil semua user
             Route::post('user', [UserController::class, 'store'])->name('store'); // buat user baru
-            Route::put('user/{id}', [UserController::class, 'update'])->name('update'); // update user
-            Route::delete('user/{id}', [UserController::class, 'destroy'])->name('destroy'); // hapus user
+            Route::put('user', [UserController::class, 'update'])->name('update'); // update user
+            Route::delete('user', [UserController::class, 'destroy'])->name('destroy'); // hapus user
+        });
+
+        // PROFILE
+        Route::name('profile.')->group(function () {
+            Route::get('profile', [ProfileController::class, 'show'])->name('show'); // ambil user yang login
+            Route::put('profile', [ProfileController::class, 'update'])->name('update'); // update user
+            Route::put('profile/employee', [ProfileController::class, 'updateEmployee'])->name('updateEmployee'); // update employee
         });
     });
 
     // --- Mulai Baris Kode Android -----
-
+    
     Route::post('/android/forgot-password', [AndroidForgotPasswordController::class, 'forgotPassword']);
     Route::post('/android/reset-password', [AndroidResetPasswordController::class, 'resetPassword']);
     Route::post('/android/request-otp', [AndroidForgotPasswordController::class, 'requestOtp']);
