@@ -62,6 +62,10 @@ use App\Http\Controllers\Web\Employee\HomeController as EmployeeHome;
 // SECURITY
 use App\Http\Controllers\Web\Security\HomeController as SecurityHome;
 
+// BENDAHARA
+use App\Http\Controllers\Web\Treasurer\HomeController as BendaharaHome;
+use App\Http\Controllers\Web\Treasurer\EmployeeController as BendaharaEmployee;
+
 Route::get('/', function () {
     return redirect()->route('login');
 });
@@ -172,4 +176,20 @@ Route::group(['prefix' => 'employee', 'as' => 'employee.', 'middleware' => ['aut
 // SECURITY
 Route::group(['prefix' => 'security', 'as' => 'security.', 'middleware' => ['auth', 'can:isSecurity']], function () {
     Route::get('/', [SecurityHome::class, 'index'])->name('home');
+});
+
+
+Route::group(['prefix' => 'treasurer', 'as' => 'treasurer.', 'middleware' => ['auth', 'can:isTreasurer']], function () {
+    Route::get('/', [BendaharaHome::class, 'index'])->name('home');
+
+    // EMPLOYEE SALARY
+    Route::prefix('employee-salary')->name('employeesalary.')->group(function () {
+        Route::get('/', [BendaharaEmployee::class, 'salaryIndex'])->name('index');
+        Route::get('/show/{employee}', [BendaharaEmployee::class, 'salaryShow'])->name('show');
+        Route::get('/create/{employee}', [BendaharaEmployee::class, 'salaryCreate'])->name('create');
+        Route::post('/store/{employee}', [BendaharaEmployee::class, 'salaryStore'])->name('store');
+        Route::get('/edit/{employee}', [BendaharaEmployee::class, 'salaryEdit'])->name('edit');
+        Route::put('/update/{employee}', [BendaharaEmployee::class, 'salaryUpdate'])->name('update');
+        Route::delete('/destroy/{employee}', [BendaharaEmployee::class, 'salaryDestroy'])->name('destroy');
+    });
 });
