@@ -6,12 +6,18 @@ use App\Http\Controllers\API\APIController;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Auth;
 
 class UserController extends APIController
 {
     protected $hidden = ['password'];
-
-
+    protected $user;
+    public function __construct()
+    {
+        if (Auth::check()) {
+            $this->user = User::find(Auth::user()->id);
+        }
+    }
     // Get all users
     public function index()
     {
@@ -20,19 +26,13 @@ class UserController extends APIController
     }
 
     // Get a single user by ID
-    public function show($id = null)
-{
-    if ($id === null) {
-        $user = auth()->user();
-    } else {
-        $user = User::find($id);
+    public function show()
+    {
+        if (!$this->user) {
+            return $this->notFoundResponse('User not found');
+        }
+        return $this->successResponse($this->user);
     }
-    
-    if (!$user) {
-        return $this->notFoundResponse('User not found');
-    }
-    return $this->successResponse($user);
-}
 
     // Create a new user
     public function store(Request $request)
@@ -61,17 +61,16 @@ class UserController extends APIController
     }
 
     // Update an existing user
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
-        $user = User::find($id);
-        if (!$user) {
+        if (!$this->user) {
             return $this->notFoundResponse('User not found');
         }
 
         $validator = Validator::make($request->all(), [
             'name' => 'sometimes|required|string|max:255',
-            'email' => 'sometimes|required|string|email|max:255|unique:users,email,' . $user->id,
-            'username' => 'sometimes|required|string|max:255|unique:users,username,' . $user->id,
+            'email' => 'sometimes|required|string|email|max:255|unique:users,email,' . $this->user->id,
+            'username' => 'sometimes|required|string|max:255|unique:users,username,' . $this->user->id,
             'password' => 'sometimes|required|string|min:8',
             'role_id' => 'sometimes|required|integer|exists:roles,id',
         ]);
@@ -80,24 +79,23 @@ class UserController extends APIController
             return $this->clientErrorResponse($validator->errors(), 'Validation errors', 422);
         }
 
-        $user->update($request->only('name', 'email', 'username', 'role_id'));
+        $this->user->update($request->only('name', 'email', 'username', 'role_id'));
         if ($request->filled('password')) {
-            $user->password = $request->password;
-            $user->save();
+            $this->user->password = $request->password;
+            $this->user->save();
         }
 
-        return $this->successResponse($user, 'User updated successfully');
+        return $this->successResponse($this->user, 'User updated successfully');
     }
 
     // Delete a user
-    public function destroy($id)
+    public function destroy()
     {
-        $user = User::find($id);
-        if (!$user) {
+        if (!$this->user) {
             return $this->notFoundResponse('User not found');
         }
 
-        $user->delete();
+        $this->user->delete();
         return $this->successResponse(null, 'User deleted successfully');
     }
 }
