@@ -54,7 +54,7 @@
                             </div>
                         </div>
                         <div class="cartoon"><img class="img-fluid"
-                                src="{{asset('assets/images/dashboard/cartoon.svg')}}"
+                                src="{{asset('assets/images/dashboard/cartoon.png') }}" style="width: 220px; height: 220px;"
                                 alt="vector women with leptop">
                         </div>
                     </div>

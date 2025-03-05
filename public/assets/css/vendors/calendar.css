@@ -1248,7 +1248,7 @@ a.fc-event:hover {
 
 .fc-h-event {
   display: block;
-  border: 1px solid #7366FF;
+  border: 1px solid var(--theme-default, #7366ff);
   border: 1px solid var(--fc-event-border-color, #7366FF);
   background-color: var(--theme-default, #7366ff);
   background-color: var(--fc-event-bg-color, #7366FF);

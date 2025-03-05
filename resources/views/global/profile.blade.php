@@ -109,7 +109,7 @@
                                                             <h5>Password</h5>
                                                         </div>
                                                         <div class="card-body">
-                                                            <div class="alert alert-info">
+                                                            <div class="alert alert-primary">
                                                                 <p>Password harus terdiri dari 8 karakter atau lebih.</p>
                                                             </div>
                                                             <div class="form-group mb-3">

@@ -17,6 +17,12 @@
   </head>
   <body>
     @yield('main_content')
+    <script>
+      var baseUrl = "{{ asset('') }}";
+      document.addEventListener('DOMContentLoaded', function() {
+          document.querySelector('.sidebar-panel-main').style.display = 'none';
+      });
+  </script>
     @include('layouts.authentication.scripts')
     @include('layouts.components.alert')
 </body>

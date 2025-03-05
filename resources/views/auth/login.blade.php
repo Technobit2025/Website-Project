@@ -61,7 +61,7 @@
                                         <a class="link" href="{{ route('password.request') }}">Lupa password?</a>
                                     @endif
                                     <div class="text-end">
-                                        <button class="btn btn-primary btn-block w-100 mt-3 spinner-btn"
+                                        <button class="btn btn-primary w-100 mt-3 spinner-btn"
                                             type="submit">Masuk</button>
                                     </div>
                                 </div>

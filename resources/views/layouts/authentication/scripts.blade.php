@@ -14,9 +14,12 @@
  <!-- Theme js-->
  <script src="{{ asset('assets/js/script.js') }}"></script>
  <script src="{{ asset('assets/js/script1.js') }}"></script>
+ <script src="{{ asset('assets/js/theme-customizer/customizer.js') }}"></script>
  <!-- Theme js-->
  <script src="{{ asset('assets/js/sweet-alert/sweetalert.min.js') }}"></script>
  <script>
-     localStorage.setItem('primary', '#{{ env('APP_COLOR') }}');
-     localStorage.setItem('secondary', '#{{ env('APP_COLOR') }}');
+     if (localStorage.getItem('primary') == null) {
+         localStorage.setItem('primary', '#{{ env('APP_COLOR') }}');
+         localStorage.setItem('secondary', '#{{ env('APP_COLOR') }}');
+     }
  </script>

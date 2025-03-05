@@ -1536,7 +1536,7 @@ svg.f-light {
 }
 
 .social-tabs .nav .social-box.bg-7-primary.active {
-    border: 1px solid #7366FF;
+    border: 1px solid var(--theme-default, #7366ff);
     transition: all .4s ease
 }
 
@@ -1554,7 +1554,7 @@ svg.f-light {
 }
 
 .border-dashed-primary {
-    border: 1px dashed #7366FF;
+    border: 1px dashed var(--theme-default, #7366ff);
     color: #7366ff
 }
 
@@ -4438,22 +4438,22 @@ table tbody .border-bottom-warning td {
 
 .bs-tooltip-top .tooltip-arrow:before,
 .bs-tooltip-auto[data-popper-placement^=top] .tooltip-arrow:before {
-    border-top-color: #e8e5ff
+    border-top-color: #404040
 }
 
 .bs-tooltip-end .tooltip-arrow:before,
 .bs-tooltip-auto[data-popper-placement^=right] .tooltip-arrow:before {
-    border-right-color: #e8e5ff
+    border-right-color: #404040
 }
 
 .bs-tooltip-bottom .tooltip-arrow:before,
 .bs-tooltip-auto[data-popper-placement^=bottom] .tooltip-arrow:before {
-    border-bottom-color: #e8e5ff
+    border-bottom-color: #404040
 }
 
 .bs-tooltip-start .tooltip-arrow:before,
 .bs-tooltip-auto[data-popper-placement^=left] .tooltip-arrow:before {
-    border-left-color: #e8e5ff
+    border-left-color: #404040
 }
 
 .common-title {
@@ -4596,7 +4596,7 @@ span {
 }
 
 blockquote {
-    border-left: 4px solid #7366FF;
+    border-left: 4px solid var(--theme-default, #7366ff);
     padding: 18px
 }
 
@@ -5068,7 +5068,7 @@ table tbody tr {
 }
 
 .accordion-wrapper:active {
-    border: 1px solid #7366FF;
+    border: 1px solid var(--theme-default, #7366ff);
     border-top: 1px solid #7366FF !important
 }
 
@@ -5234,8 +5234,8 @@ strong~p {
 }
 
 .alert-primary {
-    background-color: #7366ffcc;
-    border-color: #7366ffe6;
+    background-color: var(--theme-default-alert, #7366ffcc);
+    border-color: var(--theme-default-alert, #7366ffe6);
     color: #fff
 }
 
@@ -5275,25 +5275,25 @@ strong~p {
 
 .touchspin-wrapper .btn-touchspin.touchspin-primary {
     background-color: var(--theme-default, #7366ff);
-    border: 1px solid #7366FF;
+    border: 1px solid var(--theme-default, #7366ff);
     color: #fff
 }
 
 .touchspin-wrapper .btn-touchspin.spin-border-primary {
     background-color: unset;
-    border: 1px solid #7366FF;
+    border: 1px solid var(--theme-default, #7366ff);
     color: #7366ff
 }
 
 .touchspin-wrapper input[type=number].spin-outline-primary {
-    outline: 1px solid #7366FF;
+    outline: 1px solid var(--theme-default, #7366ff);
     border: none;
     border-radius: 3px
 }
 
 .pre-post-touchspin .btn-touchspin.touchspin-primary {
     background-color: var(--theme-default, #7366ff);
-    border: 1px solid #7366FF;
+    border: 1px solid var(--theme-default, #7366ff);
     color: #fff
 }
 
@@ -5324,7 +5324,7 @@ strong~p {
 [dir=rtl] .list-group-horizontal-lg .list-group-item.border-left-primary,
 [dir=rtl] .list-group-horizontal-xl .list-group-item.border-left-primary,
 [dir=rtl] .list-group-horizontal-xxl .list-group-item.border-left-primary {
-    border-right: 4px solid #7366FF;
+    border-right: 4px solid var(--theme-default, #7366ff);
     border-left: unset
 }
 
@@ -5398,7 +5398,7 @@ strong~p {
     left: 54px;
     width: 0;
     height: 0;
-    border-left: 7px solid #7366FF;
+    border-left: 7px solid var(--theme-default, #7366ff);
     border-top: 7px solid transparent;
     border-bottom: 7px solid transparent
 }
@@ -6830,7 +6830,7 @@ strong~p {
 }
 
 .alert-light-primary {
-    background-color: #e8e5ff
+    background-color: var(--theme-default-shadow, #e8e5ff)
 }
 
 .shadow-primary {
@@ -7707,7 +7707,7 @@ body.modal-open .select2-container--open .select2-dropdown {
 
 .button-light-primary,
 .button-light-primary:hover {
-    background-color: #e8e5ff
+    background-color: var(--theme-default-shadow, #e8e5ff)
 }
 
 .button-light-secondary,
@@ -8290,7 +8290,7 @@ button.button-primary:hover {
     padding: 0;
     transition: border-color .3s, background-color .3s;
     transition-timing-function: cubic-bezier(.2, 1, .3, 1);
-    border: 2px solid #7366FF;
+    border: 2px solid var(--theme-default, #7366ff);
     background-color: transparent;
     color: var(--body-font-color)
 }
@@ -14170,7 +14170,7 @@ btn-group .dropdown-wrapper .input-group .input-group-text {
 
 .shipping-form .shipping-options .nav-link.active i,
 .checkout-cart .shipping-options .nav-link.active i {
-    background-color: #e8e5ff;
+    background-color: var(--theme-default-shadow, #e8e5ff);
     color: var(--theme-default);
     transition: all .3s ease-in-out
 }
@@ -15234,7 +15234,7 @@ btn-group .dropdown-wrapper .input-group .input-group-text {
 
 .radio-wrapper li .form-check-input:checked,
 .checkbox-wrapper li .form-check-input:checked {
-    border: 2px solid #7366FF;
+    border: 2px solid var(--theme-default, #7366ff);
     background-color: transparent
 }
 
@@ -16426,7 +16426,7 @@ fieldset .input-group-lg .touchspin {
 }
 
 .popover .popover-header {
-    background-color: #eae8ff;
+    background-color: var(--theme-default-shadow, #eae8ff);
     color: var(--theme-default, #7366ff);
     border-bottom: none
 }
@@ -18019,7 +18019,7 @@ fieldset .input-group-lg .touchspin {
 .triangular-ribbon .ribbon-wrapper .triangular-ribbon-box {
     width: 100px;
     height: 100px;
-    background: #e8e5ff;
+    background: var(--theme-default-shadow, #e8e5ff);
     position: absolute;
     top: -50px;
     left: -50px;
@@ -40695,7 +40695,7 @@ footer.blockquote-footer {
     text-align: center;
     line-height: 2.3;
     transition: all .3s ease;
-    border: 1px solid #7366FF;
+    border: 1px solid var(--theme-default, #7366ff);
     color: #7366ff
 }
 
@@ -40838,7 +40838,7 @@ footer.blockquote-footer {
 }
 
 .product-wrapper .product-grid .product-wrapper-grid .modal .modal-header .product-box .product-details .product-size ul li {
-    background-color: #e8e5ff;
+    background-color: var(--theme-default-shadow, #e8e5ff);
     border-radius: 6px
 }
 
@@ -42386,7 +42386,7 @@ footer.blockquote-footer {
 .email-body .mail-body-wrapper ul li .inbox-user .rounded-border>div {
     width: 40px;
     height: 40px;
-    background-color: #e8e5ff;
+    background-color: var(--theme-default-shadow, #e8e5ff);
     border-radius: 100%
 }
 
@@ -46660,7 +46660,7 @@ footer {
 
 .mesh-loader .circle {
     position: absolute;
-    background: #7366ff;
+    background: var(--theme-default, #7366ff);
     border-radius: 50%;
     margin: -3px;
     animation: mesh 3s ease-in-out infinite -1.5s;
@@ -47522,7 +47522,7 @@ footer {
 }
 
 .testimonial-slider .slick-dots li.slick-active button {
-    background: #7366ff;
+    background: var(--theme-default, #7366ff);
     border-radius: 20px;
     width: 20px;
     transition: all .5s
@@ -50283,7 +50283,7 @@ ul.dot-group li {
     position: absolute;
     width: 65%;
     height: 2px;
-    background-color: #f3f3ff;
+    background-color: var(--theme-default-shadow, #f3f3ff);
     top: 9px;
     z-index: 0;
     right: 0
@@ -50295,7 +50295,7 @@ ul.dot-group li {
 }
 
 .login-card .login-main .theme-form input {
-    background-color: #f3f3ff;
+    background-color: var(--theme-default-shadow, #f3f3ff);
     transition: all .3s ease
 }
 
@@ -50580,7 +50580,7 @@ ul.dot-group li {
 .main-upgrade .variation-box .selection-box {
     position: relative;
     height: 100px;
-    border: 1px solid #7366FF;
+    border: 1px solid var(--theme-default, #7366ff);
     min-width: 125px;
     border-radius: 15px
 }
@@ -51610,16 +51610,16 @@ ul.dot-group li {
 
 .pagin-border-primary .page-item.active,
 .pagin-border-primary .page-item:active {
-    background-color: #e8e5ff
+    background-color: var(--theme-default-shadow, #e8e5ff)
 }
 
 .pagin-border-primary .page-item .page-link {
-    border-color: #e8e5ff
+    border-color: var(--theme-default-shadow, #e8e5ff)
 }
 
 .pagin-border-primary .page-item .page-link:hover,
 .pagin-border-primary .page-item .page-link:focus {
-    background-color: #e8e5ff
+    background-color: var(--theme-default-shadow, #e8e5ff)
 }
 
 .pagin-border-primary .page-item .page-link:focus {
@@ -52070,7 +52070,7 @@ button.progress-btn {
     right: -18px;
     height: 30px;
     width: 30px;
-    border: 14px solid #7366FF;
+    border: 14px solid var(--theme-default, #7366ff);
     border-radius: 70px;
     animation: heart 1s ease-in-out;
     animation-iteration-count: infinite
@@ -61927,7 +61927,7 @@ table.table-bordered thead tr th p {
 }
 
 .page-wrapper.horizontal-wrapper .page-body-wrapper .sidebar-wrapper .sidebar-main .sidebar-links .simplebar-wrapper .simplebar-mask .simplebar-content-wrapper .simplebar-content>li>a.active {
-    background-color: #dad6ff;
+    background-color: var(--theme-default-label, #dad6ff);
     transition: all .3s ease
 }
 
@@ -62653,7 +62653,7 @@ table.table-bordered thead tr th p {
     transition: all .5s ease;
     position: relative;
     margin-bottom: 10px;
-    background-color: #f1f0ff
+    background-color: var(--theme-default-shadow, #f1f0ff)
 }
 
 .page-wrapper.compact-wrapper .page-body-wrapper div.sidebar-wrapper .sidebar-main .sidebar-links .simplebar-wrapper .simplebar-mask .simplebar-content-wrapper .simplebar-content>li .sidebar-link.active:after {
@@ -63440,7 +63440,7 @@ table.table-bordered thead tr th p {
 }
 
 .page-wrapper.modern-type .project-box {
-    background-color: #dad6ff
+    background-color: var(--theme-default-label, #dad6ff);
 }
 
 .page-wrapper.modern-type .nav-tabs .nav-link.active {
@@ -64517,7 +64517,7 @@ table.table-bordered thead tr th p {
     display: inline-flex;
     border-radius: 10px;
     overflow: hidden;
-    border: 1px solid #7366FF;
+    border: 1px solid var(--theme-default, #7366ff);
     border: none
 }
 
@@ -65299,7 +65299,7 @@ html[dir=rtl] .papernote-wrap .note-labels ul {
 }
 
 html[dir=rtl] blockquote {
-    border-right: 4px solid #7366FF;
+    border-right: 4px solid var(--theme-default, #7366ff);
     border-left: unset
 }
 
@@ -68246,7 +68246,7 @@ html[dir=rtl] .card-body.alerts-icon .alert svg {
 }
 
 html[dir=rtl] .alert-primary.inverse:before {
-    border-right: 7px solid #7366FF;
+    border-right: 7px solid var(--theme-default, #7366ff);
     right: 54px;
     left: unset;
     border-left: unset
@@ -75591,7 +75591,7 @@ html[dir=rtl] .dtfh-floatingparent-foot>div {
     align-items: center;
     justify-content: center;
     display: inline-flex;
-    box-shadow: 0 0 10px #7366ff
+    box-shadow: 0 0 10px var(--theme-default)
 }
 
 .sidebar-panel-main ul .icon-btn i {
@@ -75617,7 +75617,7 @@ html[dir=rtl] .dtfh-floatingparent-foot>div {
     transition: all .3s ease;
     opacity: 0;
     color: var(--theme-default);
-    background-color: #e8e5ff;
+    background-color: var(--theme-default-shadow, #e8e5ff);
     box-shadow: 0 0 37px #0815421a
 }
 
@@ -75643,7 +75643,7 @@ html[dir=rtl] .dtfh-floatingparent-foot>div {
     border-style: solid;
     top: 12px;
     border-width: 5px 0 5px 5px;
-    border-left-color: #e8e5ff;
+    border-left-color: var(--theme-default-shadow, #e8e5ff);
     opacity: 0;
     transform: scale(0);
     color: #fff;
@@ -76389,31 +76389,33 @@ html[dir=rtl] .dtfh-floatingparent-foot>div {
 }
 
 .tooltip.bs-tooltip-top .tooltip-arrow:before {
-    border-top-color: #eae8ff
+    border-top-color: var(--theme-default-shadow, #eae8ff)
 }
 
 .tooltip.bs-tooltip-bottom .tooltip-arrow:before {
-    border-bottom-color: #eae8ff;
+    border-bottom-color: var(--theme-default-shadow, #eae8ff);
     border-top-color: transparent
 }
 
 .tooltip.bs-tooltip-start .tooltip-arrow:before {
-    border-left-color: #eae8ff;
+    border-left-color: var(--theme-default-shadow, #eae8ff);
     border-top-color: transparent
 }
 
 .tooltip.bs-tooltip-end .tooltip-arrow:before {
-    border-right-color: #eae8ff;
+    border-right-color: var(--theme-default-shadow, #eae8ff);
     border-top-color: transparent
 }
 
 .tooltip .tooltip-inner {
-    background-color: #eae8ff;
-    color: #7366ff
+    /* background-color: var(--theme-default-shadow, #eae8ff);
+    color: var(--theme-default, #7366ff); */
+    background-color: #404040;
+    color: #fff
 }
 
 .tooltip .tooltip-arrow:before {
-    border-top-color: #eae8ff
+    border-top-color: var(--theme-default-shadow, #eae8ff)
 }
 
 .dropdown-basic .dropdown .dropdown-content a {
@@ -76900,14 +76902,14 @@ html[dir=rtl] .dtfh-floatingparent-foot>div {
     width: 0;
     height: 0;
     top: 50%;
-    border-left: 7px solid #7366FF;
+    border-left: 7px solid var(--theme-default, #7366ff);
     border-top: 7px solid transparent;
     border-bottom: 7px solid transparent;
     transform: translateY(-50%)
 }
 
 [dir=rtl] .starter-main .alert-primary.inverse:before {
-    border-right: 7px solid #7366FF;
+    border-right: 7px solid var(--theme-default, #7366ff);
     border-left: unset;
     left: unset;
     right: 55px
@@ -77343,7 +77345,7 @@ html[dir=rtl] .dtfh-floatingparent-foot>div {
 .user-management .blog-tags .tags-icon svg {
     width: 30px;
     height: 30px;
-    stroke: #7366ff;
+    stroke: var(--theme-default, #7366ff);
     fill: #7366ff
 }
 
@@ -78544,7 +78546,7 @@ html[dir=rtl] .dtfh-floatingparent-foot>div {
     color: var(--theme-default, #7366ff);
     align-items: center;
     justify-content: center;
-    background-color: #e8e5ff;
+    background-color: var(--theme-default-shadow, #e8e5ff);
     font-size: 20px;
     text-transform: uppercase
 }
@@ -80233,8 +80235,8 @@ body.dark-only .sm-progress-bar {
 }
 
 body.dark-only .alert-primary {
-    background-color: #7366ffcc !important;
-    border-color: #7366ffe6 !important;
+    background-color: var(--theme-default-alert, #7366ffcc) !important;
+    border-color: var(--theme-default-alert, #7366ffcc) !important;
     color: #fff
 }
 
@@ -87231,7 +87233,7 @@ body[class*=dark-] .for-light {
 }
 
 :root {
-    --theme-default: #7366FF;
+    --theme-default: var(--theme-default, #7366ff);
     --theme-secondary: #838383;
     --light-background: rgba(242, 243, 247, .7);
     --body-font-color: #2F2F3B;

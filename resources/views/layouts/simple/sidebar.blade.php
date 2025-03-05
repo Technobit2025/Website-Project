@@ -17,7 +17,7 @@
         <div class="logo-icon-wrapper">
             <a href="#">
                 <img class="img-fluid" src="{{ asset('assets/images/logo/logo-icon.png') }}" alt=""
-                    style="width: 37px; height:37px">
+                    style="width: 39px; height:39px">
             </a>
         </div>
         <nav class="sidebar-main">
