@@ -50,7 +50,7 @@
                                                 </div>
                                             </a>
                                         </li>
-                                        @if ($user->role->code == 'human_resource' || $user->role->code == 'employee' || $user->role->code == 'security')
+                                        @if ($user->role->code == 'human_resource' || $user->role->code == 'employee' || $user->role->code == 'security' || $user->role->code == 'treasurer')
                                             <li class="nav-item">
                                                 <a class="nav-link" id="profile-tab" data-bs-toggle="pill" href="#profile"
                                                     role="tab" aria-controls="profile" aria-selected="false">
@@ -140,7 +140,7 @@
                                                 </div>
                                             </form>
                                         </div>
-                                        @if ($user->role->code == 'human_resource' || $user->role->code == 'employee' || $user->role->code == 'security')
+                                        @if ($user->role->code == 'human_resource' || $user->role->code == 'employee' || $user->role->code == 'security' || $user->role->code == 'treasurer')
                                             <div class="tab-pane fade" id="profile" role="tabpanel"
                                                 aria-labelledby="profile-tab">
                                                 <form action="{{ route('profile.update-employee') }}" method="POST">

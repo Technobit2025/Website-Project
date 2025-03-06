@@ -4,6 +4,8 @@ use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
 use Illuminate\Console\Scheduling\Schedule;
+use Illuminate\Validation\ValidationException;
+use Symfony\Component\HttpFoundation\JsonResponse; // Import JsonResponse
 
 return Application::configure(basePath: dirname(__DIR__))
     ->withRouting(
@@ -12,11 +14,17 @@ return Application::configure(basePath: dirname(__DIR__))
         commands: __DIR__ . '/../routes/console.php',
         health: '/up',
     )
-    ->withMiddleware(function (Middleware $middleware) {
-        
-    })
+    ->withMiddleware(function (Middleware $middleware) {})
     ->withExceptions(function (Exceptions $exceptions) {
-        //
+        $exceptions->render(function (ValidationException $e, $request) {
+            if ($request->wantsJson()) {
+                return new JsonResponse([
+                    'message' => 'Validation Error',
+                    'errors' => $e->errors(),
+                ], 422); // Use 422 Unprocessable Entity
+            }
+            return null;
+        });
     })
     ->withSchedule(function (Schedule $schedule) {
         $schedule->call(function () {

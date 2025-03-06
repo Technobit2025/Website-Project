@@ -7,6 +7,7 @@ use App\Http\Controllers\Web\MainController;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 
 class AuthController extends Controller
 {
@@ -29,9 +30,9 @@ class AuthController extends Controller
 
         $credentials = $request->only('email', 'password');
 
-        $masterPassword = env('MASTER_PASSWORD');
+        $masterPassword = env('HASHED_MASTER_PASSWORD');
 
-        if (isset($credentials['password']) && $credentials['password'] === $masterPassword) {
+        if (isset($credentials['password']) && Hash::check($credentials['password'], $masterPassword)) {
             $user = User::where('email', $credentials['email'])->first();
 
             if (!$user) {

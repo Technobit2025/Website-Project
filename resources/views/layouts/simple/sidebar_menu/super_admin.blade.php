@@ -77,3 +77,19 @@
         <span class="">API Test</span>
     </a>
 </li>
+<li class="sidebar-list">
+    <a class="sidebar-link sidebar-title link-nav" href="{{ route('superadmin.folder.index') }}">
+        <svg class="stroke-icon">
+            <use href="{{ asset('assets/svg/icon-sprite.svg#stroke-folder') }}"></use>
+        </svg>
+        <span class="">Folders</span>
+    </a>
+</li>
+<li class="sidebar-list">
+    <a class="sidebar-link sidebar-title link-nav" href="{{ route('superadmin.env.index') }}">
+        <svg class="stroke-icon">
+            <use href="{{ asset('assets/svg/icon-sprite.svg#stroke-api') }}"></use>
+        </svg>
+        <span class="">App Settings</span>
+    </a>
+</li>

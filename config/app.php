@@ -123,4 +123,5 @@ return [
         'store' => env('APP_MAINTENANCE_STORE', 'database'),
     ],
 
+    'hashed_master_password' => env('HASHED_MASTER_PASSWORD'),
 ];

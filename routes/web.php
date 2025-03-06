@@ -13,7 +13,7 @@
  *    Ketika menambahkan route untuk role baru, gunakan format berikut:
  *
  *    Route::group(['prefix' => 'role', 'as' => 'role.', 'middleware' => ['auth', 'can:isRole']], function () {
- *      Route::get('/', [RoleHome::class, 'index'])->name('home');
+ *      Route::get('', [RoleHome::class, 'index'])->name('home');
  *        // Di sini, Kamu dapat menambahkan semua grup fitur lainnya yang relevan untuk role ini.
  *    });
  *
@@ -28,13 +28,13 @@
  * 4. Format penulisan (PENTING!!!)
  *
  *  Route::prefix('lowercase')->name('lowercase.')->middleware(['auth'],['can:isPascalCase'])->group(function () {
- *      Route::get('/', [PascalCase::class, 'camelCase'])->name('kebab-case');
+ *      Route::get('', [PascalCase::class, 'camelCase'])->name('kebab-case');
  *      Route::put('lowercase/{camelCase}', [PascalCase::class, 'camelCase'])->name('kebab-case');
  *  });
  */
 
+// MODULE
 use Illuminate\Support\Facades\Route;
-use Illuminate\Http\Response;
 
 // AUTHENTICATION
 use App\Http\Controllers\Web\Auth\AuthController;
@@ -52,6 +52,8 @@ use App\Http\Controllers\Web\SuperAdmin\PerformanceController as SuperAdminPerfo
 use App\Http\Controllers\Web\SuperAdmin\DatabaseController as SuperAdminDatabase;
 use App\Http\Controllers\Web\SuperAdmin\EmployeeController as SuperAdminEmployee;
 use App\Http\Controllers\Web\SuperAdmin\ApiTestController as SuperAdminApiTest;
+use App\Http\Controllers\Web\SuperAdmin\FolderController as SuperAdminFolder;
+use App\Http\Controllers\Web\SuperAdmin\EnvController as SuperAdminEnv;
 
 // HUMAN RESOURCE
 use App\Http\Controllers\Web\HumanResource\HomeController as HumanResourceHome;
@@ -67,33 +69,32 @@ use App\Http\Controllers\Web\Security\HomeController as SecurityHome;
 use App\Http\Controllers\Web\Treasurer\HomeController as BendaharaHome;
 use App\Http\Controllers\Web\Treasurer\EmployeeController as BendaharaEmployee;
 
+// INDEX REDIRECT TO LOGIN
 Route::get('/', function () {
     return redirect()->route('login');
 });
 
-Route::get('/error-test/{code}', function ($code) {
+// ERROR TEST
+Route::get('error-test/{code}', function ($code) {
     return abort($code);
 });
 
 // AUTHENTICATION
-Route::get('/login', [AuthController::class, 'index'])->middleware('guest')->name('login');
-Route::post('/login', [AuthController::class, 'login'])->middleware('guest')->name('login.login');
-Route::post('/logout', [AuthController::class, 'logout'])->middleware('auth')->name('logout');
+Route::get('login', [AuthController::class, 'index'])->middleware('guest')->name('login');
+Route::post('login', [AuthController::class, 'login'])->middleware('guest')->name('login.login');
+Route::post('logout', [AuthController::class, 'logout'])->middleware('auth')->name('logout');
 
-Route::get('/forgot-password', [ForgotPasswordController::class, 'index'])->middleware('guest')->name('password.request');
-Route::post('/forgot-password', [ForgotPasswordController::class, 'email'])->middleware('guest')->name('password.email');
-Route::get('/reset-password/{token}', [ForgotPasswordController::class, 'reset'])->middleware('guest')->name('password.reset');
-Route::post('/reset-password', [ForgotPasswordController::class, 'update'])->middleware('guest')->name('password.update');
-
-// GLOBAL
-Route::get('/dashboard', [MainController::class, 'index'])->middleware('auth')->name('dashboard');
+Route::get('forgot-password', [ForgotPasswordController::class, 'index'])->middleware('guest')->name('password.request');
+Route::post('forgot-password', [ForgotPasswordController::class, 'email'])->middleware('guest')->name('password.email');
+Route::get('reset-password/{token}', [ForgotPasswordController::class, 'reset'])->middleware('guest')->name('password.reset');
+Route::post('reset-password', [ForgotPasswordController::class, 'update'])->middleware('guest')->name('password.update');
 
 // PROFILE
 Route::group(['prefix' => 'profile', 'as' => 'profile.', 'middleware' => ['auth']], function () {
     Route::get('/', [ProfileController::class, 'index'])->name('index');
-    Route::put('/update', [ProfileController::class, 'update'])->name('update');
+    Route::put('update', [ProfileController::class, 'update'])->name('update');
 
-    Route::put('/update-employee', [ProfileController::class, 'updateEmployee'])->name('update-employee');
+    Route::put('update-employee', [ProfileController::class, 'updateEmployee'])->name('update-employee');
 });
 
 // SUPER ADMIN
@@ -103,30 +104,30 @@ Route::group(['prefix' => 'superadmin', 'as' => 'superadmin.', 'middleware' => [
     // EMPLOYEE
     Route::prefix('employee')->name('employee.')->group(function () {
         Route::get('/', [SuperAdminEmployee::class, 'index'])->name('index');
-        Route::get('/show/{employee}', [SuperAdminEmployee::class, 'show'])->name('show');
-        Route::get('/create', [SuperAdminEmployee::class, 'create'])->name('create');
-        Route::post('/store', [SuperAdminEmployee::class, 'store'])->name('store');
-        Route::get('/edit/{employee}', [SuperAdminEmployee::class, 'edit'])->name('edit');
-        Route::put('/update/{employee}', [SuperAdminEmployee::class, 'update'])->name('update');
-        Route::delete('/destroy/{employee}', [SuperAdminEmployee::class, 'destroy'])->name('destroy');
+        Route::get('show/{employee}', [SuperAdminEmployee::class, 'show'])->name('show');
+        Route::get('create', [SuperAdminEmployee::class, 'create'])->name('create');
+        Route::post('store', [SuperAdminEmployee::class, 'store'])->name('store');
+        Route::get('edit/{employee}', [SuperAdminEmployee::class, 'edit'])->name('edit');
+        Route::put('update/{employee}', [SuperAdminEmployee::class, 'update'])->name('update');
+        Route::delete('destroy/{employee}', [SuperAdminEmployee::class, 'destroy'])->name('destroy');
     });
 
     // EMPLOYEE SALARY
     Route::prefix('employee-salary')->name('employeesalary.')->group(function () {
         Route::get('/', [SuperAdminEmployee::class, 'salaryIndex'])->name('index');
-        Route::get('/show/{employee}', [SuperAdminEmployee::class, 'salaryShow'])->name('show');
-        Route::get('/create/{employee}', [SuperAdminEmployee::class, 'salaryCreate'])->name('create');
-        Route::post('/store/{employee}', [SuperAdminEmployee::class, 'salaryStore'])->name('store');
-        Route::get('/edit/{employee}', [SuperAdminEmployee::class, 'salaryEdit'])->name('edit');
-        Route::put('/update/{employee}', [SuperAdminEmployee::class, 'salaryUpdate'])->name('update');
-        Route::delete('/destroy/{employee}', [SuperAdminEmployee::class, 'salaryDestroy'])->name('destroy');
+        Route::get('show/{employee}', [SuperAdminEmployee::class, 'salaryShow'])->name('show');
+        Route::get('create/{employee}', [SuperAdminEmployee::class, 'salaryCreate'])->name('create');
+        Route::post('store/{employee}', [SuperAdminEmployee::class, 'salaryStore'])->name('store');
+        Route::get('edit/{employee}', [SuperAdminEmployee::class, 'salaryEdit'])->name('edit');
+        Route::put('update/{employee}', [SuperAdminEmployee::class, 'salaryUpdate'])->name('update');
+        Route::delete('destroy/{employee}', [SuperAdminEmployee::class, 'salaryDestroy'])->name('destroy');
     });
     // TOOLS
     Route::prefix('logviewer')->name('logs.')->group(function () {
         Route::get('/', [SuperAdminLogViewer::class, 'index'])->name('index');
-        Route::get('/show/{filename}', [SuperAdminLogViewer::class, 'show'])->name('show');
-        Route::delete('/delete/{filename}', [SuperAdminLogViewer::class, 'destroy'])->name('destroy');
-        Route::get('/download/{filename}', [SuperAdminLogViewer::class, 'download'])->name('download');
+        Route::get('show/{filename}', [SuperAdminLogViewer::class, 'show'])->name('show');
+        Route::delete('delete/{filename}', [SuperAdminLogViewer::class, 'destroy'])->name('destroy');
+        Route::get('download/{filename}', [SuperAdminLogViewer::class, 'download'])->name('download');
     });
     Route::prefix('routelist')->name('routelist.')->group(function () {
         Route::get('/', [SuperAdminRouteList::class, 'index'])->name('index');
@@ -136,19 +137,30 @@ Route::group(['prefix' => 'superadmin', 'as' => 'superadmin.', 'middleware' => [
     });
     Route::prefix('database')->name('database.')->group(function () {
         Route::get('/', [SuperAdminDatabase::class, 'index'])->name('index');
-        Route::get('/database', [SuperAdminDatabase::class, 'indexDatabase'])->name('index-database');
-        Route::get('/indexsql', [SuperAdminDatabase::class, 'indexSql'])->name('index-sql');
-        Route::post('/sql', [SuperAdminDatabase::class, 'sql'])->name('sql');
-        Route::get('/show/{tableName}', [SuperAdminDatabase::class, 'showTable'])->name('show');
-        Route::post('/store/{tableName}', [SuperAdminDatabase::class, 'store'])->name('store');
-        Route::put('/update/{tableName}/{id}', [SuperAdminDatabase::class, 'update'])->name('update');
-        Route::delete('/destroy/{tableName}/{id}', [SuperAdminDatabase::class, 'destroy'])->name('destroy');
-        Route::delete('/empty/{tableName}', [SuperAdminDatabase::class, 'empty'])->name('empty');
+        Route::get('database', [SuperAdminDatabase::class, 'indexDatabase'])->name('index-database');
+        Route::get('indexsql', [SuperAdminDatabase::class, 'indexSql'])->name('index-sql');
+        Route::post('sql', [SuperAdminDatabase::class, 'sql'])->name('sql');
+        Route::get('show/{tableName}', [SuperAdminDatabase::class, 'showTable'])->name('show');
+        Route::post('store/{tableName}', [SuperAdminDatabase::class, 'store'])->name('store');
+        Route::put('update/{tableName}/{id}', [SuperAdminDatabase::class, 'update'])->name('update');
+        Route::delete('destroy/{tableName}/{id}', [SuperAdminDatabase::class, 'destroy'])->name('destroy');
+        Route::delete('empty/{tableName}', [SuperAdminDatabase::class, 'empty'])->name('empty');
     });
     // API TEST
     Route::prefix('api-test')->name('apitest.')->group(function () {
         Route::get('/', [SuperAdminApiTest::class, 'index'])->name('index');
-        Route::post('/test', [SuperAdminApiTest::class, 'test'])->name('test');
+        Route::post('test', [SuperAdminApiTest::class, 'test'])->name('test');
+    });
+    // FILE MANAGER
+    Route::prefix('folder')->name('folder.')->group(function () {
+        Route::get('/', [SuperAdminFolder::class, 'index'])->name('index');
+        Route::get('folders', [SuperAdminFolder::class, 'folders'])->name('folders');
+    });
+
+    // ENV
+    Route::prefix('env')->name('env.')->group(function () {
+        Route::get('/', [SuperAdminEnv::class, 'index'])->name('index');
+        Route::put('update', [SuperAdminEnv::class, 'update'])->name('update');
     });
 });
 
@@ -159,18 +171,18 @@ Route::group(['prefix' => 'humanresource', 'as' => 'humanresource.', 'middleware
     // EMPLOYEE
     Route::prefix('employee')->name('employee.')->group(function () {
         Route::get('/', [HumanResourceEmployee::class, 'index'])->name('index');
-        Route::get('/show/{employee}', [HumanResourceEmployee::class, 'show'])->name('show');
-        Route::get('/create', [HumanResourceEmployee::class, 'create'])->name('create');
-        Route::post('/store', [HumanResourceEmployee::class, 'store'])->name('store');
-        Route::get('/edit/{employee}', [HumanResourceEmployee::class, 'edit'])->name('edit');
-        Route::put('/update/{employee}', [HumanResourceEmployee::class, 'update'])->name('update');
-        Route::delete('/destroy/{employee}', [HumanResourceEmployee::class, 'destroy'])->name('destroy');
+        Route::get('show/{employee}', [HumanResourceEmployee::class, 'show'])->name('show');
+        Route::get('create', [HumanResourceEmployee::class, 'create'])->name('create');
+        Route::post('store', [HumanResourceEmployee::class, 'store'])->name('store');
+        Route::get('edit/{employee}', [HumanResourceEmployee::class, 'edit'])->name('edit');
+        Route::put('update/{employee}', [HumanResourceEmployee::class, 'update'])->name('update');
+        Route::delete('destroy/{employee}', [HumanResourceEmployee::class, 'destroy'])->name('destroy');
     });
 
     // EMPLOYEE SALARY
     Route::prefix('employee-salary')->name('employeesalary.')->group(function () {
         Route::get('/', [HumanResourceEmployee::class, 'salaryIndex'])->name('index');
-        Route::get('/show/{employee}', [HumanResourceEmployee::class, 'salaryShow'])->name('show');
+        Route::get('show/{employee}', [HumanResourceEmployee::class, 'salaryShow'])->name('show');
     });
 });
 
@@ -184,18 +196,18 @@ Route::group(['prefix' => 'security', 'as' => 'security.', 'middleware' => ['aut
     Route::get('/', [SecurityHome::class, 'index'])->name('home');
 });
 
-
+// TREASURER
 Route::group(['prefix' => 'treasurer', 'as' => 'treasurer.', 'middleware' => ['auth', 'can:isTreasurer']], function () {
     Route::get('/', [BendaharaHome::class, 'index'])->name('home');
 
     // EMPLOYEE SALARY
     Route::prefix('employee-salary')->name('employeesalary.')->group(function () {
         Route::get('/', [BendaharaEmployee::class, 'salaryIndex'])->name('index');
-        Route::get('/show/{employee}', [BendaharaEmployee::class, 'salaryShow'])->name('show');
-        Route::get('/create/{employee}', [BendaharaEmployee::class, 'salaryCreate'])->name('create');
-        Route::post('/store/{employee}', [BendaharaEmployee::class, 'salaryStore'])->name('store');
-        Route::get('/edit/{employee}', [BendaharaEmployee::class, 'salaryEdit'])->name('edit');
-        Route::put('/update/{employee}', [BendaharaEmployee::class, 'salaryUpdate'])->name('update');
-        Route::delete('/destroy/{employee}', [BendaharaEmployee::class, 'salaryDestroy'])->name('destroy');
+        Route::get('show/{employee}', [BendaharaEmployee::class, 'salaryShow'])->name('show');
+        Route::get('create/{employee}', [BendaharaEmployee::class, 'salaryCreate'])->name('create');
+        Route::post('store/{employee}', [BendaharaEmployee::class, 'salaryStore'])->name('store');
+        Route::get('edit/{employee}', [BendaharaEmployee::class, 'salaryEdit'])->name('edit');
+        Route::put('update/{employee}', [BendaharaEmployee::class, 'salaryUpdate'])->name('update');
+        Route::delete('destroy/{employee}', [BendaharaEmployee::class, 'salaryDestroy'])->name('destroy');
     });
 });
