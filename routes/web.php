@@ -184,7 +184,7 @@ Route::group(['prefix' => 'security', 'as' => 'security.', 'middleware' => ['aut
     Route::get('/', [SecurityHome::class, 'index'])->name('home');
 });
 
-
+// TREASURER
 Route::group(['prefix' => 'treasurer', 'as' => 'treasurer.', 'middleware' => ['auth', 'can:isTreasurer']], function () {
     Route::get('/', [BendaharaHome::class, 'index'])->name('home');
 

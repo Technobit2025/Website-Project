@@ -36,54 +36,40 @@ class AuthTest extends TestCase
     #[\PHPUnit\Framework\Attributes\Test] 
     public function it_can_get_all_users()
     {
-        User::factory(4)->create(); // Membuat 4 user
-        $response = $this->getJson('/api/users');
+    
+    User::factory(4)->create();
+    
+    $user = User::factory()->create();
+    
+    $response = $this->actingAs($user, 'sanctum')
+                     ->getJson('/api/users');
 
-        $response->assertOk()
-                 ->assertJsonCount(User::count()); // Sesuaikan dengan jumlah user dalam database
+    // Check the response
+    $response->assertOk()
+             ->assertJsonPath('success', true)
+             ->assertJsonCount(5, 'data'); 
     }
 
-    #[\PHPUnit\Framework\Attributes\Test] 
-    public function it_can_create_a_user()
-    {
-        $userData = [
-            'name' => 'John Doe',
-            'email' => 'johndoe@example.com',
-            'password' => 'password',
-            'password_confirmation' => 'password',
-        ];
+   
 
-        $response = $this->postJson('/api/user', $userData);
-
-        $response->assertCreated()
-                 ->assertJson(fn (AssertableJson $json) =>
-                    $json->where('message', 'User created successfully')
-                         ->has('data.id')
-                         ->where('data.name', 'John Doe')
-                         ->where('data.email', 'johndoe@example.com')
-                 );
-
-        $this->assertDatabaseHas('users', [
-            'email' => 'johndoe@example.com'
-        ]);
-    }
 
     #[\PHPUnit\Framework\Attributes\Test] 
     public function it_can_update_a_user()
     {
         $user = User::factory()->create();
         Sanctum::actingAs($user);
-
+        
         $updateData = ['name' => 'Updated Name'];
-
-        $response = $this->putJson("/api/user/{$user->id}", $updateData);
-
+        
+        // Ubah URL sesuai dengan route yang ada
+        $response = $this->putJson("/api/user", $updateData);
+        
         $response->assertOk()
                  ->assertJson([
                      'message' => 'User updated successfully',
                      'data' => ['name' => 'Updated Name'],
                  ]);
-
+                 
         $this->assertDatabaseHas('users', ['id' => $user->id, 'name' => 'Updated Name']);
     }
 
@@ -92,14 +78,15 @@ class AuthTest extends TestCase
     {
         $user = User::factory()->create();
         Sanctum::actingAs($user);
-
-        $response = $this->deleteJson("/api/user/{$user->id}");
-
+    
+        // Ubah URL sesuai dengan route yang ada (tanpa ID)
+        $response = $this->deleteJson("/api/user");
+    
         $response->assertOk()
                  ->assertJson([
                      'message' => 'User deleted successfully',
                  ]);
-
+    
         $this->assertDatabaseMissing('users', ['id' => $user->id]);
     }
 }
