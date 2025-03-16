@@ -21,16 +21,16 @@
 
 use Illuminate\Support\Facades\Route;
 
-use App\Http\Controllers\API\Auth\AuthController;
-use App\Http\Controllers\API\User\UserController;
-use App\Http\Controllers\API\Auth\AndroidForgotPasswordController;
-use App\Http\Controllers\API\Auth\AndroidResetPasswordController;
-use App\Http\Controllers\API\Auth\AndroidVerifyOtpController;
+use App\Http\Controllers\API\V1\Auth\AuthController;
+use App\Http\Controllers\API\V1\User\UserController;
+use App\Http\Controllers\API\V1\Auth\AndroidForgotPasswordController;
+use App\Http\Controllers\API\V1\Auth\AndroidResetPasswordController;
+use App\Http\Controllers\API\V1\Auth\AndroidVerifyOtpController;
+use App\Http\Controllers\API\V1\User\ProfileController;
 
-use App\Http\Controllers\API\User\ProfileController;
 
 // API Route
-Route::name('api.')->group(function () {
+Route::prefix('v1')->name('api.')->group(function () {
     // AUTHENTICATION
     Route::post('login', [AuthController::class, 'login'])->middleware('guest')->name('login');
 
@@ -49,18 +49,22 @@ Route::name('api.')->group(function () {
 
         // PROFILE
         Route::name('profile.')->group(function () {
-            Route::get('profile', [ProfileController::class, 'show'])->name('show'); // ambil user yang login
-            Route::put('profile', [ProfileController::class, 'update'])->name('update'); // update user
-            Route::put('profile/employee', [ProfileController::class, 'updateEmployee'])->name('updateEmployee'); // update employee
+            Route::get('profile/user', [ProfileController::class, 'getUserProfile'])->name('getUserProfile'); // ambil user yang login
+            Route::get('profile/employee', [ProfileController::class, 'getEmployeeProfile'])->name('getEmployeeProfile'); // ambil employee yang login
+            Route::put('profile/user', [ProfileController::class, 'updateUserProfile'])->name('updateUserProfile'); // update user
+            Route::put('profile/employee', [ProfileController::class, 'updateEmployeeProfile'])->name('updateEmployeeProfile'); // update employee
         });
     });
 
     // --- Mulai Baris Kode Android -----
-    
-    Route::post('/android/forgot-password', [AndroidForgotPasswordController::class, 'forgotPassword']);
-    Route::post('/android/reset-password', [AndroidResetPasswordController::class, 'resetPassword']);
-    Route::post('/android/request-otp', [AndroidForgotPasswordController::class, 'requestOtp']);
-    Route::post('/android/verify-otp', [AndroidVerifyOtpController::class, 'verifyOtp']);
+
+    // FORGOT PASSWORD
+    Route::prefix('android')->name('android.')->group(function () {
+        Route::post('forgot-password', [AndroidForgotPasswordController::class, 'forgotPassword']);
+        Route::post('reset-password', [AndroidResetPasswordController::class, 'resetPassword']);
+        Route::post('request-otp', [AndroidForgotPasswordController::class, 'requestOtp']);
+        Route::post('verify-otp', [AndroidVerifyOtpController::class, 'verifyOtp']);
+    });
 
 
 

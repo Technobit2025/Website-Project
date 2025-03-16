@@ -59,7 +59,7 @@ class PerformanceController extends Controller
 
     private function getDiskUsage()
     {
-        $hostPath = env('HOST_PATH', '/');
+        $hostPath = env('APP_HOST_PATH', '/');
         $totalSpace = disk_total_space($hostPath);
         $freeSpace = disk_free_space($hostPath);
         return round((($totalSpace - $freeSpace) / $totalSpace) * 100, 2);

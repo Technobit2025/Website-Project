@@ -149,4 +149,15 @@ class APIController extends Controller
 
         return getJsonResponse($response, $code);
     }
+
+    public function unauthorizedResponse($message = '', $code = 401)
+    {
+        $response = [
+            'success' => false,
+            'data' => null,
+            'message' => $message ? $message : 'Unauthorized',
+        ];
+
+        return getJsonResponse($response, $code);
+    }
 }

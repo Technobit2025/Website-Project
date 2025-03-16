@@ -21,10 +21,13 @@ class AndroidOtpNotification extends Notification
 
     public function toMail($notifiable)
     {
+
         return (new MailMessage)
             ->subject('Kode OTP Reset Password')
-            ->line('Gunakan kode OTP berikut untuk mengatur ulang password Anda:')
-            ->line("**$this->otp**") // Tampilkan OTP di email
-            ->line('Kode ini berlaku selama 5 menit.');
+            ->view('emails.otp', [
+                'otp' => $this->otp,
+                'email' => $notifiable->email,
+                'name' => $notifiable->name,
+            ]);
     }
 }
