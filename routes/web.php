@@ -51,9 +51,12 @@ use App\Http\Controllers\Web\SuperAdmin\RouteListController as SuperAdminRouteLi
 use App\Http\Controllers\Web\SuperAdmin\PerformanceController as SuperAdminPerformance;
 use App\Http\Controllers\Web\SuperAdmin\DatabaseController as SuperAdminDatabase;
 use App\Http\Controllers\Web\SuperAdmin\EmployeeController as SuperAdminEmployee;
+use App\Http\Controllers\Web\SuperAdmin\CompanyController as SuperAdminCompany;
 use App\Http\Controllers\Web\SuperAdmin\ApiTestController as SuperAdminApiTest;
 use App\Http\Controllers\Web\SuperAdmin\FolderController as SuperAdminFolder;
 use App\Http\Controllers\Web\SuperAdmin\EnvController as SuperAdminEnv;
+use App\Http\Controllers\Web\SuperAdmin\CompanyShiftController as SuperAdminCompanyShift;
+use App\Http\Controllers\Web\SuperAdmin\CompanyScheduleController as SuperAdminCompanySchedule;
 
 // HUMAN RESOURCE
 use App\Http\Controllers\Web\HumanResource\HomeController as HumanResourceHome;
@@ -95,11 +98,44 @@ Route::group(['prefix' => 'profile', 'as' => 'profile.', 'middleware' => ['auth'
     Route::put('update', [ProfileController::class, 'update'])->name('update');
 
     Route::put('update-employee', [ProfileController::class, 'updateEmployee'])->name('update-employee');
+    Route::put('update-photo', [ProfileController::class, 'updatePhoto'])->name('update-photo');
 });
 
 // SUPER ADMIN
 Route::group(['prefix' => 'superadmin', 'as' => 'superadmin.', 'middleware' => ['auth', 'can:isSuperAdmin']], function () {
     Route::get('/', [SuperAdminHome::class, 'index'])->name('home');
+
+    // COMPANY
+    Route::prefix('company')->name('company.')->group(function () {
+        Route::get('/', [SuperAdminCompany::class, 'index'])->name('index');
+        Route::get('show/{company}', [SuperAdminCompany::class, 'show'])->name('show');
+        Route::get('create', [SuperAdminCompany::class, 'create'])->name('create');
+        Route::post('store', [SuperAdminCompany::class, 'store'])->name('store');
+        Route::get('edit/{company}', [SuperAdminCompany::class, 'edit'])->name('edit');
+        Route::put('update/{company}', [SuperAdminCompany::class, 'update'])->name('update');
+        Route::delete('destroy/{company}', [SuperAdminCompany::class, 'destroy'])->name('destroy');
+
+        Route::prefix('employee')->name('employee.')->group(function () {
+            Route::get('employee/{companyId}', [SuperAdminCompany::class, 'employeeIndex'])->name('index');
+            Route::post('employee/{companyId}/store', [SuperAdminCompany::class, 'employeeStore'])->name('store');
+            Route::delete('employee/{companyId}/{employee}', [SuperAdminCompany::class, 'employeeDestroy'])->name('destroy');
+        });
+
+        Route::prefix('shift')->name('shift.')->group(function () {
+            Route::get('/{company}', [SuperAdminCompanyShift::class, 'index'])->name('index');
+            Route::get('create/{company}', [SuperAdminCompanyShift::class, 'create'])->name('create');
+            Route::post('store', [SuperAdminCompanyShift::class, 'store'])->name('store');
+            Route::get('show/{companyShift}', [SuperAdminCompanyShift::class, 'show'])->name('show');
+            Route::get('edit/{companyShift}', [SuperAdminCompanyShift::class, 'edit'])->name('edit');
+            Route::put('update/{companyShift}', [SuperAdminCompanyShift::class, 'update'])->name('update');
+            Route::delete('destroy/{companyShift}', [SuperAdminCompanyShift::class, 'destroy'])->name('destroy');
+        });
+        Route::prefix('schedule')->name('schedule.')->group(function () {
+            Route::get('/{company}', [SuperAdminCompanySchedule::class, 'index'])->name('index');
+            Route::post('save', [SuperAdminCompanySchedule::class, 'save'])->name('save');
+            Route::post('destroy', [SuperAdminCompanySchedule::class, 'destroy'])->name('destroy');
+        });
+    });
 
     // EMPLOYEE
     Route::prefix('employee')->name('employee.')->group(function () {

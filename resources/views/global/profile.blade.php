@@ -20,8 +20,12 @@
                                     <div class="common-align">
                                         <div>
                                             <img id="output" src="{{ $user->photo }}" alt="Profile Image">
-                                            <input type="file" accept="image/*" onchange="loadFile(event)">
-                                            <div class="icon-wrapper"><i class="icofont icofont-pencil-alt-5"></i></div>
+                                            <form id="update-photo-form" action="{{ route('profile.update-photo') }}" method="POST" enctype="multipart/form-data">
+                                                @csrf
+                                                @method('PUT')
+                                                <input type="file" accept="image/*" name="photo" onchange="loadFile(event); document.getElementById('update-photo-form').submit();">
+                                                <div class="icon-wrapper"><i class="icofont icofont-pencil-alt-5"></i></div>
+                                            </form>
                                         </div>
                                         <div class="user-designation"><a target="_blank"
                                                 href="">{{ $user->name }}</a>

@@ -64,7 +64,7 @@
                                     <th>Method</th>
                                     <th>URI</th>
                                     <th>Name</th>
-                                    <th>Action</th>
+                                    <th>Aksi</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -114,7 +114,7 @@
                                     <th>Method</th>
                                     <th>URI</th>
                                     <th>Name</th>
-                                    <th>Action</th>
+                                    <th>Aksi</th>
                                 </tr>
                             </thead>
                             <tbody>

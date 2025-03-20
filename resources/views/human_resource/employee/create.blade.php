@@ -296,7 +296,7 @@
                                 </select>
                                 @errorFeedback('active')
                             </div>
-                            <button type="submit" class="btn btn-primary">Kirim</button>
+                            <button type="submit" class="btn btn-primary"><i class="fa fa-save"></i> Simpan</button>
                         </div>
                     </div>
                 </div>

@@ -1,4 +1,5 @@
 <?php
+use Illuminate\Support\Facades\Storage; 
 if (! function_exists('getJsonResponse')) {
   function getJsonResponse($params = null, $status = 200, array $headers = [], $options = 0)
   {
@@ -28,5 +29,21 @@ if (! function_exists('formatRupiah')) {
   function formatRupiah($amount)
   {
     return 'Rp ' . number_format($amount, 0, ',', '.');
+  }
+}
+if (!function_exists('uploadFile')) {
+  function uploadFile($file, $folder, $disk = 'public')
+  {
+      $filename = time() . '_' . preg_replace('/[^a-zA-Z0-9_\.-]/', '', $file->getClientOriginalName());
+      $file->storeAs($folder, $filename, $disk);
+      return $filename;
+  }
+}
+if (!function_exists('deleteFile')) {
+  function deleteFile($path)
+  {
+      if (Storage::disk('public')->exists($path)) {
+          Storage::disk('public')->delete($path);
+      }
   }
 }

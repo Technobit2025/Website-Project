@@ -45,4 +45,27 @@ class ProfileController extends Controller
         $employee->update($validated);
         return redirect()->route('profile.index')->with('success', 'Profile updated successfully.');
     }
+
+    public function updatePhoto(Request $request)
+    {
+        $validated = $request->validate([
+            'photo' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+        ]);
+
+        $user = Auth::user();
+
+        if ($request->hasFile('photo')) {
+            $file = $request->file('photo');
+            // Hapus file lama jika ada dan bukan URL default
+            if ($user->photo) {
+                deleteFile('user/photo/' . basename($user->photo));
+            }
+            $validated['photo'] = uploadFile($file, 'user/photo');
+
+            $user->update($validated);
+            return redirect()->route('profile.index')->with('success', 'Photo updated successfully.');
+        }
+
+        return redirect()->route('profile.index')->with('error', 'No photo uploaded.');
+    }
 }
