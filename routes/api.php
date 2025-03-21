@@ -27,7 +27,7 @@ use App\Http\Controllers\API\V1\Auth\AndroidForgotPasswordController;
 use App\Http\Controllers\API\V1\Auth\AndroidResetPasswordController;
 use App\Http\Controllers\API\V1\Auth\AndroidVerifyOtpController;
 use App\Http\Controllers\API\V1\User\ProfileController;
-
+use App\Http\Controllers\API\V1\Auth\AndroidChangePasswordController;
 
 // API Route
 Route::prefix('v1')->name('api.')->group(function () {
@@ -64,11 +64,12 @@ Route::prefix('v1')->name('api.')->group(function () {
         Route::post('reset-password', [AndroidResetPasswordController::class, 'resetPassword']);
         Route::post('request-otp', [AndroidForgotPasswordController::class, 'requestOtp']);
         Route::post('verify-otp', [AndroidVerifyOtpController::class, 'verifyOtp']);
+
+        // --- PENGGUNA HARUS LOGIN ----
+        Route::middleware('auth:sanctum')->group(function () {
+            Route::put('change-password', [AndroidChangePasswordController::class, 'changePassword']);
+        });
     });
-
-
-
-
 
 
 
