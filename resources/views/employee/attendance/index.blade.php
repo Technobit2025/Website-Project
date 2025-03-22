@@ -58,12 +58,24 @@
 
         Instascan.Camera.getCameras().then(function(cameras) {
             if (cameras.length > 0) {
-                let backCamera = cameras.find(cam => cam.name.toLowerCase().includes('back')) || cameras[cameras
-                    .length - 1];
-                scanner.start(backCamera).catch(e => {
-                    console.error("Gagal memulai kamera:", e);
-                    alert("Gagal mengakses kamera, pastikan sudah diizinkan!");
-                });
+                // Cari kamera belakang berdasarkan properti 'facing'
+                let backCamera = cameras.find(cam => cam.facing === 'environment');
+
+                // Fallback: Cari berdasarkan nama jika properti facing tidak tersedia
+                if (!backCamera) {
+                    backCamera = cameras.find(cam => cam.name.toLowerCase().includes('back'));
+                }
+
+                if (backCamera) {
+                    scanner.start(backCamera).catch(e => {
+                        console.error("Gagal memulai kamera belakang:", e);
+                        alert("Gagal mengakses kamera belakang!");
+                    });
+                } else {
+                    // Jika tidak ditemukan, gunakan kamera pertama dengan peringatan
+                    console.warn("Kamera belakang tidak ditemukan, menggunakan kamera default");
+                    scanner.start(cameras[0]);
+                }
             } else {
                 alert("Tidak ada kamera tersedia!");
             }
@@ -71,7 +83,6 @@
             console.error("Error mendapatkan kamera:", e);
             alert("Tidak bisa mengakses kamera, cek izin di browser!");
         });
-        
 
         scanner.addListener('scan', function(content) {
             document.getElementById('scanned-code').innerText = content;
