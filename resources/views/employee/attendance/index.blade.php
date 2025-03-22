@@ -58,8 +58,9 @@
 
         Instascan.Camera.getCameras().then(function(cameras) {
             if (cameras.length > 0) {
-                let frontCamera = cameras.find(cam => cam.name.toLowerCase().includes('front'));
-                scanner.start(frontCamera || cameras[0]).catch(e => {
+                let backCamera = cameras.find(cam => cam.name.toLowerCase().includes('back')) || cameras[cameras
+                    .length - 1];
+                scanner.start(backCamera).catch(e => {
                     console.error("Gagal memulai kamera:", e);
                     alert("Gagal mengakses kamera, pastikan sudah diizinkan!");
                 });
@@ -70,7 +71,7 @@
             console.error("Error mendapatkan kamera:", e);
             alert("Tidak bisa mengakses kamera, cek izin di browser!");
         });
-
+        
 
         scanner.addListener('scan', function(content) {
             document.getElementById('scanned-code').innerText = content;
@@ -96,9 +97,11 @@
                 <input type="hidden" name="code" id="code">
                 <input type="hidden" name="latitude" id="latitude">
                 <input type="hidden" name="longitude" id="longitude">
-                <button class="btn btn-primary mt-3" formaction="{{ route('employee.attendance.checkIn') }}" id="btnCheckIn" disabled>Check-In</button>
-                <button class="btn btn-danger mt-2" formaction="{{ route('employee.attendance.checkOut') }}" id="btnCheckOut" disabled>Check-Out</button>
-            </form>            
+                <button class="btn btn-primary mt-3" formaction="{{ route('employee.attendance.checkIn') }}" id="btnCheckIn"
+                    disabled>Check-In</button>
+                <button class="btn btn-danger mt-2" formaction="{{ route('employee.attendance.checkOut') }}"
+                    id="btnCheckOut" disabled>Check-Out</button>
+            </form>
         </div>
     </div>
 @endsection
