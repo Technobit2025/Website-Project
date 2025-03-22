@@ -57,6 +57,7 @@ use App\Http\Controllers\Web\SuperAdmin\FolderController as SuperAdminFolder;
 use App\Http\Controllers\Web\SuperAdmin\EnvController as SuperAdminEnv;
 use App\Http\Controllers\Web\SuperAdmin\CompanyShiftController as SuperAdminCompanyShift;
 use App\Http\Controllers\Web\SuperAdmin\CompanyScheduleController as SuperAdminCompanySchedule;
+use App\Http\Controllers\Web\SuperAdmin\CompanyPlaceController as SuperAdminCompanyPlace;
 
 // HUMAN RESOURCE
 use App\Http\Controllers\Web\HumanResource\HomeController as HumanResourceHome;
@@ -64,6 +65,7 @@ use App\Http\Controllers\Web\HumanResource\EmployeeController as HumanResourceEm
 
 // EMPLOYEE
 use App\Http\Controllers\Web\Employee\HomeController as EmployeeHome;
+use App\Http\Controllers\Web\Employee\AttendanceController as EmployeeAttendance;
 
 // SECURITY
 use App\Http\Controllers\Web\Security\HomeController as SecurityHome;
@@ -71,6 +73,13 @@ use App\Http\Controllers\Web\Security\HomeController as SecurityHome;
 // BENDAHARA
 use App\Http\Controllers\Web\Treasurer\HomeController as BendaharaHome;
 use App\Http\Controllers\Web\Treasurer\EmployeeController as BendaharaEmployee;
+
+// COMPANY
+use App\Http\Controllers\Web\Company\HomeController as CompanyHome;
+use App\Http\Controllers\Web\Company\CompanyController as CompanyCompany;
+use App\Http\Controllers\Web\Company\CompanyShiftController as CompanyCompanyShift;
+use App\Http\Controllers\Web\Company\CompanyScheduleController as CompanyCompanySchedule;
+use App\Http\Controllers\Web\Company\CompanyPlaceController as CompanyCompanyPlace;
 
 // INDEX REDIRECT TO LOGIN
 Route::get('/', function () {
@@ -134,6 +143,18 @@ Route::group(['prefix' => 'superadmin', 'as' => 'superadmin.', 'middleware' => [
             Route::get('/{company}', [SuperAdminCompanySchedule::class, 'index'])->name('index');
             Route::post('save', [SuperAdminCompanySchedule::class, 'save'])->name('save');
             Route::post('destroy', [SuperAdminCompanySchedule::class, 'destroy'])->name('destroy');
+        });
+
+        Route::prefix('place')->name('place.')->group(function () {
+            Route::get('/{company}', [SuperAdminCompanyPlace::class, 'index'])->name('index');
+            Route::get('create/{company}', [SuperAdminCompanyPlace::class, 'create'])->name('create');
+            Route::post('store/{company}', [SuperAdminCompanyPlace::class, 'store'])->name('store');
+            Route::get('show/{companyPlace}', [SuperAdminCompanyPlace::class, 'show'])->name('show');
+            Route::get('edit/{companyPlace}', [SuperAdminCompanyPlace::class, 'edit'])->name('edit');
+            Route::put('update/{companyPlace}', [SuperAdminCompanyPlace::class, 'update'])->name('update');
+            Route::delete('destroy/{companyPlace}', [SuperAdminCompanyPlace::class, 'destroy'])->name('destroy');
+
+            Route::get('print-qr-code/{companyPlace}', [SuperAdminCompanyPlace::class, 'printQrCode'])->name('printQrCode');
         });
     });
 
@@ -225,6 +246,13 @@ Route::group(['prefix' => 'humanresource', 'as' => 'humanresource.', 'middleware
 // EMPLOYEE
 Route::group(['prefix' => 'employee', 'as' => 'employee.', 'middleware' => ['auth', 'can:isEmployee']], function () {
     Route::get('/', [EmployeeHome::class, 'index'])->name('home');
+
+    // ATTENDANCE
+    Route::prefix('attendance')->name('attendance.')->group(function () {
+        Route::get('/', [EmployeeAttendance::class, 'index'])->name('index');
+        Route::post('check-in', [EmployeeAttendance::class, 'checkIn'])->name('checkIn');
+        Route::post('check-out', [EmployeeAttendance::class, 'checkOut'])->name('checkOut');
+    });
 });
 
 // SECURITY
@@ -245,5 +273,47 @@ Route::group(['prefix' => 'treasurer', 'as' => 'treasurer.', 'middleware' => ['a
         Route::get('edit/{employee}', [BendaharaEmployee::class, 'salaryEdit'])->name('edit');
         Route::put('update/{employee}', [BendaharaEmployee::class, 'salaryUpdate'])->name('update');
         Route::delete('destroy/{employee}', [BendaharaEmployee::class, 'salaryDestroy'])->name('destroy');
+    });
+});
+
+// COMPANY
+Route::group(['prefix' => 'company', 'as' => 'company.', 'middleware' => ['auth', 'can:isCompany']], function () {
+    Route::get('/', [CompanyHome::class, 'index'])->name('home');
+    // Route::get('/', [SuperAdminCompany::class, 'index'])->name('index');
+    // Route::get('show/{company}', [SuperAdminCompany::class, 'show'])->name('show');
+    // Route::get('create', [SuperAdminCompany::class, 'create'])->name('create');
+    // Route::post('store', [SuperAdminCompany::class, 'store'])->name('store');
+    // Route::get('edit/{company}', [SuperAdminCompany::class, 'edit'])->name('edit');
+    // Route::put('update/{company}', [SuperAdminCompany::class, 'update'])->name('update');
+    // Route::delete('destroy/{company}', [SuperAdminCompany::class, 'destroy'])->name('destroy');
+
+    Route::prefix('employee')->name('employee.')->group(function () {
+        Route::get('/', [CompanyCompany::class, 'employeeIndex'])->name('index');
+        // Route::post('store', [CompanyCompany::class, 'employeeStore'])->name('store');
+        Route::delete('destroy/{employee}', [CompanyCompany::class, 'employeeDestroy'])->name('destroy');
+    });
+    Route::prefix('shift')->name('shift.')->group(function () {
+        Route::get('/', [CompanyCompanyShift::class, 'index'])->name('index');
+        Route::get('create', [CompanyCompanyShift::class, 'create'])->name('create');
+        Route::post('store', [CompanyCompanyShift::class, 'store'])->name('store');
+        Route::get('show/{companyShift}', [CompanyCompanyShift::class, 'show'])->name('show');
+        Route::get('edit/{companyShift}', [CompanyCompanyShift::class, 'edit'])->name('edit');
+        Route::put('update/{companyShift}', [CompanyCompanyShift::class, 'update'])->name('update');
+        Route::delete('destroy/{companyShift}', [CompanyCompanyShift::class, 'destroy'])->name('destroy');
+    });
+    Route::prefix('schedule')->name('schedule.')->group(function () {
+        Route::get('/', [CompanyCompanySchedule::class, 'index'])->name('index');
+        Route::post('save', [CompanyCompanySchedule::class, 'save'])->name('save');
+        Route::post('destroy', [CompanyCompanySchedule::class, 'destroy'])->name('destroy');
+    });
+
+    Route::prefix('place')->name('place.')->group(function () {
+        Route::get('/', [CompanyCompanyPlace::class, 'index'])->name('index');
+        Route::get('create', [CompanyCompanyPlace::class, 'create'])->name('create');
+        Route::post('store', [CompanyCompanyPlace::class, 'store'])->name('store');
+        Route::get('show/{companyPlace}', [CompanyCompanyPlace::class, 'show'])->name('show');
+        Route::get('edit/{companyPlace}', [CompanyCompanyPlace::class, 'edit'])->name('edit');
+        Route::put('update/{companyPlace}', [CompanyCompanyPlace::class, 'update'])->name('update');
+        Route::delete('destroy/{companyPlace}', [CompanyCompanyPlace::class, 'destroy'])->name('destroy');
     });
 });

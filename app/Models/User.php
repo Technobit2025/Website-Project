@@ -7,6 +7,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 // use Illuminate\Database\Eloquent\SoftDeletes;
 use Laravel\Sanctum\HasApiTokens;
+use Illuminate\Database\Eloquent\Builder;
 
 class User extends Authenticatable
 {
@@ -37,6 +38,14 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+    // protected static function boot()
+    // {
+    //     parent::boot();
+
+    //     static::addGlobalScope('excludeSuperAdmin', function (Builder $builder) {
+    //         $builder->where('role_id', '!=', 1);
+    //     });
+    // }
 
     public function setPasswordAttribute($value)
     {

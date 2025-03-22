@@ -150,6 +150,11 @@
                                                             data-bs-placement="top" data-bs-title="Jadwal Perusahaan">
                                                             <i class="fa-solid fa-calendar-days"></i>
                                                         </a>
+                                                        <a href="{{ route('superadmin.company.place.index', $company->id) }}"
+                                                            class="btn btn-warning btn-sm px-3" data-bs-toggle="tooltip"
+                                                            data-bs-placement="top" data-bs-title="Lokasi Presensi Perusahaan">
+                                                            <i class="fa-solid fa-map"></i>
+                                                        </a>
                                                         <a href="{{ route('superadmin.company.employee.index', $company->id) }}"
                                                             class="btn btn-secondary btn-sm px-3" data-bs-toggle="tooltip"
                                                             data-bs-placement="top" data-bs-title="Karyawan Perusahaan">

@@ -19,7 +19,7 @@ class CompanyRequest extends FormRequest
     {
         return [
             'name' => 'required|string|max:255|required',
-            'email' => 'string|max:255|required|unique:companies,email',
+            'email' => 'string|max:255|required|unique:companies,email,' . $this->company->id,
             'address' => 'string|max:255',
             'phone' => 'string|max:255',
             'website' => 'string|max:255',

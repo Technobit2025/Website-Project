@@ -21,6 +21,7 @@ class DummySeeder extends Seeder
             ['name' => 'Employee', 'role_id' => 3],
             ['name' => 'Security', 'role_id' => 4],
             ['name' => 'Bendahara', 'role_id' => 5],
+            ['name' => 'Company', 'role_id' => 6],
         ];
 
         foreach ($employees as $employee) {

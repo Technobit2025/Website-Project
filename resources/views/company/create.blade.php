@@ -1,6 +1,6 @@
 @extends('layouts.simple.master')
 
-@section('title', 'Edit Perusahaan')
+@section('title', 'Tambah Perusahaan')
 
 @section('scripts')
     <script src="{{ asset('assets/js/common-avatar-change.js') }}"></script>
@@ -8,13 +8,12 @@
 
 @section('main_content')
     <div class="container-fluid">
-        @include('layouts.components.breadcrumb', ['header' => 'Edit Perusahaan'])
+        @include('layouts.components.breadcrumb', ['header' => 'Tambah Perusahaan'])
     </div>
     <div class="container-fluid">
         <div class="row">
-            <form action="{{ route('superadmin.company.update', $company->id) }}" method="POST" enctype="multipart/form-data">
+            <form action="{{ route('superadmin.company.store') }}" method="POST" enctype="multipart/form-data">
                 @csrf
-                @method('PUT')
                 <div class="col-12">
                     <div class="card">
                         <div class="card-header">
@@ -24,7 +23,7 @@
                             <div class="mb-3">
                                 <div class="row">
                                     <div class="col-12 col-md-3">
-                                        <img id="output" src="{{ $company->logo ?? 'https://fakeimg.pl/150x150/?text=Logo' }}" alt="Logo Preview"
+                                        <img id="output" src="https://fakeimg.pl/150x150/?text=Logo" alt="Logo Preview"
                                             class="img-fluid mb-2" style="max-height: 150px">
                                     </div>
                                     <div class="col-12 col-md-9">
@@ -40,36 +39,36 @@
                             <div class="mb-3">
                                 <label for="name" class="form-label">Nama Perusahaan</label>
                                 <input type="text" class="form-control @error('name') is-invalid @enderror"
-                                    id="name" name="name" value="{{ old('name', $company->name) }}" required>
+                                    id="name" name="name" value="{{ old('name') }}" required>
                                 @errorFeedback('name')
                             </div>
                             <div class="mb-3">
                                 <label for="email" class="form-label">Email</label>
                                 <input type="email" class="form-control @error('email') is-invalid @enderror"
-                                    id="email" name="email" value="{{ old('email', $company->email) }}" required>
+                                    id="email" name="email" value="{{ old('email') }}" required>
                                 @errorFeedback('email')
                             </div>
                             <div class="mb-3">
                                 <label for="phone" class="form-label">No. Telepon</label>
                                 <input type="text" class="form-control @error('phone') is-invalid @enderror"
-                                    id="phone" name="phone" value="{{ old('phone', $company->phone) }}">
+                                    id="phone" name="phone" value="{{ old('phone') }}">
                                 @errorFeedback('phone')
                             </div>
                             <div class="mb-3">
                                 <label for="website" class="form-label">Website</label>
                                 <input type="text" class="form-control @error('website') is-invalid @enderror"
-                                    id="website" name="website" value="{{ old('website', $company->website) }}">
+                                    id="website" name="website" value="{{ old('website') }}">
                                 @errorFeedback('website')
                             </div>
                             <div class="mb-3">
                                 <label for="address" class="form-label">Alamat</label>
-                                <textarea class="form-control @error('address') is-invalid @enderror" id="address" name="address" rows="3">{{ old('address', $company->address) }}</textarea>
+                                <textarea class="form-control @error('address') is-invalid @enderror" id="address" name="address" rows="3">{{ old('address') }}</textarea>
                                 @errorFeedback('address')
                             </div>
                             <div class="mb-3">
                                 <label for="description" class="form-label">Deskripsi</label>
                                 <textarea class="form-control @error('description') is-invalid @enderror" id="description" name="description"
-                                    rows="3">{{ old('description', $company->description) }}</textarea>
+                                    rows="3">{{ old('description') }}</textarea>
                                 @errorFeedback('description')
                             </div>
                             <div class="mt-4">
