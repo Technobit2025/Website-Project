@@ -18,8 +18,8 @@ class CompanyRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => 'required|string|max:255|required',
-            'email' => 'string|max:255|required|unique:companies,email,' . $this->company->id,
+            'name' => 'required|string|max:255',
+            'email' => 'required|string|max:255|unique:companies,email,' . $this->route('company'),
             'address' => 'string|max:255',
             'phone' => 'string|max:255',
             'website' => 'string|max:255',
