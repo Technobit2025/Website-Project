@@ -31,6 +31,25 @@
         );
     </script>
     <script>
+        // async function generateLocationHash(latitude, longitude) {
+        //     const secret = {{ env('APP_LOCATION_SECRET_KEY') }}; // HARUS sama dengan backend
+        //     const encoder = new TextEncoder();
+        //     const key = await crypto.subtle.importKey(
+        //         "raw",
+        //         encoder.encode(secret), {
+        //             name: "HMAC",
+        //             hash: "SHA-256"
+        //         },
+        //         false,
+        //         ["sign"]
+        //     );
+        //     const data = encoder.encode(`${latitude},${longitude}`);
+        //     const signature = await crypto.subtle.sign("HMAC", key, data);
+        //     return Array.from(new Uint8Array(signature))
+        //         .map(b => b.toString(16).padStart(2, "0"))
+        //         .join("");
+        // }
+        // generateLocationHash(37.7749, -122.4194).then(console.log);
         let scanner = new Instascan.Scanner({
             video: document.getElementById('preview'),
             mirror: false
@@ -145,7 +164,9 @@
                 <video id="preview" class="border rounded w-100"></video>
                 {{-- <p class="mt-3"><strong>Kode: </strong><span id="scanned-code">-</span></p> --}}
                 <div id="status">
-                    <div class="badge badge-warning px-3 py-1" id="status"> <h2 class="text-white"> Belum siap </h2></div>
+                    <div class="badge badge-warning px-3 py-1" id="status">
+                        <h2 class="text-white"> Belum siap </h2>
+                    </div>
                 </div>
                 <form id="attendanceForm" method="POST">
                     @csrf

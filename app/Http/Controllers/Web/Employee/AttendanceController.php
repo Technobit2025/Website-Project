@@ -6,8 +6,12 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\CompanyAttendance;
 use App\Models\CompanyPlace;
+use App\Models\CompanySchedule;
+use App\Models\CompanyShift;
 use App\Models\Employee;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Log;
 
 class AttendanceController extends Controller
 {
@@ -24,25 +28,39 @@ class AttendanceController extends Controller
             'longitude' => 'required|numeric',
         ]);
 
-        $employee = Employee::where('user_id', Auth::user()->id)->first();
-        if (!$employee) {
-            return back()->with('error', 'anda tidak login');
-        }
-        if ($employee->company_id == null) {
-            return back()->with('error', 'anda tidak terdaftar sebagai karyawan');
+        $employee = Employee::where('user_id', Auth::id())->first();
+        if (!$employee || is_null($employee->company_id)) {
+            return back()->with('error', $employee ? 'anda tidak terdaftar sebagai karyawan' : 'anda tidak login');
         }
 
-        $companyPlace = CompanyPlace::where('code', $request->code)->first();
+        $companyPlace = CompanyPlace::where('code', $request->code)
+            ->where('company_id', $employee->company_id)
+            ->first();
 
         if (!$companyPlace) {
-            return back()->with('error', 'kode lokasi tidak ditemukan');
+            return back()->with('error', 'kode lokasi tidak ditemukan atau anda bukan karyawan perusahaan ini');
         }
 
-        if ($companyPlace->company_id != $employee->company_id) {
-            return back()->with('error', 'anda bukan karyawan perusahaan ini');
+        // **Validasi Lokasi GPS vs IP**
+        if (!$this->validateLocation($request->latitude, $request->longitude, $request->ip())) {
+            return back()->with('error', 'terdeteksi fake GPS, lokasi anda mencurigakan');
         }
 
-        // hitung jarak lokasi dengan Haversine Formula
+        $schedule = CompanySchedule::where('company_id', $employee->company_id)
+            ->where('date', now()->toDateString())
+            ->where('employee_id', $employee->id)
+            ->first();
+
+        if (!$schedule) {
+            return back()->with('error', 'jadwal kerja tidak ditemukan');
+        }
+
+        $shift = CompanyShift::find($schedule->company_shift_id);
+
+        if (!$shift || $shift->start_time > now() || $shift->end_time < now()) {
+            return back()->with('error', 'jadwal kerja tidak aktif');
+        }
+
         $distance = $this->haversineDistance(
             $request->latitude,
             $request->longitude,
@@ -50,20 +68,18 @@ class AttendanceController extends Controller
             $companyPlace->longitude
         );
 
-        if ($distance > 10000) { // lebih dari 10 meter
+        if ($distance > 50) {
             return back()->with('error', 'anda tidak berada di lokasi yang diizinkan');
         }
 
-        // cek apakah sudah check-in hari ini
         $existingAttendance = CompanyAttendance::where('employee_id', $employee->id)
             ->whereDate('checked_in_at', now()->toDateString())
-            ->first();
+            ->exists();
 
         if ($existingAttendance) {
             return back()->with('error', 'anda sudah check-in hari ini');
         }
 
-        // simpan presensi
         CompanyAttendance::create([
             'employee_id' => $employee->id,
             'company_place_id' => $companyPlace->id,
@@ -83,7 +99,7 @@ class AttendanceController extends Controller
             'longitude' => 'required|numeric',
         ]);
 
-        $employee = Employee::where('user_id', Auth::user()->id)->first();
+        $employee = Employee::where('user_id', Auth::id())->first();
         if (!$employee) {
             return back()->with('error', 'anda tidak login');
         }
@@ -93,12 +109,27 @@ class AttendanceController extends Controller
             ->first();
 
         if (!$companyPlace) {
+            return back()->with('error', 'kode lokasi tidak ditemukan atau anda bukan karyawan perusahaan ini');
+        }
+
+        // **Validasi Lokasi GPS vs IP**
+        if (!$this->validateLocation($request->latitude, $request->longitude, $request->ip())) {
+            return back()->with('error', 'terdeteksi fake GPS, lokasi anda mencurigakan');
+        }
+
+        $distance = $this->haversineDistance(
+            $request->latitude,
+            $request->longitude,
+            $companyPlace->latitude,
+            $companyPlace->longitude
+        );
+
+        if ($distance > 50) {
             return back()->with('error', 'anda tidak berada di lokasi yang diizinkan');
         }
 
-        // cek apakah sudah check-in & belum check-out
         $attendance = CompanyAttendance::where('employee_id', $employee->id)
-            ->whereNotNull('checked_in_at')
+            ->whereDate('checked_in_at', now()->toDateString())
             ->whereNull('checked_out_at')
             ->first();
 
@@ -111,6 +142,35 @@ class AttendanceController extends Controller
         return back()->with('success', 'check-out berhasil');
     }
 
+    // **Validasi Lokasi GPS vs IP**
+    private function validateLocation($latUser, $lonUser, $ip)
+    {
+        try {
+            $geoData = Http::get("https://ipinfo.io/{$ip}/json")->json();
+
+            if (!isset($geoData['loc'])) {
+                Log::error('Gagal ambil lokasi dari IP', ['response' => $geoData]);
+                return false;
+            }
+
+            [$ipLat, $ipLon] = explode(',', $geoData['loc']);
+
+            Log::info('User GPS:', ['lat' => $latUser, 'lon' => $lonUser]);
+            Log::info('IP Geolocation:', ['lat' => $ipLat, 'lon' => $ipLon]);
+
+            $ipDistance = $this->haversineDistance($latUser, $lonUser, $ipLat, $ipLon);
+
+            Log::info('Jarak GPS & IP:', ['distance' => $ipDistance]);
+
+            return $ipDistance <= 5000; // Maksimum selisih 5KM
+        } catch (\Exception $e) {
+            Log::error('Error fetch IP geolocation:', ['error' => $e->getMessage()]);
+            return false;
+        }
+    }
+
+
+    // **Hitung jarak antar koordinat (Haversine Formula)**
     private function haversineDistance($lat1, $lon1, $lat2, $lon2)
     {
         $earthRadius = 6371000; // meter

@@ -140,6 +140,11 @@
                                                             data-bs-placement="top" data-bs-title="Lihat Perusahaan" >
                                                             <i class="fa-solid fa-eye"></i>
                                                         </a>
+                                                        <a href="{{ route('superadmin.company.employee.index', $company->id) }}"
+                                                            class="btn btn-success btn-sm px-3" data-bs-toggle="tooltip"
+                                                            data-bs-placement="top" data-bs-title="Karyawan Perusahaan">
+                                                            <i class="fa-solid fa-user"></i>
+                                                        </a>
                                                         <a href="{{ route('superadmin.company.shift.index', $company->id) }}"
                                                             class="btn btn-success btn-sm px-3" data-bs-toggle="tooltip"
                                                             data-bs-placement="top" data-bs-title="Shift Perusahaan">
@@ -157,8 +162,8 @@
                                                         </a>
                                                         <a href="{{ route('superadmin.company.employee.index', $company->id) }}"
                                                             class="btn btn-secondary btn-sm px-3" data-bs-toggle="tooltip"
-                                                            data-bs-placement="top" data-bs-title="Karyawan Perusahaan">
-                                                            <i class="fa-solid fa-user"></i>
+                                                            data-bs-placement="top" data-bs-title="Presensi Perusahaan">
+                                                            <i class="fa-solid fa-clock"></i>
                                                         </a>
                                                         @include('layouts.components.delete', [
                                                             'route' => route(
