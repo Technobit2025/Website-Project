@@ -56,33 +56,34 @@
             }
         }
 
-        Instascan.Camera.getCameras().then(function(cameras) {
-            if (cameras.length > 0) {
-                // Cari kamera belakang berdasarkan properti 'facing'
-                let backCamera = cameras.find(cam => cam.facing === 'environment');
+        Instascan.Camera.getCameras()
+            .then(cameras => {
+                console.log('Daftar Kamera:', cameras); // Debug: lihat semua kamera
 
-                // Fallback: Cari berdasarkan nama jika properti facing tidak tersedia
-                if (!backCamera) {
-                    backCamera = cameras.find(cam => cam.name.toLowerCase().includes('back'));
-                }
+                let backCamera = cameras.find(cam => cam.facing === 'environment') ||
+                    cameras.find(cam => cam.name.match(/back|rear/gi));
 
-                if (backCamera) {
-                    scanner.start(backCamera).catch(e => {
-                        console.error("Gagal memulai kamera belakang:", e);
-                        alert("Gagal mengakses kamera belakang!");
-                    });
+                // Jika tidak ada kamera belakang, gunakan kamera pertama
+                const targetCamera = backCamera || cameras[0];
+
+                if (targetCamera) {
+                    scanner.start(targetCamera)
+                        .then(() => console.log('Kamera berhasil dimulai'))
+                        .catch(e => {
+                            console.error('Gagal mulai kamera pilihan:', e);
+                            // Fallback ke kamera pertama jika gagal
+                            if (cameras.length > 0 && targetCamera !== cameras[0]) {
+                                scanner.start(cameras[0]);
+                            }
+                        });
                 } else {
-                    // Jika tidak ditemukan, gunakan kamera pertama dengan peringatan
-                    console.warn("Kamera belakang tidak ditemukan, menggunakan kamera default");
-                    scanner.start(cameras[0]);
+                    alert('Tidak menemukan kamera!');
                 }
-            } else {
-                alert("Tidak ada kamera tersedia!");
-            }
-        }).catch(function(e) {
-            console.error("Error mendapatkan kamera:", e);
-            alert("Tidak bisa mengakses kamera, cek izin di browser!");
-        });
+            })
+            .catch(e => {
+                console.error('Error akses kamera:', e);
+                alert('Tidak bisa mengakses kamera!');
+            });
 
         scanner.addListener('scan', function(content) {
             document.getElementById('scanned-code').innerText = content;
@@ -97,22 +98,29 @@
 @endsection
 
 @section('main_content')
+    <div class="container-fluid">
+        @include('layouts.components.breadcrumb', ['header' => 'Presensi'])
+    </div>
     <div class="container mt-5 text-center">
-        <h2>Scan QR untuk Presensi</h2>
 
         <div class="card shadow-lg p-4">
-            <video id="preview" class="border rounded w-100"></video>
-            <p class="mt-3"><strong>Kode: </strong><span id="scanned-code">-</span></p>
-            <form id="attendanceForm" method="POST">
-                @csrf
-                <input type="hidden" name="code" id="code">
-                <input type="hidden" name="latitude" id="latitude">
-                <input type="hidden" name="longitude" id="longitude">
-                <button class="btn btn-primary mt-3" formaction="{{ route('employee.attendance.checkIn') }}" id="btnCheckIn"
-                    disabled>Check-In</button>
-                <button class="btn btn-danger mt-2" formaction="{{ route('employee.attendance.checkOut') }}"
-                    id="btnCheckOut" disabled>Check-Out</button>
-            </form>
+            <div class="card-header">
+                <h2>Scan QR untuk Presensi</h2>
+            </div>
+            <div class="card-body">
+                <video id="preview" class="border rounded w-100"></video>
+                <p class="mt-3"><strong>Kode: </strong><span id="scanned-code">-</span></p>
+                <form id="attendanceForm" method="POST">
+                    @csrf
+                    <input type="hidden" name="code" id="code">
+                    <input type="hidden" name="latitude" id="latitude">
+                    <input type="hidden" name="longitude" id="longitude">
+                    <button class="btn btn-primary mt-3" formaction="{{ route('employee.attendance.checkIn') }}"
+                        id="btnCheckIn" disabled>Check-In</button>
+                    <button class="btn btn-danger mt-2" formaction="{{ route('employee.attendance.checkOut') }}"
+                        id="btnCheckOut" disabled>Check-Out</button>
+                </form>
+            </div>
         </div>
     </div>
 @endsection
