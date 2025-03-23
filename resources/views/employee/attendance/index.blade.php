@@ -170,9 +170,9 @@
                 </div>
                 <form id="attendanceForm" method="POST">
                     @csrf
-                    <input type="hidden" name="code" id="code">
-                    <input type="hidden" name="latitude" id="latitude">
-                    <input type="hidden" name="longitude" id="longitude">
+                    <input type="hidden" name="code" id="code" value="{{ old('code') }}">
+                    <input type="hidden" name="latitude" id="latitude" value="{{ old('latitude') }}">
+                    <input type="hidden" name="longitude" id="longitude" value="{{ old('longitude') }}">
                     <button class="btn btn-primary mt-2" formaction="{{ route('employee.attendance.checkIn') }}"
                         id="btnCheckIn" disabled>Check-In</button>
                     <button class="btn btn-danger mt-2" formaction="{{ route('employee.attendance.checkOut') }}"
