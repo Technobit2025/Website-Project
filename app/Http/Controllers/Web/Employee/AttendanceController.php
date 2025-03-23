@@ -61,14 +61,9 @@ class AttendanceController extends Controller
             return back()->with('error', 'jadwal kerja tidak aktif');
         }
 
-        $distance = $this->haversineDistance(
-            $request->latitude,
-            $request->longitude,
-            $companyPlace->latitude,
-            $companyPlace->longitude
-        );
+        $distance = $this->haversineDistance($request->latitude, $request->longitude, $companyPlace->latitude, $companyPlace->longitude);
 
-        if ($distance > 50) {
+        if ($distance > env('APP_LOCATION_MAX_DISTANCE', 10) * 10) { // 100 m
             return back()->with('error', 'anda tidak berada di lokasi yang diizinkan');
         }
 
@@ -124,7 +119,7 @@ class AttendanceController extends Controller
             $companyPlace->longitude
         );
 
-        if ($distance > 50) {
+        if ($distance > env('APP_LOCATION_MAX_DISTANCE', 10) * 10) { // 100 m
             return back()->with('error', 'anda tidak berada di lokasi yang diizinkan');
         }
 
@@ -162,7 +157,7 @@ class AttendanceController extends Controller
 
             Log::info('Jarak GPS & IP:', ['distance' => $ipDistance]);
 
-            return $ipDistance <= 5000; // Maksimum selisih 5KM
+            return $ipDistance <= env('APP_LOCATION_MAX_DISTANCE', 10) * 1000; // Maksimum selisih 10KM
         } catch (\Exception $e) {
             Log::error('Error fetch IP geolocation:', ['error' => $e->getMessage()]);
             return false;
