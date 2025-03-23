@@ -57,6 +57,7 @@ use App\Http\Controllers\Web\SuperAdmin\FolderController as SuperAdminFolder;
 use App\Http\Controllers\Web\SuperAdmin\EnvController as SuperAdminEnv;
 use App\Http\Controllers\Web\SuperAdmin\CompanyShiftController as SuperAdminCompanyShift;
 use App\Http\Controllers\Web\SuperAdmin\CompanyScheduleController as SuperAdminCompanySchedule;
+use App\Http\Controllers\Web\SuperAdmin\CompanyAttendanceController as SuperAdminCompanyAttendance;
 use App\Http\Controllers\Web\SuperAdmin\CompanyPlaceController as SuperAdminCompanyPlace;
 
 // HUMAN RESOURCE
@@ -143,6 +144,12 @@ Route::group(['prefix' => 'superadmin', 'as' => 'superadmin.', 'middleware' => [
             Route::get('/{company}', [SuperAdminCompanySchedule::class, 'index'])->name('index');
             Route::post('save', [SuperAdminCompanySchedule::class, 'save'])->name('save');
             Route::post('destroy', [SuperAdminCompanySchedule::class, 'destroy'])->name('destroy');
+        });
+
+        Route::prefix('attendance')->name('attendance.')->group(function () {
+            Route::get('/{company}', [SuperAdminCompanyAttendance::class, 'index'])->name('index');
+            Route::post('save', [SuperAdminCompanyAttendance::class, 'save'])->name('save');
+            Route::post('destroy', [SuperAdminCompanyAttendance::class, 'destroy'])->name('destroy');
         });
 
         Route::prefix('place')->name('place.')->group(function () {

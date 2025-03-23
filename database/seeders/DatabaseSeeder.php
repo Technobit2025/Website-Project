@@ -22,6 +22,13 @@ class DatabaseSeeder extends Seeder
                 'username' => 'superadmin',
                 'password' => 'superadmin',
                 'role_id' => 1,
+            ],
+            [
+                'name' => 'Company',
+                'email' => 'company@gmail.com',
+                'username' => 'company',
+                'password' => 'company',
+                'role_id' => 6,
             ]
         ];
 

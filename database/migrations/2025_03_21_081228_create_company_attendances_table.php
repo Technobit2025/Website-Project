@@ -19,6 +19,16 @@ return new class extends Migration
             $table->decimal('longitude', 10, 7);
             $table->timestamp('checked_in_at')->nullable();
             $table->timestamp('checked_out_at')->nullable();
+            $table->enum('status', [
+                'Present',
+                'Sick Leave',
+                'Leave',
+                'Absent',
+                'Late',
+                'Left Early',
+                'WFH'
+            ])->nullable();
+            $table->text('note')->nullable();
             $table->timestamps();
         });
     }

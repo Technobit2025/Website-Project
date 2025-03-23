@@ -15,7 +15,7 @@ class EmployeeController extends Controller
     public function index()
     {
         $employees = Employee::all();
-        $roles = Role::all()->where('code', '!=', 'super_admin');
+        $roles = Role::where('code', '!=', 'super_admin')->where('code', '!=', 'company')->get();
         return view('super_admin.employee.index', compact('employees', 'roles'));
     }
 
@@ -26,7 +26,7 @@ class EmployeeController extends Controller
 
     public function create()
     {
-        $roles = Role::all()->where('code', '!=', 'super_admin');
+        $roles = Role::where('code', '!=', 'super_admin')->where('code', '!=', 'company')->get();
         return view('super_admin.employee.create', compact('roles'));
     }
 
@@ -48,7 +48,7 @@ class EmployeeController extends Controller
 
     public function edit(Employee $employee)
     {
-        $roles = Role::all()->where('code', '!=', 'super_admin');
+        $roles = Role::where('code', '!=', 'super_admin')->where('code', '!=', 'company')->get();
         return view('super_admin.employee.edit', compact('employee', 'roles'));
     }
 

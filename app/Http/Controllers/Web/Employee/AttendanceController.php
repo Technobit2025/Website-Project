@@ -27,12 +27,12 @@ class AttendanceController extends Controller
             'latitude' => 'required|numeric',
             'longitude' => 'required|numeric',
         ], [
-            'code.required' => 'Mohon scan barcode yang tersedia',
-            'code.string' => 'Mohon scan barcode yang tersedia',
-            'latitude.required' => 'Mohon ambil lokasi anda',
-            'latitude.numeric' => 'Mohon ambil lokasi anda',
-            'longitude.required' => 'Mohon ambil lokasi anda',
-            'longitude.numeric' => 'Mohon ambil lokasi anda',
+            'code.required' => 'Mohon scan barcode yang tersedia.',
+            'code.string' => 'Mohon scan barcode yang tersedia.',
+            'latitude.required' => 'Mohon aktifkan GPS anda dan cek koneksi internet.',
+            'latitude.numeric' => 'Mohon aktifkan GPS anda dan cek koneksi internet.',
+            'longitude.required' => 'Mohon aktifkan GPS anda dan cek koneksi internet.',
+            'longitude.numeric' => 'Mohon aktifkan GPS anda dan cek koneksi internet.',
         ]);
 
         $employee = Employee::where('user_id', Auth::id())->first();
@@ -49,8 +49,10 @@ class AttendanceController extends Controller
         }
 
         // **Validasi Lokasi GPS vs IP**
-        if (!$this->validateLocation($request->latitude, $request->longitude, $request->ip())) {
-            return back()->with('error', 'terdeteksi fake GPS, lokasi anda mencurigakan')->withInput();
+        if (env('APP_ENV') == 'production') {
+            if (!$this->validateLocation($request->latitude, $request->longitude, $request->ip())) {
+                return back()->with('error', 'terdeteksi fake GPS, lokasi anda mencurigakan')->withInput();
+            }
         }
 
         $schedule = CompanySchedule::where('company_id', $employee->company_id)
@@ -87,7 +89,8 @@ class AttendanceController extends Controller
             'company_place_id' => $companyPlace->id,
             'latitude' => $request->latitude,
             'longitude' => $request->longitude,
-            'checked_in_at' => now(),
+            'status' => "Present",
+            'checked_in_at' => now()
         ]);
 
         return back()->with('success', 'check-in berhasil');
@@ -100,12 +103,12 @@ class AttendanceController extends Controller
             'latitude' => 'required|numeric',
             'longitude' => 'required|numeric',
         ], [
-            'code.required' => 'Mohon scan barcode yang tersedia',
-            'code.string' => 'Mohon scan barcode yang tersedia',
-            'latitude.required' => 'Mohon ambil lokasi anda',
-            'latitude.numeric' => 'Mohon ambil lokasi anda',
-            'longitude.required' => 'Mohon ambil lokasi anda',
-            'longitude.numeric' => 'Mohon ambil lokasi anda',
+            'code.required' => 'Mohon scan barcode yang tersedia.',
+            'code.string' => 'Mohon scan barcode yang tersedia.',
+            'latitude.required' => 'Mohon aktifkan GPS anda dan cek koneksi internet.',
+            'latitude.numeric' => 'Mohon aktifkan GPS anda dan cek koneksi internet.',
+            'longitude.required' => 'Mohon aktifkan GPS anda dan cek koneksi internet.',
+            'longitude.numeric' => 'Mohon aktifkan GPS anda dan cek koneksi internet.',
         ]);
 
         $employee = Employee::where('user_id', Auth::id())->first();
@@ -122,16 +125,13 @@ class AttendanceController extends Controller
         }
 
         // **Validasi Lokasi GPS vs IP**
-        if (!$this->validateLocation($request->latitude, $request->longitude, $request->ip())) {
-            return back()->with('error', 'terdeteksi fake GPS, lokasi anda mencurigakan')->withInput();
+        if (env('APP_ENV') == 'production') {
+            if (!$this->validateLocation($request->latitude, $request->longitude, $request->ip())) {
+                return back()->with('error', 'terdeteksi fake GPS, lokasi anda mencurigakan')->withInput();
+            }
         }
 
-        $distance = $this->haversineDistance(
-            $request->latitude,
-            $request->longitude,
-            $companyPlace->latitude,
-            $companyPlace->longitude
-        );
+        $distance = $this->haversineDistance($request->latitude, $request->longitude, $companyPlace->latitude, $companyPlace->longitude);
 
         if ($distance > env('APP_LOCATION_MAX_DISTANCE', 10) * 10) { // 100 m
             return back()->with('error', 'anda tidak berada di lokasi yang diizinkan')->withInput();

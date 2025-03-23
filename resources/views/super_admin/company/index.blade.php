@@ -160,7 +160,7 @@
                                                             data-bs-placement="top" data-bs-title="Lokasi Presensi Perusahaan">
                                                             <i class="fa-solid fa-map"></i>
                                                         </a>
-                                                        <a href="{{ route('superadmin.company.employee.index', $company->id) }}"
+                                                        <a href="{{ route('superadmin.company.attendance.index', $company->id) }}"
                                                             class="btn btn-secondary btn-sm px-3" data-bs-toggle="tooltip"
                                                             data-bs-placement="top" data-bs-title="Presensi Perusahaan">
                                                             <i class="fa-solid fa-clock"></i>

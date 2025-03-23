@@ -50,13 +50,13 @@
         //         .join("");
         // }
         // generateLocationHash(37.7749, -122.4194).then(console.log);
-        let scanner = new Instascan.Scanner({
-            video: document.getElementById('preview'),
-            mirror: false
-        });
-        let scannedCode = null;
-        let latitude = null;
-        let longitude = null;
+        // let scanner = new Instascan.Scanner({
+        //     video: document.getElementById('preview'),
+        //     mirror: false
+        // });
+        // let scannedCode = null;
+        // let latitude = null;
+        // let longitude = null;
 
         // Dapatkan lokasi user
         function getLocation() {
@@ -138,12 +138,12 @@
             app.init();
         });
 
-        scanner.addListener('scan', function(content) {
-            document.getElementById('scanned-code').innerText = content;
-            document.getElementById('code').value = content;
-            document.getElementById('btnCheckIn').disabled = false;
-            document.getElementById('btnCheckOut').disabled = false;
-        });
+        // scanner.addListener('scan', function(content) {
+        //     document.getElementById('scanned-code').innerText = content;
+        //     document.getElementById('code').value = content;
+        //     document.getElementById('btnCheckIn').disabled = false;
+        //     document.getElementById('btnCheckOut').disabled = false;
+        // });
 
         getLocation(); // Panggil pas load
     </script>
