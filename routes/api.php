@@ -27,10 +27,14 @@ use App\Http\Controllers\API\V1\Auth\AndroidForgotPasswordController;
 use App\Http\Controllers\API\V1\Auth\AndroidResetPasswordController;
 use App\Http\Controllers\API\V1\Auth\AndroidVerifyOtpController;
 use App\Http\Controllers\API\V1\User\ProfileController;
+<<<<<<< HEAD
 use App\Http\Controllers\API\V1\Auth\AndroidChangePasswordController;
+=======
+use App\Http\Controllers\API\V1\Company\CompanyAttendanceController;
+>>>>>>> 04d9b7b753f75450691d133a9a75e344f28f9dc1
 
 // API Route
-Route::prefix('v1')->name('api.')->group(function () {
+Route::prefix('v1')->name('api.v1.')->group(function () {
     // AUTHENTICATION
     Route::post('login', [AuthController::class, 'login'])->middleware('guest')->name('login');
 
@@ -54,6 +58,12 @@ Route::prefix('v1')->name('api.')->group(function () {
             Route::put('profile/user', [ProfileController::class, 'updateUserProfile'])->name('updateUserProfile'); // update user
             Route::put('profile/employee', [ProfileController::class, 'updateEmployeeProfile'])->name('updateEmployeeProfile'); // update employee
         });
+
+        // ATTENDANCE
+        Route::name('attendance.')->group(function () {
+            Route::post('check-in', [CompanyAttendanceController::class, 'checkIn'])->name('checkIn'); // check-in
+            Route::post('check-out', [CompanyAttendanceController::class, 'checkOut'])->name('checkOut'); // check-out
+        });
     });
 
     // --- Mulai Baris Kode Android -----
@@ -72,7 +82,10 @@ Route::prefix('v1')->name('api.')->group(function () {
         });
     });
 
-
+    // Route::name('attendance.')->group(function () {
+    //     Route::post('check-in', [CompanyAttendanceController::class, 'checkIn'])->name('checkIn'); // check-in
+    //     Route::post('check-out', [CompanyAttendanceController::class, 'checkOut'])->name('checkOut'); // check-out
+    // });
 
 
 

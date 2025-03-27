@@ -48,8 +48,9 @@
 
 
                                     <div class="form-group mb-0">
-                                        <button class="btn btn-primary btn-block w-100 mt-3 mb-2" type="submit">Kirim
-                                            Link Reset Password </button>
+                                        <button type="submit" class="btn btn-primary"><i class="fa fa-paper-plane"></i>
+                                            Kirim</button>
+                                        Link Reset Password </button>
                                     </div>
                                 </form>
                                 <a href="{{ route('login') }}" class="text-center">

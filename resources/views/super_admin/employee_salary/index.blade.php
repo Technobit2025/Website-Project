@@ -136,13 +136,13 @@
                                                             <a href="{{ route('superadmin.employeesalary.show', $employee->id) }}"
                                                                 class="btn btn-info btn-sm px-3" data-bs-toggle="tooltip"
                                                                 data-bs-placement="top" data-bs-title="Lihat Gaji Karyawan">
-                                                                <i class="fa-regular fa-eye"></i>
+                                                                <i class="fa-solid fa-eye"></i>
                                                             </a>
 
                                                             <a href="{{ route('superadmin.employeesalary.edit', $employee->id) }}"
                                                                 class="btn btn-warning btn-sm px-3" data-bs-toggle="tooltip"
                                                                 data-bs-placement="top" data-bs-title="Ubah Gaji Karyawan">
-                                                                <i class="fa-regular fa-pen-to-square"></i>
+                                                                <i class="fa-solid fa-pen-to-square"></i>
                                                             </a>
 
                                                             @include('layouts.components.delete', [
@@ -158,7 +158,7 @@
                                                                 class="btn btn-success btn-sm px-3" data-bs-toggle="tooltip"
                                                                 data-bs-placement="top"
                                                                 data-bs-title="Tentukan Gaji Karyawan">
-                                                                <i class="fa-regular fa-plus"></i> Tentukan Gaji
+                                                                <i class="fa-solid fa-plus"></i> Tentukan Gaji
                                                             </a>
                                                         @endif
                                                     </div>

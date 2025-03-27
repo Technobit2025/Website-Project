@@ -131,7 +131,7 @@
                                                         <a href="{{ route('humanresource.employeesalary.show', $employee->id) }}"
                                                             class="btn btn-info btn-sm px-3" data-bs-toggle="tooltip"
                                                             data-bs-placement="top" data-bs-title="Lihat Gaji Karyawan">
-                                                            <i class="fa-regular fa-eye"></i>
+                                                            <i class="fa-solid fa-eye"></i>
                                                         </a>
                                                     </div>
                                                 </td>

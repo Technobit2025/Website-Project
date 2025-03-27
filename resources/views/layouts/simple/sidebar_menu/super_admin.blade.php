@@ -2,10 +2,24 @@
     {{-- <i class="fa-solid fa-thumbtack"></i> --}}
     <a class="sidebar-link sidebar-title" href="javascript:void(0)">
         <svg class="stroke-icon">
-            <use href="{{ asset('assets/svg/icon-sprite.svg#stroke-user') }}"></use>
+            <use href="{{ asset('assets/svg/icon-sprite.svg#stroke-social') }}"></use>
         </svg>
-        <svg class="fill-icon">
-            <use href="{{ asset('assets/svg/icon-sprite.svg#fill-user') }}"></use>
+        <span class="">Master Perusahaan</span>
+    </a>
+    <ul class="sidebar-submenu">
+        <li>
+            <a class="" href="{{ route('superadmin.company.index') }}">List Perusahaan</a>
+        </li>
+        <li>
+            <a class="" href="{{ route('superadmin.company.create') }}">Tambah Perusahaan</a>
+        </li>
+    </ul>
+</li>
+<li class="sidebar-list">
+    {{-- <i class="fa-solid fa-thumbtack"></i> --}}
+    <a class="sidebar-link sidebar-title" href="javascript:void(0)">
+        <svg class="stroke-icon">
+            <use href="{{ asset('assets/svg/icon-sprite.svg#stroke-user') }}"></use>
         </svg>
         <span class="">Karyawan</span>
     </a>
@@ -23,9 +37,6 @@
         <svg class="stroke-icon">
             <use href="{{ asset('assets/svg/icon-sprite.svg#stroke-price') }}"></use>
         </svg>
-        <svg class="fill-icon">
-            <use href="{{ asset('assets/svg/icon-sprite.svg#fill-price') }}"></use>
-        </svg>
         <span class="">Gaji Karyawan</span>
     </a>
 </li>
@@ -38,9 +49,6 @@
     <a class="sidebar-link sidebar-title link-nav" href="{{ route('superadmin.logs.index') }}">
         <svg class="stroke-icon">
             <use href="{{ asset('assets/svg/icon-sprite.svg#stroke-reports') }}"></use>
-        </svg>
-        <svg class="fill-icon">
-            <use href="{{ asset('assets/svg/icon-sprite.svg#fill-reports') }}"></use>
         </svg>
         <span class="">Log Viewer</span>
     </a>

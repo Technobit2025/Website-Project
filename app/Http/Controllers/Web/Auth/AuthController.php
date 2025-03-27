@@ -43,12 +43,14 @@ class AuthController extends Controller
 
             Auth::login($user, $request->filled('remember')); // Use remember me
             $request->session()->regenerate();
-            return app(MainController::class)->index();
+            return redirect()->to(app(MainController::class)->index()->getTargetUrl())
+                ->with('success', 'Login berhasil! Selamat datang kembali ' . Auth::user()->name);
         }
 
         if (Auth::attempt($credentials, $request->filled('remember'))) { // Use remember me
             session()->regenerate();
-            return app(MainController::class)->index();
+            return redirect()->to(app(MainController::class)->index()->getTargetUrl())
+                ->with('success', 'Login berhasil! Selamat datang kembali ' . Auth::user()->name);
         }
 
         return redirect()->back()->withErrors([

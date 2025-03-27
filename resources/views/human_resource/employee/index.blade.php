@@ -116,7 +116,7 @@
                                             <th>Email</th>
                                             <th>Role</th>
                                             <th>Status</th>
-                                            <th>Action</th>
+                                            <th>Aksi</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -134,13 +134,13 @@
                                                         <a href="{{ route('humanresource.employee.show', $employee->id) }}"
                                                             class="btn btn-info btn-sm px-3" data-bs-toggle="tooltip"
                                                             data-bs-placement="top" data-bs-title="Lihat Karyawan">
-                                                            <i class="fa-regular fa-eye"></i>
+                                                            <i class="fa-solid fa-eye"></i>
                                                         </a>
 
                                                         <a href="{{ route('humanresource.employee.edit', $employee->id) }}"
                                                             class="btn btn-warning btn-sm px-3" data-bs-toggle="tooltip"
                                                             data-bs-placement="top" data-bs-title="Ubah Karyawan">
-                                                            <i class="fa-regular fa-pen-to-square"></i>
+                                                            <i class="fa-solid fa-pen-to-square"></i>
                                                         </a>
 
                                                         @include('layouts.components.delete', [
