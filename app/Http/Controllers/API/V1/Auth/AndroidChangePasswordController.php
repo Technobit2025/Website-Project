@@ -7,7 +7,7 @@ use App\Services\ChangePasswordService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Routing\Controller;
 use Symfony\Component\HttpFoundation\Response;
-
+use Illuminate\Support\Facades\Auth;
 
 class AndroidChangePasswordController extends Controller
 {
@@ -21,7 +21,11 @@ class AndroidChangePasswordController extends Controller
 
     public function changePassword(ChangePasswordRequest $request): JsonResponse
     {
+        /** @var \App\Models\User $user */
+        $user = Auth::user();
+
         $success = $this->changePasswordService->changePassword(
+            $user,
             $request->current_password,
             $request->new_password
         );
@@ -37,7 +41,8 @@ class AndroidChangePasswordController extends Controller
         }
 
         return response()->json([
-            'status'=>'success',
-            'message' => 'Password berhasil diubah. Silahkan login kembali'], Response::HTTP_OK);
+            'status' => 'success',
+            'message' => 'Password berhasil diubah. Silakan login kembali.'
+        ], Response::HTTP_OK);
     }
 }
