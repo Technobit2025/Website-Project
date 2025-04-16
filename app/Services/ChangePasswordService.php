@@ -4,22 +4,22 @@ namespace App\Services;
 
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Auth;
 
 class ChangePasswordService
 {
-    public function changePassword($currentPassword, $newPassword): bool
+    public function changePassword($user, $currentPassword, $newPassword): bool
     {
-        $user = Auth::user();
+        if (!$user) {
+            return false;
+        }
 
-        if (!$user || !Hash::check($currentPassword, $user->password)) {
+        if (!Hash::check($currentPassword, $user->password)) {
             return false;
         }
 
         $user->password = $newPassword;
+        $saved = $user->save();
 
-        /** @var \App\Models\User $user **/
-        
-        return $user->save();
+        return $saved;
     }
 }
