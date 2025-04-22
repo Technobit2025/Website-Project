@@ -27,7 +27,9 @@ use App\Http\Controllers\API\V1\Auth\AndroidForgotPasswordController;
 use App\Http\Controllers\API\V1\Auth\AndroidResetPasswordController;
 use App\Http\Controllers\API\V1\Auth\AndroidVerifyOtpController;
 use App\Http\Controllers\API\V1\User\ProfileController;
+use App\Http\Controllers\API\V1\Auth\AndroidChangePasswordController;
 use App\Http\Controllers\API\V1\Company\CompanyAttendanceController;
+
 
 // API Route
 Route::prefix('v1')->name('api.v1.')->group(function () {
@@ -63,6 +65,7 @@ Route::prefix('v1')->name('api.v1.')->group(function () {
     });
 
     // --- Mulai Baris Kode Android -----
+    //test
 
     // FORGOT PASSWORD
     Route::prefix('android')->name('android.')->group(function () {
@@ -70,16 +73,17 @@ Route::prefix('v1')->name('api.v1.')->group(function () {
         Route::post('reset-password', [AndroidResetPasswordController::class, 'resetPassword']);
         Route::post('request-otp', [AndroidForgotPasswordController::class, 'requestOtp']);
         Route::post('verify-otp', [AndroidVerifyOtpController::class, 'verifyOtp']);
+
+        // --- PENGGUNA HARUS LOGIN ----
+        Route::middleware('auth:sanctum')->group(function () {
+            Route::put('change-password', [AndroidChangePasswordController::class, 'changePassword']);
+        });
     });
 
     // Route::name('attendance.')->group(function () {
     //     Route::post('check-in', [CompanyAttendanceController::class, 'checkIn'])->name('checkIn'); // check-in
     //     Route::post('check-out', [CompanyAttendanceController::class, 'checkOut'])->name('checkOut'); // check-out
     // });
-
-
-
-
 
 
 
