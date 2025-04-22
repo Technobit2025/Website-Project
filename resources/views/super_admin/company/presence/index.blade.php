@@ -105,11 +105,11 @@
             <div class="col-sm-12">
                 <div class="card">
                     <div class="card-header">
-                        <div class="d-flex justify-content-between">
-                            <h5>Data Perusahaan</h5>
-                            <a href="{{ route('superadmin.company.create') }}" data-intro="Klik tombol ini untuk menambahkan perusahaan"
-                                class="btn btn-primary">Tambahkan Perusahaan</a>
-                        </div>
+                        {{-- <div class="d-flex justify-content-between">
+                            <h5>Data Jadwal</h5>
+                            <a href="{{ route('superadmin.company.presence.create') }}" data-intro="Klik tombol ini untuk menambahkan jadwal"
+                                class="btn btn-primary">Tambahkan Jadwal</a>
+                        </div> --}}
                     </div>
                     <div class="card-body">
                         <div class="table-responsive custom-scrollbar table-striped" data-intro="Data perusahaan akan ditampilkan disini">
@@ -120,66 +120,43 @@
                                     <thead>
                                         <tr>
                                             {{-- <th style="width: 5% !important;">ID</th> --}}
-                                            <th>Nama</th>
-                                            <th>Email</th>
-                                            <th>Alamat</th>
+                                            <th>Informasi</th>
+                                            <th>Hari</th>
+                                            <th>Waktu Mulai</th>
+                                            <th>Waktu Selesai</th>
                                             <th data-intro="Klik tombol yang tersedia dibawah ini untuk melihat, mengubah, menghapus perusahaan">Aksi</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        @foreach ($companies as $company)
+                                        @foreach ($companyPresence as $companyPresence)
                                             <tr>
                                                 {{-- <td style="width: 5% !important;">{{ $company->id }}</td> --}}
-                                                <td>{{ $company->name ?? '-' }}</td>
-                                                <td>{{ $company->email ?? '-' }}</td>
-                                                <td>{{ Str::limit($company->address, 40) ?? '-' }}</td>
+                                                <td>{{ $companyPresence->information ?? '-' }}</td>
+                                                <td>{{ $companyPresence->day ?? '-' }}</td>
+                                                <td>{{ $companyPresence->start_time ?? '-' }}</td>
+                                                <td>{{ $companyPresence->start_end ?? '-' }}</td>
                                                 <td>
                                                     <div class="d-flex gap-2">
-                                                        <a href="{{ route('superadmin.company.show', $company->id) }}"
+                                                        <a href="{{ route('superadmin.company.presence.create', $company->id) }}"
                                                             class="btn btn-info btn-sm px-3" data-bs-toggle="tooltip"
-                                                            data-bs-placement="top" data-bs-title="Lihat Perusahaan" >
-                                                            <i class="fa-solid fa-eye"></i>
+                                                            data-bs-placement="top" data-bs-title="Tambah Jadwal" >
+                                                            <i class="fa-solid fa-plus"></i>
                                                         </a>
-                                                        <a href="{{ route('superadmin.company.employee.index', $company->id) }}"
-                                                            class="btn btn-success btn-sm px-3" data-bs-toggle="tooltip"
-                                                            data-bs-placement="top" data-bs-title="Karyawan Perusahaan">
-                                                            <i class="fa-solid fa-user"></i>
-                                                        </a>
-                                                        <a href="{{ route('superadmin.company.shift.index', $company->id) }}"
-                                                            class="btn btn-success btn-sm px-3" data-bs-toggle="tooltip"
-                                                            data-bs-placement="top" data-bs-title="Shift Perusahaan">
-                                                            <i class="fa-solid fa-layer-group"></i>
-                                                        </a>
-                                                        <a href="{{ route('superadmin.company.schedule.index', $company->id) }}"
-                                                            class="btn btn-warning btn-sm px-3" data-bs-toggle="tooltip"
-                                                            data-bs-placement="top" data-bs-title="Jadwal Perusahaan">
-                                                            <i class="fa-solid fa-calendar-days"></i>
-                                                        </a>
-                                                        <a href="{{ route('superadmin.company.place.index', $company->id) }}"
-                                                            class="btn btn-warning btn-sm px-3" data-bs-toggle="tooltip"
-                                                            data-bs-placement="top" data-bs-title="Lokasi Presensi Perusahaan">
-                                                            <i class="fa-solid fa-map"></i>
-                                                        </a>
-                                                        <a href="{{ route('superadmin.company.attendance.index', $company->id) }}"
-                                                            class="btn btn-secondary btn-sm px-3" data-bs-toggle="tooltip"
-                                                            data-bs-placement="top" data-bs-title="Presensi Perusahaan">
-                                                            <i class="fa-solid fa-clock"></i>
-                                                        </a>
-                                                        <a href="{{ route('superadmin.company.presence.index', $company->id) }}"
-                                                            class="btn btn-secondary btn-sm px-3" data-bs-toggle="tooltip"
-                                                            data-bs-placement="top" data-bs-title="Perizinan Perusahaan">
-                                                            <i class="fa-solid fa-clock"></i>
+                                            
+                                                        <a href="{{ route('superadmin.company.presence.edit', $company->id) }}"
+                                                            class="btn btn-info btn-sm px-3" data-bs-toggle="tooltip"
+                                                            data-bs-placement="top" data-bs-title="Edit Jadwal" >
+                                                            <i class="fa-solid fa-edit"></i>
                                                         </a>
                                                         @include('layouts.components.delete', [
-                                                            'route' => route(
-                                                                'superadmin.company.destroy',
-                                                                $company->id),
-                                                            'title' => 'Hapus Perusahaan',
+                                                            'route' => route('superadmin.company.presence.destroy', [
+                                                                $companyPresence->id,
+                                                            ]),
+                                                            'title' => 'Hapus Lokasi dari Perusahaan',
                                                             'message' =>
-                                                                'Apakah kamu yakin ingin menghapus karyawan ini?',
+                                                                'Apakah kamu yakin ingin menghapus lokasi dari perusahaan ini?',
                                                         ])
                                                     </div>
-
                                                 </td>
                                             </tr>
                                         @endforeach

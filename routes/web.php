@@ -59,6 +59,9 @@ use App\Http\Controllers\Web\SuperAdmin\CompanyShiftController as SuperAdminComp
 use App\Http\Controllers\Web\SuperAdmin\CompanyScheduleController as SuperAdminCompanySchedule;
 use App\Http\Controllers\Web\SuperAdmin\CompanyAttendanceController as SuperAdminCompanyAttendance;
 use App\Http\Controllers\Web\SuperAdmin\CompanyPlaceController as SuperAdminCompanyPlace;
+use App\Http\Controllers\Web\SuperAdmin\CompanyPermissionController as SuperAdminCompanyPermission;
+use App\Http\Controllers\Web\SuperAdmin\CompanyPresencesController as SuperAdminCompanyPresence;
+
 
 // HUMAN RESOURCE
 use App\Http\Controllers\Web\HumanResource\HomeController as HumanResourceHome;
@@ -163,6 +166,18 @@ Route::group(['prefix' => 'superadmin', 'as' => 'superadmin.', 'middleware' => [
 
             Route::get('print-qr-code/{companyPlace}', [SuperAdminCompanyPlace::class, 'printQrCode'])->name('printQrCode');
         });
+        Route::prefix('presence')->name('presence.')->group(function () {
+            Route::get('/{company}', [SuperAdminCompanyPresence::class, 'index'])->name('index');
+            Route::get('create/{company}', [SuperAdminCompanyPresence::class, 'create'])->name('create');
+            Route::post('store/{company}', [SuperAdminCompanyPresence::class, 'store'])->name('store');
+            Route::get('edit/{presence}', [SuperAdminCompanyPresence::class, 'edit'])->name('edit');
+            Route::put('update/{presence}', [SuperAdminCompanyPresence::class, 'update'])->name('update');
+            Route::delete('destroy/{presence}', [SuperAdminCompanyPresence::class, 'destroy'])->name('destroy');
+        });
+        // Route::resource('presence', SuperAdminCompanyPresence::class);
+        // Route::prefix('permission')->name('permission.')->group(function (){
+        //     Route::get('/create/{company}',[SuperAdminCompanyPermission::class, 'create'])->name('create');
+        // });
     });
 
     // EMPLOYEE
