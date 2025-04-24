@@ -29,6 +29,7 @@ use App\Http\Controllers\API\V1\Auth\AndroidVerifyOtpController;
 use App\Http\Controllers\API\V1\User\ProfileController;
 use App\Http\Controllers\API\V1\Auth\AndroidChangePasswordController;
 use App\Http\Controllers\API\V1\Company\CompanyAttendanceController;
+use App\Http\Controllers\API\V1\Company\AndroidPresensiController;
 
 
 // API Route
@@ -77,6 +78,8 @@ Route::prefix('v1')->name('api.v1.')->group(function () {
         // --- PENGGUNA HARUS LOGIN ----
         Route::middleware('auth:sanctum')->group(function () {
             Route::put('change-password', [AndroidChangePasswordController::class, 'changePassword']);
+            Route::post('presensi', [AndroidPresensiController::class, 'store']);
+            
         });
     });
 
