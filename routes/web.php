@@ -59,6 +59,9 @@ use App\Http\Controllers\Web\SuperAdmin\CompanyShiftController as SuperAdminComp
 use App\Http\Controllers\Web\SuperAdmin\CompanyScheduleController as SuperAdminCompanySchedule;
 use App\Http\Controllers\Web\SuperAdmin\CompanyAttendanceController as SuperAdminCompanyAttendance;
 use App\Http\Controllers\Web\SuperAdmin\CompanyPlaceController as SuperAdminCompanyPlace;
+use App\Http\Controllers\Web\SuperAdmin\PayrollPeriodController as SuperAdminPayrollPeriod;
+use App\Http\Controllers\Web\SuperAdmin\PayrollController as SuperAdminPayroll;
+use App\Http\Controllers\Web\SuperAdmin\PayrollComponentController as SuperAdminPayrollComponent;
 
 // HUMAN RESOURCE
 use App\Http\Controllers\Web\HumanResource\HomeController as HumanResourceHome;
@@ -186,6 +189,30 @@ Route::group(['prefix' => 'superadmin', 'as' => 'superadmin.', 'middleware' => [
         Route::put('update/{employee}', [SuperAdminEmployee::class, 'salaryUpdate'])->name('update');
         Route::delete('destroy/{employee}', [SuperAdminEmployee::class, 'salaryDestroy'])->name('destroy');
     });
+
+    // PAYROLL
+    Route::prefix('payroll')->name('payroll.')->group(function () {
+        // PAYROLL PERIOD
+        Route::prefix('period')->name('period.')->group(function () {
+            Route::get('/', [SuperAdminPayrollPeriod::class, 'index'])->name('index');
+            Route::post('store', [SuperAdminPayrollPeriod::class, 'store'])->name('store');
+            Route::put('update/{payrollPeriod}', [SuperAdminPayrollPeriod::class, 'update'])->name('update');
+            Route::delete('destroy/{payrollPeriod}', [SuperAdminPayrollPeriod::class, 'destroy'])->name('destroy');
+        });
+
+        // PAYROLL
+        Route::get('/{payrollPeriod}', [SuperAdminPayroll::class, 'index'])->name('index');
+        Route::post('store', [SuperAdminPayroll::class, 'store'])->name('store');
+        Route::put('update/{payroll}', [SuperAdminPayroll::class, 'update'])->name('update');
+        Route::delete('destroy/{payroll}', [SuperAdminPayroll::class, 'destroy'])->name('destroy');
+
+        // PAYROLL COMPONENT
+        Route::prefix('component')->name('component.')->group(function () {
+            Route::get('/{payroll}', [SuperAdminPayrollComponent::class, 'index'])->name('index');
+            Route::post('store/{payroll}', [SuperAdminPayrollComponent::class, 'store'])->name('store');
+        });
+    });
+
     // TOOLS
     Route::prefix('logviewer')->name('logs.')->group(function () {
         Route::get('/', [SuperAdminLogViewer::class, 'index'])->name('index');

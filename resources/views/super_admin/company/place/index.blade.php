@@ -86,7 +86,7 @@
                                                             ]),
                                                             'title' => 'Hapus Lokasi dari Perusahaan',
                                                             'message' =>
-                                                                'Apakah kamu yakin ingin menghapus lokasi dari perusahaan ini?',
+                                                                'Apakah anda yakin ingin menghapus lokasi dari perusahaan ini?',
                                                         ])
                                                     </div>
 

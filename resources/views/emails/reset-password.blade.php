@@ -113,7 +113,7 @@
                             <tr>
                                 <td style="padding: 30px">
                                     <h6 style="font-weight: 600">Reset Password</h6>
-                                    <p>Kamu lupa password untuk {{ env('APP_NAME') }}. Jika ini benar, klik di bawah
+                                    <p>Anda lupa password untuk {{ env('APP_NAME') }}. Jika ini benar, klik di bawah
                                         untuk
                                         mereset passwordmu.</p>
                                     <p style="text-align: center">
@@ -121,7 +121,7 @@
                                             style="padding: 10px; background-color: #{{ env('APP_COLOR') }}; color: #fff; display: inline-block; border-radius: 4px">Reset
                                             Password</a>
                                     </p>
-                                    <p>Jika kamu ingat passwordmu, kamu bisa mengabaikan email ini.</p>
+                                    <p>Jika anda ingat passwordmu, anda bisa mengabaikan email ini.</p>
                                     <p>Semoga berhasil!</p>
                                     <p style="margin-bottom: 0">
                                         Terima kasih,<br>Arunika Prawira</p>

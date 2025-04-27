@@ -37,7 +37,15 @@
         <svg class="stroke-icon">
             <use href="{{ asset('assets/svg/icon-sprite.svg#stroke-price') }}"></use>
         </svg>
-        <span class="">Gaji Karyawan</span>
+        <span class="">Gaji Pokok</span>
+    </a>
+</li>
+<li class="sidebar-list">
+    <a class="sidebar-link sidebar-title link-nav" href="{{ route('superadmin.payroll.period.index') }}">
+        <svg class="stroke-icon">
+            <use href="{{ asset('assets/svg/icon-sprite.svg#stroke-sample-page') }}"></use>
+        </svg>
+        <span class="">Payroll</span>
     </a>
 </li>
 <li class="sidebar-main-title">

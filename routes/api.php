@@ -27,11 +27,9 @@ use App\Http\Controllers\API\V1\Auth\AndroidForgotPasswordController;
 use App\Http\Controllers\API\V1\Auth\AndroidResetPasswordController;
 use App\Http\Controllers\API\V1\Auth\AndroidVerifyOtpController;
 use App\Http\Controllers\API\V1\User\ProfileController;
-<<<<<<< HEAD
 use App\Http\Controllers\API\V1\Auth\AndroidChangePasswordController;
-=======
 use App\Http\Controllers\API\V1\Company\CompanyAttendanceController;
->>>>>>> 04d9b7b753f75450691d133a9a75e344f28f9dc1
+
 
 // API Route
 Route::prefix('v1')->name('api.v1.')->group(function () {

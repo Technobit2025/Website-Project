@@ -151,7 +151,7 @@
                                                                     $employee->id),
                                                                 'title' => 'Hapus Gaji Karyawan',
                                                                 'message' =>
-                                                                    'Apakah kamu yakin ingin menghapus gaji karyawan ini?',
+                                                                    'Apakah anda yakin ingin menghapus gaji karyawan ini?',
                                                             ])
                                                         @else
                                                             <a href="{{ route('treasurer.employeesalary.create', $employee->id) }}"

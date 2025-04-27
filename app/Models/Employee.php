@@ -12,4 +12,14 @@ class Employee extends Model
     {
         return $this->belongsTo(User::class);
     }
+    public function payrolls()
+    {
+        return $this->hasMany(Payroll::class);
+    }
+
+    public function payrollInPayrollPeriod($payrollPeriodId)
+    {
+        return $this->payrolls()->where('payroll_period_id', $payrollPeriodId)->first();
+    }
+
 }

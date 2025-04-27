@@ -160,7 +160,7 @@
                                                             ]),
                                                             'title' => 'Hapus Shift dari Perusahaan',
                                                             'message' =>
-                                                                'Apakah kamu yakin ingin menghapus shift dari perusahaan ini?',
+                                                                'Apakah anda yakin ingin menghapus shift dari perusahaan ini?',
                                                         ])
                                                     </div>
 

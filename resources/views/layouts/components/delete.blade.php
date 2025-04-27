@@ -1,6 +1,6 @@
 @props([
     'route',
-    'message' => 'Apakah kamu yakin ingin menghapus item ini?',
+    'message' => 'Apakah anda yakin ingin menghapus item ini?',
     'title' => 'Hapus Item',
     'icon' => 'fa-solid fa-trash',
 ])
@@ -49,7 +49,7 @@
             } else if (result.dismiss === Swal.DismissReason.cancel) {
                 Swal.fire({
                     title: "Batal",
-                    text: "Kamu tidak jadi menghapus data ini :)",
+                    text: "Anda tidak jadi menghapus data ini :)",
                     icon: "error",
                     background: $('body').hasClass('dark-only') ? '#262932' : '#fff',
                     color: $('body').hasClass('dark-only') ? '#b2b2c4' : '#000',
