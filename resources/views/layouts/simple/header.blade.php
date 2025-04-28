@@ -165,7 +165,7 @@
 <script>
     function logoutConfirm() {
         Swal.fire({
-            title: 'Apakah kamu yakin ingin keluar?',
+            title: 'Apakah anda yakin ingin keluar?',
             icon: 'warning',
             showCancelButton: true,
             confirmButtonColor: 'var(--bs-primary)',

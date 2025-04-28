@@ -1,16 +1,24 @@
 <?php
-
 namespace App\Http\Controllers\API\V1\Company;
 
-use App\Http\Controllers\API\APIController;
+use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\CompanyAttendance;
 use App\Models\CompanyPlace;
 use App\Models\Employee;
+use App\Services\PresensiService;
+use App\DTO\PresensiData;
 
-class CompanyAttendanceController extends APIController
+class CompanyAttendanceController extends Controller
 {
+    protected $presensiService;
+
+    public function __construct(PresensiService $presensiService)
+    {
+        $this->presensiService = $presensiService;
+    }
+
     public function checkIn(Request $request)
     {
         $request->validate([
@@ -20,21 +28,21 @@ class CompanyAttendanceController extends APIController
         ]);
 
         $employee = Employee::where('user_id', Auth::user()->id)->first();
-        // if (!$employee) {
-        //     return $this->clientErrorResponse('anda tidak login');
-        // }
+        if (!$employee) {
+            return response()->json(['message' => 'anda tidak login'], 401);
+        }
         if ($employee->company_id == null) {
-            return $this->clientErrorResponse('anda tidak terdaftar sebagai karyawan');
+            return response()->json(['message' => 'anda tidak terdaftar sebagai karyawan'], 400);
         }
 
         $companyPlace = CompanyPlace::where('code', $request->code)->first();
 
         if (!$companyPlace) {
-            return $this->clientErrorResponse('kode lokasi tidak ditemukan');
+            return response()->json(['message' => 'kode lokasi tidak ditemukan'], 404);
         }
 
         if ($companyPlace->company_id != $employee->company_id) {
-            return $this->clientErrorResponse('anda bukan karyawan perusahaan ini');
+            return response()->json(['message' => 'anda bukan karyawan perusahaan ini'], 403);
         }
 
         // hitung jarak lokasi dengan Haversine Formula
@@ -46,7 +54,7 @@ class CompanyAttendanceController extends APIController
         );
 
         if ($distance > 10) { // lebih dari 10 meter
-            return $this->clientErrorResponse('anda tidak berada di lokasi yang diizinkan');
+            return response()->json(['message' => 'anda tidak berada di lokasi yang diizinkan'], 400);
         }
 
         // cek apakah sudah check-in hari ini
@@ -55,19 +63,20 @@ class CompanyAttendanceController extends APIController
             ->first();
 
         if ($existingAttendance) {
-            return $this->clientErrorResponse('anda sudah check-in hari ini');
+            return response()->json(['message' => 'anda sudah check-in hari ini'], 400);
         }
 
         // simpan presensi
-        CompanyAttendance::create([
-            'employee_id' => $employee->id,
+        $data = [
+            'status' => 'Present',
             'company_place_id' => $companyPlace->id,
             'latitude' => $request->latitude,
             'longitude' => $request->longitude,
-            'checked_in_at' => now(),
-        ]);
+        ];
 
-        return $this->successResponse('check-in berhasil');
+        $presensi = $this->presensiService->handle(new PresensiData($data), false);
+
+        return response()->json(['message' => 'check-in berhasil', 'data' => $presensi], 200);
     }
 
     public function checkOut(Request $request)
@@ -78,13 +87,17 @@ class CompanyAttendanceController extends APIController
             'longitude' => 'required|numeric',
         ]);
 
-        $employee = Auth::user();
+        $employee = Employee::where('user_id', Auth::user()->id)->first();
+        if (!$employee) {
+            return response()->json(['message' => 'anda tidak login'], 401);
+        }
+
         $companyPlace = CompanyPlace::where('company_id', $employee->company_id)
             ->where('code', $request->code)
             ->first();
 
         if (!$companyPlace) {
-            return $this->clientErrorResponse('anda tidak berada di lokasi yang diizinkan');
+            return response()->json(['message' => 'anda tidak berada di lokasi yang diizinkan'], 404);
         }
 
         // cek apakah sudah check-in & belum check-out
@@ -94,12 +107,29 @@ class CompanyAttendanceController extends APIController
             ->first();
 
         if (!$attendance) {
-            return $this->clientErrorResponse('anda belum check-in atau sudah check-out');
+            return response()->json(['message' => 'anda belum check-in atau sudah check-out'], 400);
         }
 
-        $attendance->update(['checked_out_at' => now()]);
+        // hitung jarak lokasi dengan Haversine Formula
+        $distance = $this->haversineDistance(
+            $request->latitude,
+            $request->longitude,
+            $companyPlace->latitude,
+            $companyPlace->longitude
+        );
 
-        return $this->successResponse('check-out berhasil');
+        if ($distance > 10) { // lebih dari 10 meter
+            return response()->json(['message' => 'anda tidak berada di lokasi yang diizinkan'], 400);
+        }
+
+        // clock-out menggunakan PresensiService
+        $data = [
+            'status' => 'Present', // status default, akan diubah oleh PresensiService
+        ];
+
+        $presensi = $this->presensiService->handle(new PresensiData($data), false);
+
+        return response()->json(['message' => 'check-out berhasil', 'data' => $presensi], 200);
     }
 
     private function haversineDistance($lat1, $lon1, $lat2, $lon2)

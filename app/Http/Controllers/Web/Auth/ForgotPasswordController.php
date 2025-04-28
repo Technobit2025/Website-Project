@@ -24,7 +24,7 @@ class ForgotPasswordController extends Controller
         }
         $token = Password::createToken($user);
         Mail::to($user->email)->send(new ResetPasswordMail($user, $token));
-        return redirect()->route('login')->with('success', 'Link reset password berhasil dikirim ke email kamu!');
+        return redirect()->route('login')->with('success', 'Link reset password berhasil dikirim ke email anda!');
     }
     public function reset($token)
     {

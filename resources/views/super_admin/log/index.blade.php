@@ -78,7 +78,7 @@
                                                         'filename' => $log['name'],
                                                     ]),
                                                     'title' => 'Hapus Log',
-                                                    'message' => 'Apakah kamu yakin ingin menghapus log ini?',
+                                                    'message' => 'Apakah anda yakin ingin menghapus log ini?',
                                                 ])
                                             </div>
                                         </td>

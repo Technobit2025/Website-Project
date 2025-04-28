@@ -176,7 +176,7 @@
                                                                 $company->id),
                                                             'title' => 'Hapus Perusahaan',
                                                             'message' =>
-                                                                'Apakah kamu yakin ingin menghapus karyawan ini?',
+                                                                'Apakah anda yakin ingin menghapus karyawan ini?',
                                                         ])
                                                     </div>
 

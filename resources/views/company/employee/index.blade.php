@@ -72,7 +72,7 @@
                                                                 [$company->id, $employee->id]),
                                                             'title' => 'Hapus Karyawan dari Perusahaan',
                                                             'message' =>
-                                                                'Apakah kamu yakin ingin menghapus karyawan ini dari perusahaan ini?',
+                                                                'Apakah anda yakin ingin menghapus karyawan ini dari perusahaan ini?',
                                                         ])
                                                     </div>
 

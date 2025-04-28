@@ -1,6 +1,6 @@
 @extends('layouts.simple.master')
 
-@section('title', 'Human Resource Dashboard')
+@section('title', 'Penggajian Karyawan')
 
 @section('css')
     <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/vendors/jquery.dataTables.css') }}">
@@ -26,10 +26,10 @@
 
 @section('main_content')
     <div class="container-fluid">
-        @include('layouts.components.breadcrumb', ['header' => 'Data Karyawan'])
+        @include('layouts.components.breadcrumb', ['header' => 'Penggajian Karyawan'])
     </div>
     <div class="container-fluid">
-        <div class="row">
+        {{-- <div class="row">
             <div class="col-12 col-lg-3">
                 <div class="card user-management">
                     <div class="card-body bg-primary rounded-4">
@@ -63,12 +63,12 @@
                                 <div class="total-num counter">
                                     <div class="d-flex by-role custom-scrollbar">
                                         @foreach ($roles as $role)
-                                            <div>
-                                                <div class="total-user bg-light-primary">
-                                                    <h5> {{ $role->name }} </h5>
-                                                    <span class="total-num counter">{{ $role->users->count() }}</span>
-                                                </div>
+                                        <div>
+                                            <div class="total-user bg-light-primary">
+                                                <h5> {{ $role->name }} </h5>
+                                                <span class="total-num counter">{{ $role->users->count() }}</span>
                                             </div>
+                                        </div>
                                         @endforeach
                                     </div>
                                 </div>
@@ -96,12 +96,48 @@
                     </div>
                 </div>
             </div>
-        </div>
+        </div> --}}
         <div class="row">
             <div class="col-sm-12">
                 <div class="card">
-                    <div class="card-header">
-                        <h5>Data Karyawan</h5>
+                    <div class="card-header d-flex justify-content-between">
+                        <h5>Penggajian Karyawan</h5>
+                        {{-- <button type="button" class="btn btn-primary" data-bs-toggle="modal"
+                            data-bs-target="#addEmployeeModal">
+                            Tambah Karyawan
+                        </button>
+
+                        <!-- Modal -->
+                        <div class="modal fade" id="addEmployeeModal" tabindex="-1"
+                            aria-labelledby="addEmployeeModalLabel" aria-hidden="true">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="addEmployeeModalLabel">Karyawan</h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                            aria-label="Close"></button>
+                                    </div>
+                                    <form action="{{ route('superadmin.payroll.period.store') }}" method="POST">
+                                        @csrf
+                                        <div class="modal-body">
+                                            <div class="mb-3">
+                                                <label for="employee_ids" class="form-label">Pilih Karyawan</label>
+                                                <select class="form-select select2" id="employee_ids" name="employee_ids[]" multiple required>
+                                                    @foreach ($employees as $employee)
+                                                        <option value="{{ $employee->id }}">{{ $employee->fullname }}</option>
+                                                    @endforeach
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-warning"
+                                                data-bs-dismiss="modal">Tutup</button>
+                                            <button type="submit" class="btn btn-primary">Simpan</button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div> --}}
                     </div>
                     <div class="card-body">
                         <div class="table-responsive custom-scrollbar table-striped">
@@ -111,47 +147,60 @@
 
                                     <thead>
                                         <tr>
-                                            {{-- <th style="width: 5% !important;">ID</th> --}}
-                                            <th>Full Name</th>
-                                            <th>Email</th>
-                                            <th>Role</th>
-                                            <th>Status</th>
+                                            <th>ID</th>
+                                            <th>Nama Karyawan</th>
                                             <th>Aksi</th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         @foreach ($employees as $employee)
                                             <tr>
-                                                {{-- <td style="width: 5% !important;">{{ $employee->id }}</td> --}}
+                                                <td>{{ $employee->id }}</td>
                                                 <td>{{ $employee->fullname }}</td>
-                                                <td>{{ $employee->user->email }}</td>
-                                                <td>{{ $employee->user->role->name }}</td>
-                                                <td><span
-                                                        class="badge {{ $employee->active ? 'badge-success' : 'badge-danger' }}">{{ $employee->active ? 'Aktif' : 'Tidak Aktif' }}</span>
-                                                </td>
                                                 <td>
                                                     <div class="d-flex gap-2">
-                                                        <a href="{{ route('superadmin.employee.show', $employee->id) }}"
+                                                        {{-- <a href="{{ route('superadmin.employeesalary.show', $employee->id) }}"
                                                             class="btn btn-info btn-sm px-3" data-bs-toggle="tooltip"
-                                                            data-bs-placement="top" data-bs-title="Lihat Karyawan">
+                                                            data-bs-placement="top"
+                                                            data-bs-title="Lihat Penggajian Karyawan">
                                                             <i class="fa-solid fa-eye"></i>
                                                         </a>
 
-                                                        <a href="{{ route('superadmin.employee.edit', $employee->id) }}"
+                                                        <a href="{{ route('superadmin.employeesalary.edit', $employee->id) }}"
                                                             class="btn btn-warning btn-sm px-3" data-bs-toggle="tooltip"
-                                                            data-bs-placement="top" data-bs-title="Ubah Karyawan">
+                                                            data-bs-placement="top"
+                                                            data-bs-title="Ubah Penggajian Karyawan">
                                                             <i class="fa-solid fa-pen-to-square"></i>
                                                         </a>
+
                                                         @include('layouts.components.delete', [
                                                             'route' => route(
-                                                                'superadmin.employee.destroy',
+                                                                'superadmin.employeesalary.destroy',
                                                                 $employee->id),
-                                                            'title' => 'Hapus Karyawan',
+                                                            'title' => 'Hapus Penggajian Karyawan',
                                                             'message' =>
-                                                                'Apakah anda yakin ingin menghapus karyawan ini?',
-                                                        ])
+                                                                'Apakah anda yakin ingin menghapus gaji Pokok karyawan ini?',
+                                                        ]) --}}
+                                                        @if (!$employee->payrollInPayrollPeriod($payrollPeriodId))
+                                                            <form action="{{ route('superadmin.payroll.store') }}"
+                                                                method="POST" class="d-inline">
+                                                                @csrf
+                                                                <input type="hidden" name="employee_id"
+                                                                    value="{{ $employee->id }}">
+                                                                <input type="hidden" name="payroll_period_id"
+                                                                    value="{{ $payrollPeriodId }}">
+                                                                <button type="submit" class="btn btn-success btn-sm px-3"
+                                                                    data-bs-toggle="tooltip" data-bs-placement="top"
+                                                                    data-bs-title="Tentukan Penggajian Karyawan">
+                                                                    <i class="fa-solid fa-plus"></i> Buat Payroll
+                                                                </button>
+                                                            </form>
+                                                        @else
+                                                            <a href="{{ route('superadmin.payroll.component.index', $employee->payrollInPayrollPeriod($payrollPeriodId)->id) }} "
+                                                                class="btn btn-sm btn-primary px-3"><i
+                                                                    class="fa-solid fa-money-bill"></i> Payroll</a>
+                                                        @endif
                                                     </div>
-
                                                 </td>
                                             </tr>
                                         @endforeach
@@ -163,5 +212,7 @@
                 </div>
             </div>
         </div>
-    </div><!-- Container-fluid Ends-->
+        <a href="{{ route('superadmin.payroll.period.index') }}" class="btn btn-secondary"><i class="fa fa-arrow-left"></i>
+            Kembali</a>
+    </div>
 @endsection

@@ -1,6 +1,6 @@
 @extends('layouts.simple.master')
 
-@section('title', 'Human Resource Dashboard')
+@section('title', 'Gaji Pokok Karyawan')
 
 @section('css')
     <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/vendors/jquery.dataTables.css') }}">
@@ -26,7 +26,7 @@
 
 @section('main_content')
     <div class="container-fluid">
-        @include('layouts.components.breadcrumb', ['header' => 'Gaji Karyawan'])
+        @include('layouts.components.breadcrumb', ['header' => 'Gaji Pokok Karyawan'])
     </div>
     <div class="container-fluid">
         {{-- <div class="row">
@@ -101,7 +101,7 @@
             <div class="col-sm-12">
                 <div class="card">
                     <div class="card-header d-flex justify-content-between">
-                        <h5>Gaji Karyawan</h5>
+                        <h5>Gaji Pokok Karyawan</h5>
                         {{-- <a href="{{ route('superadmin.employeesalary.create') }}" class="btn btn-primary">Tambah Gaji
                             Karyawan</a> --}}
                     </div>
@@ -135,13 +135,13 @@
                                                         @if ($employee->salary !== null)
                                                             <a href="{{ route('superadmin.employeesalary.show', $employee->id) }}"
                                                                 class="btn btn-info btn-sm px-3" data-bs-toggle="tooltip"
-                                                                data-bs-placement="top" data-bs-title="Lihat Gaji Karyawan">
+                                                                data-bs-placement="top" data-bs-title="Lihat Gaji Pokok Karyawan">
                                                                 <i class="fa-solid fa-eye"></i>
                                                             </a>
 
                                                             <a href="{{ route('superadmin.employeesalary.edit', $employee->id) }}"
                                                                 class="btn btn-warning btn-sm px-3" data-bs-toggle="tooltip"
-                                                                data-bs-placement="top" data-bs-title="Ubah Gaji Karyawan">
+                                                                data-bs-placement="top" data-bs-title="Ubah Gaji Pokok Karyawan">
                                                                 <i class="fa-solid fa-pen-to-square"></i>
                                                             </a>
 
@@ -149,15 +149,15 @@
                                                                 'route' => route(
                                                                     'superadmin.employeesalary.destroy',
                                                                     $employee->id),
-                                                                'title' => 'Hapus Gaji Karyawan',
+                                                                'title' => 'Hapus Gaji Pokok Karyawan',
                                                                 'message' =>
-                                                                    'Apakah kamu yakin ingin menghapus gaji karyawan ini?',
+                                                                    'Apakah anda yakin ingin menghapus gaji Pokok karyawan ini?',
                                                             ])
                                                         @else
                                                             <a href="{{ route('superadmin.employeesalary.create', $employee->id) }}"
                                                                 class="btn btn-success btn-sm px-3" data-bs-toggle="tooltip"
                                                                 data-bs-placement="top"
-                                                                data-bs-title="Tentukan Gaji Karyawan">
+                                                                data-bs-title="Tentukan Gaji Pokok Karyawan">
                                                                 <i class="fa-solid fa-plus"></i> Tentukan Gaji
                                                             </a>
                                                         @endif
