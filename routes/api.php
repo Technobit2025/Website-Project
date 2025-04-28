@@ -31,6 +31,7 @@ use App\Http\Controllers\API\V1\Auth\AndroidChangePasswordController;
 use App\Http\Controllers\API\V1\Company\CompanyAttendanceController;
 use App\Http\Controllers\API\V1\Company\AndroidPresensiController;
 use App\Http\Controllers\API\V1\Company\PatroliController;
+use App\Http\Controllers\API\V1\Company\AttendanceController;
 
 
 // API Route
@@ -81,6 +82,8 @@ Route::prefix('v1')->name('api.v1.')->group(function () {
             Route::put('change-password', [AndroidChangePasswordController::class, 'changePassword']);
             Route::post('presensi', [AndroidPresensiController::class, 'store']);
             Route::get('jadwal-patroli', [PatroliController::class, 'getJadwalPatroli']);
+            Route::get('history-presensi', [AttendanceController::class, 'index']);
+
         });
     });
 
