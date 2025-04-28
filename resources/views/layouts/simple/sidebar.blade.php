@@ -75,6 +75,16 @@
                     --}}
                     @include("layouts.simple.sidebar_menu.$role")
 
+                    {{--Presensi--}}
+                    <li class="sidebar-list">
+                        <a class="sidebar-link sidebar-title link-nav" href="{{ route('presence.index') }}">
+                            <svg class="stroke-icon">
+                                <use href="{{ asset('assets/svg/presence_chart.svg#setting') }}"></use>
+                            </svg>
+                            <svg class="fill-icon">
+                                <use href="{{ asset('assets/svg/presence_chart.svg#setting') }}"></use>
+                            </svg><span>Presensi </span></a>
+                    </li>
                     {{-- Profile --}}
                     <li class="sidebar-main-title">
                         <div>

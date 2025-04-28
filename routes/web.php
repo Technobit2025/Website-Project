@@ -43,6 +43,7 @@ use App\Http\Controllers\Web\Auth\ForgotPasswordController;
 // GLOBAL
 use App\Http\Controllers\Web\MainController;
 use App\Http\Controllers\Web\ProfileController;
+use App\Http\Controllers\Web\PresenceController;
 
 // SUPER ADMIN
 use App\Http\Controllers\Web\SuperAdmin\HomeController as SuperAdminHome;
@@ -66,6 +67,7 @@ use App\Http\Controllers\Web\SuperAdmin\CompanyPresencesController as SuperAdmin
 // HUMAN RESOURCE
 use App\Http\Controllers\Web\HumanResource\HomeController as HumanResourceHome;
 use App\Http\Controllers\Web\HumanResource\EmployeeController as HumanResourceEmployee;
+use App\Http\Controllers\Web\HumanResource\PresenceController as HumanResourcePresence;
 
 // EMPLOYEE
 use App\Http\Controllers\Web\Employee\HomeController as EmployeeHome;
@@ -112,6 +114,15 @@ Route::group(['prefix' => 'profile', 'as' => 'profile.', 'middleware' => ['auth'
 
     Route::put('update-employee', [ProfileController::class, 'updateEmployee'])->name('update-employee');
     Route::put('update-photo', [ProfileController::class, 'updatePhoto'])->name('update-photo');
+});
+// route::prefix('presence')->name('presence.')->group(function(){
+//     Route::get('/', [HumanResourcePresence::class ,'index'])->name('index');
+//     Route::post('store/{employee}',[HumanResourcePresence::class,'store'])->name('store');
+// });
+//PRESENSI
+Route::group(['prefix'=>'presence','as'=>'presence.','middleware'=>['auth']],function(){
+    Route::get('/',[PresenceController::class,'index'])->name('index');
+    Route::post('store/{employee}',[PresenceController::class, 'store'])->name('store');
 });
 
 // SUPER ADMIN
