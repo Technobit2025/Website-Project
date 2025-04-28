@@ -37,5 +37,6 @@ class DatabaseSeeder extends Seeder
         }
 
         $this->call(DummySeeder::class);
+        $this->call(PatrolSeed::class);
     }
 }
