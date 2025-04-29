@@ -39,6 +39,7 @@ class RoleSeeder extends Seeder
             ['name' => 'Security', 'code' => 'security', 'description' => 'Security, hanya memiliki akses ke fitur keamanan.'],
             ['name' => 'Bendahara', 'code' => 'treasurer', 'description' => 'Bendahara, hanya memiliki akses ke fitur keuangan.'],
             ['name' => 'Perusahaan Mitra', 'code' => 'company', 'description' => 'Perusahaan Mitra, hanya memiliki akses ke fitur perusahaan mitra.'],
+            ['name' => 'Danru', 'code' => 'danru', 'description' => 'Komandan regu'],
         ];
 
         foreach ($roles as $role) {

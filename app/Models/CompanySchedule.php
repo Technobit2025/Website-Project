@@ -10,6 +10,6 @@ class CompanySchedule extends Model
 
     public function shift()
     {
-        $this->belongsTo(CompanyShift::class);
+        return $this->belongsTo(CompanyShift::class);
     }
 }

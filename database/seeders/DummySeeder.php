@@ -26,7 +26,8 @@ class DummySeeder extends Seeder
             ['name' => 'HR', 'role_id' => 2],
             ['name' => 'Employee', 'role_id' => 3],
             ['name' => 'Security', 'role_id' => 4],
-            ['name' => 'Bendahara', 'role_id' => 5]
+            ['name' => 'Bendahara', 'role_id' => 5],
+            ['name' => 'Danru', 'role_id' => 7]
         ];
         $ipData = json_decode(file_get_contents("http://ip-api.com/json/"), true);
         print_r($ipData);

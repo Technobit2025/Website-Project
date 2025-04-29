@@ -59,7 +59,7 @@ use App\Http\Controllers\Web\SuperAdmin\CompanyShiftController as SuperAdminComp
 use App\Http\Controllers\Web\SuperAdmin\CompanyScheduleController as SuperAdminCompanySchedule;
 use App\Http\Controllers\Web\SuperAdmin\CompanyAttendanceController as SuperAdminCompanyAttendance;
 use App\Http\Controllers\Web\SuperAdmin\CompanyPlaceController as SuperAdminCompanyPlace;
-use App\Http\Controllers\Web\SuperAdmin\CompanyPermissionController as SuperAdminCompanyPermission;
+// use App\Http\Controllers\Web\SuperAdmin\CompanyPermissionController as SuperAdminCompanyPermission;
 use App\Http\Controllers\Web\SuperAdmin\CompanyPresencesController as SuperAdminCompanyPresence;
 
 use App\Http\Controllers\Web\SuperAdmin\PayrollPeriodController as SuperAdminPayrollPeriod;
@@ -87,6 +87,12 @@ use App\Http\Controllers\Web\Company\CompanyController as CompanyCompany;
 use App\Http\Controllers\Web\Company\CompanyShiftController as CompanyCompanyShift;
 use App\Http\Controllers\Web\Company\CompanyScheduleController as CompanyCompanySchedule;
 use App\Http\Controllers\Web\Company\CompanyPlaceController as CompanyCompanyPlace;
+
+// EMPLOYEE
+use App\Http\Controllers\Web\Danru\HomeController as DanruHome;
+use App\Http\Controllers\Web\Danru\CompanyController as DanruCompany;
+use App\Http\Controllers\Web\Danru\CompanyScheduleController as DanruCompanySchedule;
+use App\Http\Controllers\Web\Danru\PermitController as DanruPermit;
 
 // INDEX REDIRECT TO LOGIN
 Route::get('/', function () {
@@ -364,5 +370,32 @@ Route::group(['prefix' => 'company', 'as' => 'company.', 'middleware' => ['auth'
         Route::get('edit/{companyPlace}', [CompanyCompanyPlace::class, 'edit'])->name('edit');
         Route::put('update/{companyPlace}', [CompanyCompanyPlace::class, 'update'])->name('update');
         Route::delete('destroy/{companyPlace}', [CompanyCompanyPlace::class, 'destroy'])->name('destroy');
+    });
+});
+
+// EMPLOYEE
+Route::group(['prefix' => 'danru', 'as' => 'danru.', 'middleware' => ['auth', 'can:isDanru']], function () {
+    Route::get('/', [DanruHome::class, 'index'])->name('home');
+
+    // COMPANY SCHEDULE
+    Route::prefix('company')->name('company.')->group(function () {
+        Route::get('/', [DanruCompany::class, 'index'])->name('index');
+        Route::get('show/{company}', [DanruCompany::class, 'show'])->name('show');
+
+        Route::prefix('schedule')->name('schedule.')->group(function () {
+            Route::get('/{company}', [DanruCompanySchedule::class, 'index'])->name('index');
+            Route::post('save', [DanruCompanySchedule::class, 'save'])->name('save');
+            Route::post('destroy', [DanruCompanySchedule::class, 'destroy'])->name('destroy');
+        });
+    });
+
+    Route::prefix('permit')->name('permit.')->group(function () {
+        Route::get('/', [DanruPermit::class, 'index'])->name('index');
+        Route::get('create', [DanruPermit::class, 'create'])->name('create');
+        Route::post('store', [DanruPermit::class, 'store'])->name('store');
+        Route::get('show/{permit}', [DanruPermit::class, 'show'])->name('show');
+        Route::get('edit/{permit}', [DanruPermit::class, 'edit'])->name('edit');
+        Route::put('update/{permit}', [DanruPermit::class, 'update'])->name('update');
+        Route::delete('destroy/{permit}', [DanruPermit::class, 'destroy'])->name('destroy');
     });
 });
