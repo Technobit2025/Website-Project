@@ -15,10 +15,14 @@ return new class extends Migration
             $table->id();
             $table->foreignId('employee_id')->constrained('employees')->onDelete('cascade');
             $table->foreignId('alternate_id')->nullable()->constrained('employees')->onDelete('cascade');
+
             $table->foreignId('employee_schedule_id')->nullable()->constrained('company_schedules')->onDelete('cascade');
             $table->foreignId('alternate_schedule_id')->nullable()->constrained('company_schedules')->onDelete('cascade');
 
-            $table->boolean("isConfirmed")->default(false);
+            $table->boolean("employeeIsConfirmed")->default(false);
+            $table->boolean("alternateIsConfirmed")->default(false);
+
+            $table->boolean("IsConfirmed")->default(false);
             $table->text("reason")->nullable();
             $table->timestamps();
         });

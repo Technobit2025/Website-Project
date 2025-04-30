@@ -46,12 +46,12 @@ class PermitController extends Controller
         return view('danru.permit.show', compact('permit'));
     }
 
-    public function edit(Permit $permit)
-    {
-        $employees = Employee::all();
-        // $schedules = CompanySchedule::all();
-        return view('danru.permit.edit', compact('permit', 'employees'));
-    }
+    // public function edit(Permit $permit)
+    // {
+    //     $employees = Employee::all();
+    //     // $schedules = CompanySchedule::all();
+    //     return view('danru.permit.edit', compact('permit', 'employees'));
+    // }
 
     public function update(Request $request, Permit $permit)
     {

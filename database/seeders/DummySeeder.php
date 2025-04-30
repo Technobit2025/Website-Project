@@ -48,15 +48,38 @@ class DummySeeder extends Seeder
             ]);
 
             // Shift
-            $shifts = ['Pagi', 'Sore', 'Malam'];
-            foreach ($shifts as $shift) {
-                $startTime = $faker->time();
-                $endTime = Carbon::createFromFormat('H:i:s', $startTime)->addHours(8)->format('H:i:s');
+            // Generate 3 shifts in a day: Pagi, Sore, Malam, each 8 hours, covering 24 hours
+            $shiftDefinitions = [
+                [
+                    'name' => 'Pagi',
+                    'start_time' => '08:00:00',
+                    'late_time' => '08:30:00',
+                    'checkout_time' => '15:30:00',
+                    'end_time' => '16:00:00',
+                ],
+                [
+                    'name' => 'Sore',
+                    'start_time' => '16:00:00',
+                    'late_time' => '16:30:00',
+                    'checkout_time' => '23:30:00',
+                    'end_time' => '00:00:00',
+                ],
+                [
+                    'name' => 'Malam',
+                    'start_time' => '00:00:00',
+                    'late_time' => '00:30:00',
+                    'checkout_time' => '07:30:00',
+                    'end_time' => '08:00:00',
+                ],
+            ];
+            foreach ($shiftDefinitions as $shift) {
                 CompanyShift::create([
                     'company_id' => $company->id,
-                    'name' => $shift,
-                    'start_time' => $startTime,
-                    'end_time' => $endTime,
+                    'name' => $shift['name'],
+                    'start_time' => $shift['start_time'],
+                    'end_time' => $shift['end_time'],
+                    'checkout_time' => $shift['checkout_time'],
+                    'late_time' => $shift['late_time'],
                     'color' => $faker->hexColor,
                     'description' => $faker->text,
                 ]);
@@ -136,20 +159,20 @@ class DummySeeder extends Seeder
                 }
 
                 // Attendance
-                for ($k = 1; $k <= rand(1, $days); $k++) {
-                    CompanyAttendance::create([
-                        'employee_id' => $employee->id,
-                        'company_place_id' => CompanyPlace::inRandomOrder()->first()->id,
-                        'latitude' => $faker->latitude,
-                        'longitude' => $faker->longitude,
-                        'status' => $faker->randomElement(['Present', 'Sick Leave', 'Leave', 'Absent', 'Late', 'Left Early', 'WFH']),
-                        'note' => $faker->text,
-                        'checked_in_at' => $faker->dateTimeThisMonth(),
-                        'checked_out_at' => $faker->dateTimeThisMonth(),
-                        'created_at' => now(),
-                        'updated_at' => now(),
-                    ]);
-                }
+                // for ($k = 1; $k <= rand(1, $days); $k++) {
+                //     CompanyAttendance::create([
+                //         'employee_id' => $employee->id,
+                //         'company_place_id' => CompanyPlace::inRandomOrder()->first()->id,
+                //         // 'latitude' => $faker->latitude,
+                //         // 'longitude' => $faker->longitude,
+                //         'status' => $faker->randomElement(['Present', 'Sick Leave', 'Leave', 'Absent', 'Late', 'Leave Early', 'WFH']),
+                //         'note' => $faker->text,
+                //         'checked_in_at' => $faker->dateTimeThisMonth(),
+                //         'checked_out_at' => $faker->dateTimeThisMonth(),
+                //         'created_at' => now(),
+                //         'updated_at' => now(),
+                //     ]);
+                // }
             }
         }
     }

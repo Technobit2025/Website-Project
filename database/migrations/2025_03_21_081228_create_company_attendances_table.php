@@ -14,9 +14,9 @@ return new class extends Migration
         Schema::create('company_attendances', function (Blueprint $table) {
             $table->id();
             $table->foreignId('employee_id')->constrained('employees')->onDelete('cascade');
-            $table->foreignId('company_place_id')->constrained('company_places')->onDelete('cascade');
-            $table->decimal('latitude', 10, 7);
-            $table->decimal('longitude', 10, 7);
+            $table->foreignId('company_place_id')->nullable()->constrained('company_places')->onDelete('cascade');
+            // $table->decimal('latitude', 10, 7)->nullable();
+            // $table->decimal('longitude', 10, 7)->nullable();
             $table->timestamp('checked_in_at')->nullable();
             $table->timestamp('checked_out_at')->nullable();
             $table->enum('status', [
@@ -25,7 +25,7 @@ return new class extends Migration
                 'Leave',
                 'Absent',
                 'Late',
-                'Left Early',
+                'Leave Early',
                 'WFH'
             ])->nullable();
             $table->text('note')->nullable();

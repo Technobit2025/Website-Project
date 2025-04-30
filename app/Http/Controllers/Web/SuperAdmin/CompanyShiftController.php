@@ -15,11 +15,6 @@ class CompanyShiftController extends Controller
         $shifts = CompanyShift::where('company_id', $company->id)->get();
         return view('super_admin.company.shift.index', compact('company', 'shifts'));
     }
-
-    public function create(Company $company) //create
-    {
-        return view('super_admin.company.shift.create', compact('company'));
-    }
     public function store(CompanyShiftRequest $companyShiftRequest)
     {
         $validated = $companyShiftRequest->validated();

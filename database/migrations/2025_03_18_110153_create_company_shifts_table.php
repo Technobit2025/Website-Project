@@ -15,8 +15,10 @@ return new class extends Migration
             $table->id();
             $table->foreignId('company_id')->constrained('companies')->onDelete('cascade');
             $table->string('name');
-            $table->time('start_time');
-            $table->time('end_time');
+            $table->time('start_time'); // waktu shift          06:00:00
+            $table->time('end_time');   //waktu selesai shift   12:00:00
+            $table->time('late_time'); // waktu telat           06:30:00
+            $table->time('checkout_time'); // waktu boleh co    11:55:00
             $table->string('color');
             $table->text('description')->nullable();
             $table->timestamps();
