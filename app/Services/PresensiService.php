@@ -37,7 +37,7 @@ class PresensiService
 
             if ($shift) {
                 if ($now->lt(Carbon::parse($shift->end_time))) {
-                    $status = 'Left Early';
+                    $status = 'Leave Early';
                 } else {
                     $status = 'Present';
                 }
