@@ -6,10 +6,11 @@ use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 use App\Services\PresensiService;
 use App\DTO\PresensiData;
+use App\Services\AndroidPresensiService;
 
 class AndroidPresensiController extends Controller
 {
-    public function store(Request $request, PresensiService $service)
+    public function store(Request $request, AndroidPresensiService $service)
     {
         $validated = $request->validate([
             'status'           => ['required', 'string', Rule::in(['Present', 'WFH', 'Sick Leave', 'Leave', 'Late', 'Leave Early'])],

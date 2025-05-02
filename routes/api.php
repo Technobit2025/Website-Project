@@ -82,7 +82,7 @@ Route::prefix('v1')->name('api.v1.')->group(function () {
             Route::put('change-password', [AndroidChangePasswordController::class, 'changePassword']);
             Route::post('presensi', [AndroidPresensiController::class, 'store']);
             Route::get('jadwal-patroli', [AndroidJadwalPatroliController::class, 'getJadwalPatroli']);
-            Route::get('history-presensi', [AndroidHistoryAttendanceController::class, 'index']);
+            Route::get('history-presensi', [AndroidHistoryAttendanceController::class, 'getHistoryByEmployee']);
 
         });
     });

@@ -1,24 +1,42 @@
 <?php
 
-namespace App\Http\Controllers\API\V1\Company;
+namespace App\Http\Controllers\Api\V1\Company;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
 
 class AndroidHistoryAttendanceController extends Controller
 {
-    public function index(Request $request)
+    public function getHistoryByEmployee(Request $request)
     {
-        // Ambil employee_id dari user yang login
-        $employeeId = auth()->user()->load('employee')->employee->id;
+        $user = Auth::user();
 
-        // Jalankan stored procedure
-        $histories = DB::select('CALL sp_get_attendance_history_by_employee(?)', [$employeeId]);
+        // Ambil relasi employee dari user
+        $employee = $user->employee;
 
-        return response()->json([
-            'message' => 'Riwayat presensi berhasil diambil',
-            'data' => $histories,
-        ], 200);
+        if (!$employee) {
+            return response()->json([
+                'message' => 'Employee data not found for this user.'
+            ], 404);
+        }
+
+        $results = DB::select('CALL get_company_attendance_history_by_employee(?)', [
+            $employee->id
+        ]);
+
+        $response = array_map(function ($item) {
+            return [
+                'nama' => $item->nama,
+                'tanggal' => $item->tanggal,
+                'status' => $item->status,
+                'lokasi' => $item->lokasi,
+                'shift' => $item->shift,
+                'foto' => $item->foto,
+            ];
+        }, $results);
+
+        return response()->json($response);
     }
 }
