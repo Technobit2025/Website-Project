@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Services;
 
 use Illuminate\Support\Facades\Auth;
@@ -8,7 +9,7 @@ use App\DTO\PresensiData;
 use Carbon\Carbon;
 use App\Models\CompanyShift;
 
-class PresensiService
+class AndroidPresensiService
 {
     /**
      * Jika belum pernah check-in hari ini → buat record baru (clock-in).
@@ -31,13 +32,13 @@ class PresensiService
             $shift = CompanyShift::where('company_id', Auth::user()->employee->company_id)
                 ->where(function ($query) use ($now) {
                     $query->whereTime('start_time', '<=', $now->toTimeString())
-                          ->whereTime('end_time', '>=', $now->toTimeString());
+                        ->whereTime('end_time', '>=', $now->toTimeString());
                 })
                 ->first();
 
             if ($shift) {
                 if ($now->lt(Carbon::parse($shift->end_time))) {
-                    $status = 'Left Early';
+                    $status = 'Leave Early';
                 } else {
                     $status = 'Present';
                 }
@@ -69,6 +70,7 @@ class PresensiService
             // Simpan foto
             $imagePath = 'presensi/' . $data->filename;
             Storage::disk('public')->put($imagePath, base64_decode($data->photo_data));
+            $imageUrl = Storage::url($imagePath);
         }
 
         // Buat record baru
@@ -80,7 +82,7 @@ class PresensiService
             'checked_in_at'    => Carbon::now(),
             'status'           => $data->status,
             'note'             => $data->note ?? null,
-            'photo_path'       => $isAndroid ? $imagePath : null,
+            'photo_path'       => $isAndroid ? $imageUrl : null,
         ]);
     }
 }

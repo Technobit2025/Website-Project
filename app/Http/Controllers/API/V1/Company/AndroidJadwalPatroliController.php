@@ -5,7 +5,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 
-class PatroliController extends Controller
+class AndroidJadwalPatroliController extends Controller
 {
     public function getJadwalPatroli()
     {
