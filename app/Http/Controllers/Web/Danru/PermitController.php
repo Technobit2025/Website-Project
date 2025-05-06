@@ -12,7 +12,15 @@ class PermitController extends Controller
 {
     public function index()
     {
-        $permits = Permit::with(['employee', 'alternate', 'employeeCompanySchedule', 'alternateCompanySchedule'])->get();
+        $permits = Permit::with([
+            'employee',
+            'alternate',
+            'employeeCompanySchedule',
+            'alternateCompanySchedule',
+            'employeeCompanySchedule.companyShift',
+            'alternateCompanySchedule.companyShift'
+        ])->get();
+
         return view('danru.permit.index', compact('permits'));
     }
 

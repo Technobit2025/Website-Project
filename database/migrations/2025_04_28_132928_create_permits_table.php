@@ -22,7 +22,15 @@ return new class extends Migration
             $table->boolean("employeeIsConfirmed")->default(false);
             $table->boolean("alternateIsConfirmed")->default(false);
 
-            $table->boolean("IsConfirmed")->default(false);
+            $table->enum("status", ["approved", "rejected", "pending"])->default("pending");
+            $table->enum('type', [
+                'Sick Leave',
+                'Leave',
+                'Absent',
+                'Late',
+                'Leave Early',
+                'WFH'
+            ])->nullable();
             $table->text("reason")->nullable();
             $table->timestamps();
         });

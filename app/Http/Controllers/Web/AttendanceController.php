@@ -17,42 +17,6 @@ use Illuminate\Support\Facades\Log;
 
 class AttendanceController extends Controller
 {
-    // public function index()
-    // {
-    //     $user = Auth::user();
-    //     if (!$user) {
-    //         return view('global.attendance.index', ['isEmployee' => false])
-    //             ->with('warning', 'Anda belum login');
-    //     }
-
-    //     $employee = Employee::where('user_id', $user->id)->first();
-
-    //     if (!$employee) {
-    //         return view('global.attendance.index', ['isEmployee' => false])
-    //             ->with('warning', 'Anda bukan karyawan');
-    //     }
-
-    //     $today = now()->toDateString();
-
-    //     $isHaveSchedule = CompanySchedule::where('employee_id', $employee->id)
-    //         ->where('date', $today)
-    //         ->exists();
-
-    //     $attendance = CompanyAttendance::where('employee_id', $employee->id)
-    //         ->whereDate('checked_in_at', $today)
-    //         ->orderBy('checked_in_at', 'desc')
-    //         ->first();
-
-    //     $isCheckedIn = $attendance ? true : false;
-    //     $isCheckedOut = $attendance && $attendance->checked_out_at !== null;
-
-    //     return view('global.attendance.index', [
-    //         'isEmployee' => true,
-    //         'isCheckedIn' => $isCheckedIn,
-    //         'isCheckedOut' => $isCheckedOut,
-    //         'isHaveSchedule' => $isHaveSchedule,
-    //     ]);
-    // }
     public function index()
     {
         $user = Auth::user();

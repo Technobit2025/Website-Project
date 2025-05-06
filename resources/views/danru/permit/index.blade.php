@@ -1,6 +1,6 @@
 @extends('layouts.simple.master')
 
-@section('title', 'Human Resource Dashboard')
+@section('title', 'Izin Karyawan')
 
 @section('css')
     <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/vendors/jquery.dataTables.css') }}">
@@ -38,7 +38,7 @@
                 <div class="card">
                     <div class="card-header">
                         <div class="d-flex justify-content-between">
-                            <h5>Data Perusahaan</h5>
+                            <h5>Izin Karyawan</h5>
                         </div>
                     </div>
                     <div class="card-body">
@@ -50,11 +50,12 @@
 
                                     <thead>
                                         <tr>
-                                            {{-- <th style="width: 5% !important;">ID</th> --}}
                                             <th>Karyawan Ijin</th>
+                                            <th>Tipe</th>
+                                            <th>Jadwal diganti</th>
                                             <th>Pengganti</th>
-                                            <th>Jadwal Karyawan</th>
                                             <th>Jadwal Pengganti</th>
+                                            <th>Status</th>
                                             <th
                                                 data-intro="Klik tombol yang tersedia dibawah ini untuk melihat, mengubah, menghapus perusahaan">
                                                 Aksi</th>
@@ -64,9 +65,19 @@
                                         @foreach ($permits as $permit)
                                             <tr>
                                                 <td>{{ $permit->employee->fullname ?? '-' }}</td>
-                                                <td>{{ $permit->alternate->fullname }}</td>
-                                                <td>{{ $permit->employeeCompanySchedule->company_shift_id ?? "" }}</td>
-                                                <td>{{ $permit->alternateCompanySchedule->company_shift_id ?? "" }}</td>
+                                                <td>{{ $permit->type ?? '-' }}</td>
+                                                <td>{{ formatDate($permit->employeeCompanySchedule->date, 'l, d F Y') . ' (' . $permit->employeeShift()?->name . ')' }}
+                                                <td>{{ $permit->alternate->fullname ?? '-' }}</td>
+                                                <td>{{ $permit->alternateShift()?->name ?? '-' }}</td>
+                                                <td>
+                                                    @if ($permit->status == 'approved')
+                                                        <span class="badge bg-success">Disetujui</span>
+                                                    @elseif ($permit->status == 'rejected')
+                                                        <span class="badge bg-danger">Ditolak</span>
+                                                    @else
+                                                        <span class="badge bg-warning text-dark">Menunggu</span>
+                                                    @endif
+                                                </td>
                                                 <td>
                                                     {{-- <div class="d-flex gap-2">
                                                         <a href="{{ route('danru.company.show', $company->id) }}"

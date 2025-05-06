@@ -12,4 +12,8 @@ class CompanySchedule extends Model
     {
         return $this->belongsTo(CompanyShift::class);
     }
+    public function companyShift()
+    {
+        return $this->belongsTo(CompanyShift::class);
+    }
 }

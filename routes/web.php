@@ -45,7 +45,9 @@ use App\Http\Controllers\Web\MainController;
 use App\Http\Controllers\Web\ProfileController;
 use App\Http\Controllers\Web\PresenceController;
 use App\Http\Controllers\Web\AttendanceController;
-
+use App\Http\Controllers\Web\PermitController;  
+use App\Http\Controllers\Web\ScheduleController;
+ 
 // SUPER ADMIN
 use App\Http\Controllers\Web\SuperAdmin\HomeController as SuperAdminHome;
 use App\Http\Controllers\Web\SuperAdmin\LogViewerController as SuperAdminLogViewer;
@@ -130,6 +132,20 @@ Route::prefix('attendance')->name('attendance.')->middleware(['auth'])->group(fu
     Route::get('/', [AttendanceController::class, 'index'])->name('index');
     Route::post('check-in', [AttendanceController::class, 'checkIn'])->name('checkIn');
     Route::post('check-out', [AttendanceController::class, 'checkOut'])->name('checkOut');
+});
+// PERMIT
+Route::prefix('permit')->name('permit.')->middleware(['auth'])->group(function () {
+    Route::get('/', [PermitController::class, 'index'])->name('index');
+    Route::get('create', [PermitController::class, 'create'])->name('create');
+    Route::post('store', [PermitController::class, 'store'])->name('store');
+    Route::get('show/{permit}', [PermitController::class, 'show'])->name('show');
+    Route::get('edit/{permit}', [PermitController::class, 'edit'])->name('edit');
+    Route::put('update/{permit}', [PermitController::class, 'update'])->name('update');
+    Route::delete('destroy/{permit}', [PermitController::class, 'destroy'])->name('destroy');
+});
+// SCHEDULE
+Route::prefix('schedule')->name('schedule.')->middleware(['auth'])->group(function () {
+    Route::get('/', [ScheduleController::class, 'index'])->name('index');
 });
 
 // SUPER ADMIN

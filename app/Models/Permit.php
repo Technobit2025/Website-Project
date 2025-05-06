@@ -6,10 +6,11 @@ use Illuminate\Database\Eloquent\Model;
 
 class Permit extends Model
 {
-    protected $fillable = ['employee_id', 'alternate_id', 'employee_schedule_id', 'alternate_schedule_id', 'isConfirmed', 'reason'];
+    protected $guarded = [];
 
     protected $casts = [
-        'isConfirmed' => 'boolean',
+        'employeeIsConfirmed' => 'boolean',
+        'alternateIsConfirmed' => 'boolean',
     ];
 
     public function employee()
@@ -43,5 +44,15 @@ class Permit extends Model
             return $this->alternateCompanySchedule->companyShift;
         }
         return null;
+    }
+
+    public function employeeShift()
+    {
+        return $this->employeeCompanySchedule?->companyShift;
+    }
+
+    public function alternateShift()
+    {
+        return $this->alternateCompanySchedule?->companyShift;
     }
 }

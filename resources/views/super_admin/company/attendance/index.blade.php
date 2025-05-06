@@ -24,16 +24,23 @@
     </script>
     <script src="https://cdn.jsdelivr.net/npm/sortablejs@1.15.6/Sortable.min.js"></script>
     <script>
+        function formatDateTime(dateTimeStr) {
+            if (!dateTimeStr) return '-';
+            const date = new Date(dateTimeStr);
+            if (isNaN(date.getTime())) return '-';
+            // Format: DD/MM/YYYY HH:mm:ss
+            const pad = n => n.toString().padStart(2, '0');
+            return `${pad(date.getDate())}/${pad(date.getMonth() + 1)}/${date.getFullYear()} ${pad(date.getHours())}:${pad(date.getMinutes())}:${pad(date.getSeconds())}`;
+        }
+
         function showAttendanceDetail(attendance) {
             Swal.fire({
-                title: 'Attendance Details',
+                title: 'Detail Presensi',
                 html: `
-                <b>Checked In:</b> ${attendance.checked_in_at} <br>
-                <b>Checked Out:</b> ${attendance.checked_out_at ?? 'N/A'} <br>
-                <b>Latitude:</b> ${attendance.latitude} <br>
-                <b>Longitude:</b> ${attendance.longitude} <br>
-                <b>Status:</b> ${attendance.status ?? 'N/A'} <br>
-                <b>Note:</b> ${attendance.note ?? 'N/A'}
+                <b>Checked In:</b> ${attendance.checked_in_at ? formatDateTime(attendance.checked_in_at) : '-'} <br>
+                <b>Checked Out:</b> ${attendance.checked_out_at ? formatDateTime(attendance.checked_out_at) : 'Belum checkout'} <br>
+                <b>Status:</b> ${attendance.status ?? '-'} <br>
+                <b>Note:</b> ${attendance.note ?? '-'}
             `,
                 icon: 'info',
                 confirmButtonText: 'OK'
@@ -136,7 +143,7 @@
                                                                     </button>
                                                                 @break
 
-                                                                @case('Left Early')
+                                                                @case('Leave Early')
                                                                     <button class="btn btn-sm btn-warning" data-bs-toggle="tooltip"
                                                                         data-bs-placement="top" title="Pulang Cepat"
                                                                         onclick="showAttendanceDetail({{ $attendance->first() }})">
@@ -180,52 +187,11 @@
                     </div>
                 </div>
             </div>
-            {{-- <div class="col-12">
-                <div class="row">
-                    <div class="col-12 col-lg-6">
-                        <div class="card">
-                            <div class="card-header">
-                                <h5>Shift Perusahaan</h5>
-                            </div>
-                            <div class="card-body">
-                                <div id="shifts">
-                                    @foreach ($shifts as $shift)
-                                        <div class="shift btn" data-shift="{{ $shift->id }}"
-                                            style="background-color: {{ $shift->color }}">
-                                            {{ $shift->name }}
-                                        </div>
-                                    @endforeach
-                                </div>
-                            </div>
-                        </div>
-                        <div class="d-flex gap-2">
-                            <a href="{{ route('superadmin.company.index') }}" class="btn btn-secondary"><i class="fa fa-arrow-left"></i>
-                                Kembali</a>
-                        </div>
-
-                    </div>
-                    <div class="col-12 col-lg-6">
-                        <div class="card">
-                            <div class="card-header">
-                                <h5>Hapus Shift</h5>
-                            </div>
-                            <div class="card-body">
-                                <div class="mt-3">
-                                    <div class=" w-100 p-3 text-center dropzone position-relative rounded-3"
-                                        id="delete-zone"
-                                        style="border: 2px dashed var(--bs-danger); min-height: 80px; display: flex; align-items: center; justify-content: center;">
-                                        <div class="position-absolute top-50 start-50 translate-middle ">
-                                            <i class="fa fa-trash fa-2x mb-2 text-danger"></i>
-                                            <div class="text-danger">Drop shift disini untuk menghapus</div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                </div>
-            </div> --}}
+        </div>
+        <div class="mb-3">
+            <a href="javascript:history.back()" class="btn btn-secondary">
+                <i class="fa fa-arrow-left"></i> Kembali
+            </a>
         </div>
     </div><!-- Container-fluid Ends-->
 @endsection
