@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Permit extends Model
 {
-    protected $fillable = ['employee_id', 'alternate_id', 'employee_schedule_id', 'alternate_schedule_id', 'isConfirmed', 'reason'];
+    protected $fillable = ['employee_id', 'alternate_id', 'employee_schedule_id', 'alternate_schedule_id','date', 'isConfirmed', 'reason'];
 
     protected $casts = [
         'isConfirmed' => 'boolean',
