@@ -103,7 +103,7 @@ public function store(Request $request, Employee $employee)
 
     $endTime = Carbon::createFromFormat('H:i:s', $jadwal->start_end);
     $currentTime = Carbon::createFromFormat('H:i:s', $waktuSekarang);
-    dd($endTime);
+    // dd($endTime);
 
     // Default status
     $status = 'hadir';
