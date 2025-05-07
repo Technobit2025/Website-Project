@@ -69,40 +69,68 @@
                                                         name="end_time" required>
                                                 </div>
                                                 <div class="mb-3">
+                                                    <label for="checkoutTime" class="form-label">Jam diperbolehkan
+                                                        checkout</label>
+                                                    <input type="time" class="form-control" id="checkoutTime"
+                                                        name="checkout_time" required>
+                                                </div>
+                                                <div class="mb-3">
+                                                    <label for="lateTime" class="form-label">Jam Presensi dihitung
+                                                        terlambat</label>
+                                                    <input type="time" class="form-control" id="lateTime"
+                                                        name="late_time" required>
+                                                </div>
+                                                <div class="mb-3">
                                                     <label for="color" class="form-label">Warna</label>
                                                     <div class="mb-3">
                                                         <div class="d-flex flex-wrap gap-2">
                                                             <div class="form-check">
-                                                                <input class="form-check-input" type="radio" name="color" id="colorPrimary" value="{{ env('APP_COLOR') }}" checked>
-                                                                <div class="bg-primary rounded-1" style="width: 20px; height: 20px;"></div>
+                                                                <input class="form-check-input" type="radio"
+                                                                    name="color" id="colorPrimary"
+                                                                    value="{{ env('APP_COLOR') }}" checked>
+                                                                <div class="bg-primary rounded-1"
+                                                                    style="width: 20px; height: 20px;"></div>
                                                             </div>
                                                             <div class="form-check">
-                                                                <input class="form-check-input" type="radio" name="color" id="colorDanger" value="#dc3545">
-                                                                <div class="bg-danger rounded-1" style="width: 20px; height: 20px;"></div>
+                                                                <input class="form-check-input" type="radio"
+                                                                    name="color" id="colorDanger" value="#dc3545">
+                                                                <div class="bg-danger rounded-1"
+                                                                    style="width: 20px; height: 20px;"></div>
                                                             </div>
                                                             <div class="form-check">
-                                                                <input class="form-check-input" type="radio" name="color" id="colorSuccess" value="#198754">
-                                                                <div class="bg-success rounded-1" style="width: 20px; height: 20px;"></div>
+                                                                <input class="form-check-input" type="radio"
+                                                                    name="color" id="colorSuccess" value="#198754">
+                                                                <div class="bg-success rounded-1"
+                                                                    style="width: 20px; height: 20px;"></div>
                                                             </div>
                                                             <div class="form-check">
-                                                                <input class="form-check-input" type="radio" name="color" id="colorWarning" value="#ffc107">
-                                                                <div class="bg-warning rounded-1" style="width: 20px; height: 20px;"></div>
+                                                                <input class="form-check-input" type="radio"
+                                                                    name="color" id="colorWarning" value="#ffc107">
+                                                                <div class="bg-warning rounded-1"
+                                                                    style="width: 20px; height: 20px;"></div>
                                                             </div>
                                                             <div class="form-check">
-                                                                <input class="form-check-input" type="radio" name="color" id="colorInfo" value="#0dcaf0">
-                                                        
-                                                                <div class="bg-info rounded-1" style="width: 20px; height: 20px;"></div>
+                                                                <input class="form-check-input" type="radio"
+                                                                    name="color" id="colorInfo" value="#0dcaf0">
+
+                                                                <div class="bg-info rounded-1"
+                                                                    style="width: 20px; height: 20px;"></div>
                                                             </div>
                                                             <div class="form-check">
-                                                                <input class="form-check-input" type="radio" name="color" id="colorDark" value="#212529">
-                                                                <div class="bg-dark rounded-1" style="width: 20px; height: 20px;"></div>
+                                                                <input class="form-check-input" type="radio"
+                                                                    name="color" id="colorDark" value="#212529">
+                                                                <div class="bg-dark rounded-1"
+                                                                    style="width: 20px; height: 20px;"></div>
                                                             </div>
                                                         </div>
                                                         <div class="mt-2">
                                                             <div class="form-check">
-                                                                <input class="form-check-input" type="radio" name="color" id="colorCustom" value="custom">
-                                                                <input type="color" class="form-control form-control-color ms-2"
-                                                                    id="customColorPicker" onchange="document.getElementById('colorCustom').value=this.value">
+                                                                <input class="form-check-input" type="radio"
+                                                                    name="color" id="colorCustom" value="custom">
+                                                                <input type="color"
+                                                                    class="form-control form-control-color ms-2"
+                                                                    id="customColorPicker"
+                                                                    onchange="document.getElementById('colorCustom').value=this.value">
                                                             </div>
                                                         </div>
                                                     </div>
@@ -127,6 +155,8 @@
                                             <th>Nama</th>
                                             <th>Jam Mulai</th>
                                             <th>Jam Selesai</th>
+                                            <th>Jam Presensi Terlambat</th>
+                                            <th>Jam Diperbolehkan checkout</th>
                                             <th>Aksi</th>
                                         </tr>
                                     </thead>
@@ -142,6 +172,8 @@
 
                                                 <td>{{ $shift->start_time ?? '-' }}</td>
                                                 <td>{{ $shift->end_time ?? '-' }}</td>
+                                                <td>{{ $shift->late_time ?? '-' }}</td>
+                                                <td>{{ $shift->checkout_time ?? '-' }}</td>
                                                 <td>
                                                     <div class="d-flex gap-2">
                                                         <a href="{{ route('superadmin.company.shift.show', $shift->id) }}"

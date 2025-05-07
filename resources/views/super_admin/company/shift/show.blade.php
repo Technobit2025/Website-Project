@@ -28,6 +28,14 @@
                             <div class="col-md-9">: {{ $companyShift->end_time ?? '-' }}</div>
                         </div>
                         <div class="row mb-2">
+                            <div class="col-md-3">Batas Presensi</div>
+                            <div class="col-md-9">: {{ $companyShift->late_time ?? '-' }}</div>
+                        </div>
+                        <div class="row mb-2">
+                            <div class="col-md-3">Jam Diperbolehkan checkout</div>
+                            <div class="col-md-9">: {{ $companyShift->checkout_time ?? '-' }}</div>
+                        </div>
+                        <div class="row mb-2">
                             <div class="col-md-3">Warna</div>
                             <div class="col-md-9">
                                 <div

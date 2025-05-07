@@ -6,15 +6,16 @@ use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 use App\Services\PresensiService;
 use App\DTO\PresensiData;
+use App\Services\AndroidPresensiService;
 
 class AndroidPresensiController extends Controller
 {
-    public function store(Request $request, PresensiService $service)
+    public function store(Request $request, AndroidPresensiService $service)
     {
         $validated = $request->validate([
-            'status'           => ['required', 'string', Rule::in(['Present', 'WFH', 'Sick Leave', 'Leave', 'Late', 'Left Early'])],
-            'photo_data'       => ['nullable', 'string', Rule::requiredIf($request->status !== 'Left Early')],
-            'filename'         => ['nullable', 'string', Rule::requiredIf($request->status !== 'Left Early')],
+            'status'           => ['required', 'string', Rule::in(['Present', 'WFH', 'Sick Leave', 'Leave', 'Late', 'Leave Early'])],
+            'photo_data'       => ['nullable', 'string', Rule::requiredIf($request->status !== 'Leave Early')],
+            'filename'         => ['nullable', 'string', Rule::requiredIf($request->status !== 'Leave Early')],
             'company_place_id' => ['nullable', 'integer'],
             'latitude'         => ['nullable', 'numeric'],
             'longitude'        => ['nullable', 'numeric'],

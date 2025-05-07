@@ -28,10 +28,10 @@ use App\Http\Controllers\API\V1\Auth\AndroidResetPasswordController;
 use App\Http\Controllers\API\V1\Auth\AndroidVerifyOtpController;
 use App\Http\Controllers\API\V1\User\ProfileController;
 use App\Http\Controllers\API\V1\Auth\AndroidChangePasswordController;
+use App\Http\Controllers\API\V1\Company\AndroidJadwalPatroliController;
 use App\Http\Controllers\API\V1\Company\CompanyAttendanceController;
 use App\Http\Controllers\API\V1\Company\AndroidPresensiController;
-use App\Http\Controllers\API\V1\Company\PatroliController;
-use App\Http\Controllers\API\V1\Company\AttendanceController;
+use App\Http\Controllers\API\V1\Company\AndroidHistoryAttendanceController;
 
 
 // API Route
@@ -81,8 +81,8 @@ Route::prefix('v1')->name('api.v1.')->group(function () {
         Route::middleware('auth:sanctum')->group(function () {
             Route::put('change-password', [AndroidChangePasswordController::class, 'changePassword']);
             Route::post('presensi', [AndroidPresensiController::class, 'store']);
-            Route::get('jadwal-patroli', [PatroliController::class, 'getJadwalPatroli']);
-            Route::get('history-presensi', [AttendanceController::class, 'index']);
+            Route::get('jadwal-patroli', [AndroidJadwalPatroliController::class, 'getJadwalPatroli']);
+            Route::get('history-presensi', [AndroidHistoryAttendanceController::class, 'getHistoryByEmployee']);
 
         });
     });

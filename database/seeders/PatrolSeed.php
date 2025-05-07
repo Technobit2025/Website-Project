@@ -30,7 +30,7 @@ class PatrolSeed extends Seeder
                 'updated_at' => now()
             ]
         ]);
-        
+
 
         // Tambah shift
         DB::table('company_shifts')->insert([
@@ -39,6 +39,8 @@ class PatrolSeed extends Seeder
                 'name' => 'Shift Pagi',
                 'start_time' => '08:00:00',
                 'end_time' => '16:00:00',
+                'late_time' => '08:30:00',
+                'checkout_time' => '15:30:00',
                 'color' => '#FFEB3B',
                 'description' => 'Shift pagi',
                 'created_at' => now(),
@@ -49,6 +51,8 @@ class PatrolSeed extends Seeder
                 'name' => 'Shift Malam',
                 'start_time' => '20:00:00',
                 'end_time' => '04:00:00',
+                'late_time' => '03:30:00',
+                'checkout_time' => '20:30:00',
                 'color' => '#3F51B5',
                 'description' => 'Shift malam',
                 'created_at' => now(),
