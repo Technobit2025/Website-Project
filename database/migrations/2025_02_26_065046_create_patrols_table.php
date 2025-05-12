@@ -15,7 +15,9 @@ return new class extends Migration
             $table->id(); 
             $table->foreignId('employee_id')->constrained('employees')->onDelete('cascade'); 
             $table->foreignId('shift_id')->constrained('shifts')->onDelete('cascade'); 
-            $table->string('patrol_location', 255)->nullable(); 
+            $table->string('photo', 255)->nullable(); 
+            $table->decimal('latitude', 10, 7);
+            $table->decimal('longitude', 10, 7);
             $table->enum('status', ['pending', 'approved', 'rejected'])->default('pending'); 
             $table->foreignId('reviewed_by')->nullable()->constrained('users')->onDelete('set null'); 
             $table->timestamp('reviewed_at')->nullable(); 
