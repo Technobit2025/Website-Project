@@ -57,3 +57,19 @@ if (!function_exists('generateQrCode')) {
     return $qrCode;
   }
 }
+if (!function_exists('attendanceType')) {
+  function attendanceType($status)
+  {
+    $types = [
+      'Present' => 'Hadir',
+      'Sick Leave' => 'Izin Sakit',
+      'Leave' => 'Cuti',
+      'Absent' => 'Alpa',
+      'Late' => 'Terlambat',
+      'Leave Early' => 'Pulang Awal',
+      'WFH' => 'WFH',
+    ];
+
+    return $types[$status] ?? $status;
+  }
+}

@@ -45,9 +45,9 @@ use App\Http\Controllers\Web\MainController;
 use App\Http\Controllers\Web\ProfileController;
 use App\Http\Controllers\Web\PresenceController;
 use App\Http\Controllers\Web\AttendanceController;
-use App\Http\Controllers\Web\PermitController;  
+use App\Http\Controllers\Web\PermitController;
 use App\Http\Controllers\Web\ScheduleController;
- 
+
 // SUPER ADMIN
 use App\Http\Controllers\Web\SuperAdmin\HomeController as SuperAdminHome;
 use App\Http\Controllers\Web\SuperAdmin\LogViewerController as SuperAdminLogViewer;
@@ -64,7 +64,6 @@ use App\Http\Controllers\Web\SuperAdmin\CompanyScheduleController as SuperAdminC
 use App\Http\Controllers\Web\SuperAdmin\CompanyAttendanceController as SuperAdminCompanyAttendance;
 use App\Http\Controllers\Web\SuperAdmin\CompanyPlaceController as SuperAdminCompanyPlace;
 // use App\Http\Controllers\Web\SuperAdmin\CompanyPermissionController as SuperAdminCompanyPermission;
-use App\Http\Controllers\Web\SuperAdmin\CompanyPresencesController as SuperAdminCompanyPresence;
 
 use App\Http\Controllers\Web\SuperAdmin\PayrollPeriodController as SuperAdminPayrollPeriod;
 use App\Http\Controllers\Web\SuperAdmin\PayrollController as SuperAdminPayroll;
@@ -73,7 +72,6 @@ use App\Http\Controllers\Web\SuperAdmin\PayrollComponentController as SuperAdmin
 // HUMAN RESOURCE
 use App\Http\Controllers\Web\HumanResource\HomeController as HumanResourceHome;
 use App\Http\Controllers\Web\HumanResource\EmployeeController as HumanResourceEmployee;
-use App\Http\Controllers\Web\HumanResource\PresenceController as HumanResourcePresence;
 
 // EMPLOYEE
 use App\Http\Controllers\Web\Employee\HomeController as EmployeeHome;
@@ -109,8 +107,8 @@ Route::get('error-test/{code}', function ($code) {
 });
 
 // AUTHENTICATION
-Route::get('login', [AuthController::class, 'index'])->middleware('guest')->name('login');
-Route::post('login', [AuthController::class, 'login'])->middleware('guest')->name('login.login');
+Route::get('login', [AuthController::class, 'index'])->name('login');
+Route::post('login', [AuthController::class, 'login'])->name('login.login');
 Route::post('logout', [AuthController::class, 'logout'])->middleware('auth')->name('logout');
 
 Route::get('forgot-password', [ForgotPasswordController::class, 'index'])->middleware('guest')->name('password.request');
@@ -139,9 +137,16 @@ Route::prefix('permit')->name('permit.')->middleware(['auth'])->group(function (
     Route::get('create', [PermitController::class, 'create'])->name('create');
     Route::post('store', [PermitController::class, 'store'])->name('store');
     Route::get('show/{permit}', [PermitController::class, 'show'])->name('show');
-    Route::get('edit/{permit}', [PermitController::class, 'edit'])->name('edit');
-    Route::put('update/{permit}', [PermitController::class, 'update'])->name('update');
+    Route::get('confirmation/{permit}', [PermitController::class, 'confirmation'])->name('confirmation');
+    Route::put('confirm/{permit}', [PermitController::class, 'confirm'])->name('confirm');
     Route::delete('destroy/{permit}', [PermitController::class, 'destroy'])->name('destroy');
+});
+// 
+Route::prefix('alternation')->name('alternation.')->middleware(['auth'])->group(function () {
+    Route::get('/', [PermitController::class, 'alternationIndex'])->name('index');
+    Route::get('show/{permit}', [PermitController::class, 'alternationShow'])->name('show');
+    // Route::get('confirmation/{permit}', [PermitController::class, 'alternationconfirmation'])->name('confirmation');
+    Route::put('confirm/{permit}', [PermitController::class, 'alternationConfirm'])->name('confirm');
 });
 // SCHEDULE
 Route::prefix('schedule')->name('schedule.')->middleware(['auth'])->group(function () {
@@ -200,18 +205,6 @@ Route::group(['prefix' => 'superadmin', 'as' => 'superadmin.', 'middleware' => [
 
             Route::get('print-qr-code/{companyPlace}', [SuperAdminCompanyPlace::class, 'printQrCode'])->name('printQrCode');
         });
-        Route::prefix('presence')->name('presence.')->group(function () {
-            Route::get('/{company}', [SuperAdminCompanyPresence::class, 'index'])->name('index');
-            Route::get('create/{company}', [SuperAdminCompanyPresence::class, 'create'])->name('create');
-            Route::post('store/{company}', [SuperAdminCompanyPresence::class, 'store'])->name('store');
-            Route::get('edit/{presence}', [SuperAdminCompanyPresence::class, 'edit'])->name('edit');
-            Route::put('update/{presence}', [SuperAdminCompanyPresence::class, 'update'])->name('update');
-            Route::delete('destroy/{presence}', [SuperAdminCompanyPresence::class, 'destroy'])->name('destroy');
-        });
-        // Route::resource('presence', SuperAdminCompanyPresence::class);
-        // Route::prefix('permission')->name('permission.')->group(function (){
-        //     Route::get('/create/{company}',[SuperAdminCompanyPermission::class, 'create'])->name('create');
-        // });
     });
 
     // EMPLOYEE
@@ -409,11 +402,11 @@ Route::group(['prefix' => 'danru', 'as' => 'danru.', 'middleware' => ['auth', 'c
 
     Route::prefix('permit')->name('permit.')->group(function () {
         Route::get('/', [DanruPermit::class, 'index'])->name('index');
-        Route::get('create', [DanruPermit::class, 'create'])->name('create');
-        Route::post('store', [DanruPermit::class, 'store'])->name('store');
+        // Route::post('store', [DanruPermit::class, 'store'])->name('store');
         Route::get('show/{permit}', [DanruPermit::class, 'show'])->name('show');
-        Route::get('edit/{permit}', [DanruPermit::class, 'edit'])->name('edit');
         Route::put('update/{permit}', [DanruPermit::class, 'update'])->name('update');
         Route::delete('destroy/{permit}', [DanruPermit::class, 'destroy'])->name('destroy');
+        Route::get('jadwal/{employee}', [DanruPermit::class, 'getJadwal'])->name('jadwal');
+        Route::post('send-mail/{permit}', [DanruPermit::class, 'sendMail'])->name('sendMail');
     });
 });

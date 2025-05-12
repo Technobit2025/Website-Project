@@ -87,26 +87,17 @@
                                                 </td>
                                                 <td>
                                                     {{-- Show detail button --}}
-                                                    <a href="" class="btn btn-sm px-3 btn-primary"
-                                                        title="Lihat Detail">
+                                                    <a href="{{ route('permit.show', $permit->id) }}"
+                                                        class="btn btn-sm px-3 btn-primary" title="Lihat Detail">
                                                         <i class="fa fa-eye"></i>
                                                     </a>
-                                                    {{-- Edit button: only if status is pending --}}
-                                                    @if ($permit->status == 'pending')
-                                                        <a href="" class="btn btn-sm px-3 btn-warning"
-                                                            title="Edit">
-                                                            <i class="fa fa-edit"></i>
-                                                        </a>
-                                                        {{-- Delete button --}}
-                                                        <form action="{{ route('permit.destroy', $permit->id) }}"
-                                                            method="POST" style="display:inline;">
-                                                            @csrf
-                                                            @method('DELETE')
-                                                            <button type="submit" class="btn btn-sm px-3 btn-danger"
-                                                                title="Hapus">
-                                                                <i class="fa fa-trash"></i>
-                                                            </button>
-                                                        </form>
+                                                    @if ($permit->alternate_schedule_id == null)
+                                                        @include('layouts.components.delete', [
+                                                            'route' => route('permit.destroy', [$permit->id]),
+                                                            'title' => 'Hapus izin ini.',
+                                                            'message' =>
+                                                                'Apakah anda yakin ingin menghapus izin ini?',
+                                                        ])
                                                     @endif
                                                 </td>
                                             </tr>

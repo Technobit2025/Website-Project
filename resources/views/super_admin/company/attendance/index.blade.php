@@ -49,7 +49,7 @@
 
         $('#month').change(function() {
             window.location.href =
-                "{{ route('superadmin.company.schedule.index', ['company' => $companyId]) }}?month=" + $(this)
+                "{{ route('superadmin.company.attendance.index', ['company' => $companyId]) }}?month=" + $(this)
                 .val();
         });
     </script>
@@ -76,7 +76,7 @@
                                     <input type="month" name="month" id="month" class="form-control w-auto"
                                         value="{{ request('month') ?? date('Y-m') }}">
 
-                                    <a href="{{ route('superadmin.company.schedule.index', ['company' => $companyId]) }}"
+                                    <a href="{{ route('superadmin.company.attendance.index', ['company' => $companyId]) }}"
                                         class="btn btn-secondary">
                                         <i class="fa fa-refresh"></i>
                                         Reset

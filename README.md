@@ -73,6 +73,8 @@ The project structure will be saved in `storage/app/project_structure.txt`.
 ├── app/
 │   ├── Console/
 │   │   └── Commands/
+│   ├── DTO/
+│   │   └── PresensiData.php
 │   ├── Helpers/
 │   │   └── Helpers.php
 │   ├── Http/
@@ -83,8 +85,22 @@ The project structure will be saved in `storage/app/project_structure.txt`.
 │   ├── Models/
 │   │   ├── AndroidOtpToken.php
 │   │   ├── AndroidPasswordResetToken.php
+│   │   ├── Attendance.php
+│   │   ├── Company.php
+│   │   ├── CompanyAttendance.php
+│   │   ├── CompanyPlace.php
+│   │   ├── CompanyPresence.php
+│   │   ├── CompanySchedule.php
+│   │   ├── CompanyShift.php
 │   │   ├── Employee.php
+│   │   ├── Payroll.php
+│   │   ├── PayrollComponent.php
+│   │   ├── PayrollPeriod.php
+│   │   ├── Permit.php
+│   │   ├── Presence.php
+│   │   ├── PresenceDetail.php
 │   │   ├── Role.php
+│   │   ├── Schedule.php
 │   │   ├── State.php
 │   │   └── User.php
 │   ├── Notifications/
@@ -94,7 +110,9 @@ The project structure will be saved in `storage/app/project_structure.txt`.
 │   │   └── AppServiceProvider.php
 │   └── Services/
 │       ├── AndroidOtpService.php
-│       └── AndroidPasswordResetService.php
+│       ├── AndroidPasswordResetService.php
+│       ├── AndroidPresensiService.php
+│       └── ChangePasswordService.php
 ├── bootstrap/
 │   ├── cache/
 │   │   ├── packages.php
@@ -125,37 +143,56 @@ The project structure will be saved in `storage/app/project_structure.txt`.
 │   │   ├── 2025_02_26_062241_create_personal_access_tokens_table.php
 │   │   ├── 2025_02_26_062836_create_management_reports_table.php
 │   │   ├── 2025_02_26_063529_create_shifts_table.php
-│   │   ├── 2025_02_26_064341_create_salaries_table.php
-│   │   ├── 2025_02_26_064443_create_salary_transactions_table.php
 │   │   ├── 2025_02_26_065046_create_patrols_table.php
 │   │   ├── 2025_02_26_065149_create_patrol_logs_table.php
-│   │   └── 2025_03_03_123555_create_otps_table.php
+│   │   ├── 2025_03_03_123555_create_otps_table.php
+│   │   ├── 2025_03_18_110130_create_companies_table.php
+│   │   ├── 2025_03_18_110153_create_company_shifts_table.php
+│   │   ├── 2025_03_18_110516_create_company_schedules_table.php
+│   │   ├── 2025_03_18_110554_add_company_id_to_employee_table.php
+│   │   ├── 2025_03_21_074744_create_company_places_table.php
+│   │   ├── 2025_03_21_081228_create_company_attendances_table.php
+│   │   ├── 2025_04_15_093329_create_payroll_periods_table.php
+│   │   ├── 2025_04_15_102712_create_payrolls_table.php
+│   │   ├── 2025_04_15_102723_create_payroll_components_table.php
+│   │   ├── 2025_04_20_110145_create_company_presences_table.php
+│   │   ├── 2025_04_24_042402_create_presence_details_table.php
+│   │   ├── 2025_04_24_065224_add_start_and_end_time_to_company_schedules_table.php
+│   │   ├── 2025_04_25_063828_create_schedules_table.php
+│   │   ├── 2025_04_25_063829_create_attendances_table.php.php
+│   │   ├── 2025_04_25_070800_create_presences_table.php
+│   │   ├── 2025_04_28_132928_create_permits_table.php
+│   │   ├── 2025_04_28_142928_create_employee_shift_schedules.php
+│   │   ├── 2025_05_02_054809_add_photo_path_to_company_attendances_table.php.php
+│   │   └── 2025_05_02_063211_create_get_company_attendance_history_procedure.php.php
 │   └── seeders/
 │       ├── DatabaseSeeder.php
 │       ├── DummySeeder.php
+│       ├── PatrolSeed.php
+│       ├── PresenceSeeder.php
 │       └── RoleSeeder.php
 ├── public/
 │   ├── assets/
-│   │   ├── ajax/
-│   │   ├── audio/
 │   │   ├── css/
 │   │   ├── fonts/
 │   │   ├── images/
 │   │   ├── js/
 │   │   ├── json/
 │   │   ├── pdf/
-│   │   ├── pug/
 │   │   ├── scss/
-│   │   ├── svg/
-│   │   └── video/
+│   │   └── svg/
 │   ├── build/
 │   │   ├── assets/
+│   ├── framework/
+│   │   └── views/
 │   ├── storage/
-│   │   └── framework/
+│   │   └── user/
 │   ├── db.sql
 │   ├── favicon.ico
 │   ├── index.php
-│   └── robots.txt
+│   ├── robots.txt
+│   └── storage/
+│       └── user/
 ├── resources/
 │   ├── css/
 │   │   └── app.css
@@ -167,6 +204,8 @@ The project structure will be saved in `storage/app/project_structure.txt`.
 │   │   └── app.scss
 │   └── views/
 │       ├── auth/
+│       ├── company/
+│       ├── danru/
 │       ├── emails/
 │       ├── employee/
 │       ├── errors/
@@ -176,6 +215,7 @@ The project structure will be saved in `storage/app/project_structure.txt`.
 │       ├── page_layouts/
 │       ├── security/
 │       ├── super_admin/
+│       ├── treasurer/
 │       └── welcome.blade.php
 ├── routes/
 │   ├── api.php
@@ -184,16 +224,17 @@ The project structure will be saved in `storage/app/project_structure.txt`.
 ├── storage/
 │   ├── app/
 │   │   ├── private/
-│   │   └── project_structure.txt
+│   │   └── public/
 │   ├── debugbar/
 │   ├── framework/
-│   │   ├── cache/
-│   │   └── views/
+│   │   └── cache/
 │   └── logs/
 ├── tests/
 │   ├── Feature/
 │   │   ├── AuthTest.php
-│   │   └── ExampleTest.php
+│   │   ├── ExampleTest.php
+│   │   ├── ProfileTest.php
+│   │   └── TreasurerTest.php
 │   ├── Unit/
 │   │   └── ExampleTest.php
 │   └── TestCase.php

@@ -19,8 +19,8 @@ return new class extends Migration
             $table->foreignId('employee_schedule_id')->nullable()->constrained('company_schedules')->onDelete('cascade');
             $table->foreignId('alternate_schedule_id')->nullable()->constrained('company_schedules')->onDelete('cascade');
 
-            $table->boolean("employeeIsConfirmed")->default(false);
-            $table->boolean("alternateIsConfirmed")->default(false);
+            $table->enum("employee_is_confirmed", ["approved", "rejected", "pending"])->default("pending");
+            $table->enum("alternate_is_confirmed", ["approved", "rejected", "pending"])->default("pending");
 
             $table->enum("status", ["approved", "rejected", "pending"])->default("pending");
             $table->enum('type', [

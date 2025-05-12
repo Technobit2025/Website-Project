@@ -8,11 +8,6 @@ class Permit extends Model
 {
     protected $guarded = [];
 
-    protected $casts = [
-        'employeeIsConfirmed' => 'boolean',
-        'alternateIsConfirmed' => 'boolean',
-    ];
-
     public function employee()
     {
         return $this->belongsTo(Employee::class, "employee_id");

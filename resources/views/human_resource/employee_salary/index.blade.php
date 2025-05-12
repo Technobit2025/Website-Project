@@ -1,6 +1,6 @@
 @extends('layouts.simple.master')
 
-@section('title', 'Human Resource Dashboard')
+@section('title', 'Gaji Pokok Karyawan')
 
 @section('css')
     <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/vendors/jquery.dataTables.css') }}">

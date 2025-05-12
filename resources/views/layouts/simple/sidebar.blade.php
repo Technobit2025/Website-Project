@@ -101,6 +101,13 @@
                                     </svg>
                                     <span>Perizinan</span></a>
                             </li>
+                            <li class="sidebar-list">
+                                <a class="sidebar-link sidebar-title link-nav" href="{{ route('alternation.index') }}">
+                                    <svg class="stroke-icon">
+                                        <use href="{{ asset('assets/svg/icon-sprite.svg#stroke-authenticate') }}"></use>
+                                    </svg>
+                                    <span>Pergantian</span></a>
+                            </li>
                     @endswitch
                     {{-- Profile --}}
                     <li class="sidebar-main-title">

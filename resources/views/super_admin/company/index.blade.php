@@ -1,6 +1,6 @@
 @extends('layouts.simple.master')
 
-@section('title', 'Human Resource Dashboard')
+@section('title', 'Data Perusahaan')
 
 @section('css')
     <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/vendors/jquery.dataTables.css') }}">
@@ -163,11 +163,6 @@
                                                         <a href="{{ route('superadmin.company.attendance.index', $company->id) }}"
                                                             class="btn btn-secondary btn-sm px-3" data-bs-toggle="tooltip"
                                                             data-bs-placement="top" data-bs-title="Presensi Perusahaan">
-                                                            <i class="fa-solid fa-clock"></i>
-                                                        </a>
-                                                        <a href="{{ route('superadmin.company.presence.index', $company->id) }}"
-                                                            class="btn btn-secondary btn-sm px-3" data-bs-toggle="tooltip"
-                                                            data-bs-placement="top" data-bs-title="Perizinan Perusahaan">
                                                             <i class="fa-solid fa-clock"></i>
                                                         </a>
                                                         @include('layouts.components.delete', [

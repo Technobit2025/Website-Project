@@ -1,6 +1,6 @@
 @extends('layouts.simple.master')
 
-@section('title', 'Human Resource Dashboard')
+@section('title', 'Jadwal Perusahaan')
 
 @section('css')
     <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/vendors/jquery.dataTables.css') }}">
@@ -38,7 +38,7 @@
                 <div class="card">
                     <div class="card-header">
                         <div class="d-flex justify-content-between">
-                            <h5>Data Perusahaan</h5>
+                            <h5>Data Jadwal Perusahaan</h5>
                         </div>
                     </div>
                     <div class="card-body">
