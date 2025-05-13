@@ -63,7 +63,7 @@ use App\Http\Controllers\Web\SuperAdmin\CompanyShiftController as SuperAdminComp
 use App\Http\Controllers\Web\SuperAdmin\CompanyScheduleController as SuperAdminCompanySchedule;
 use App\Http\Controllers\Web\SuperAdmin\CompanyAttendanceController as SuperAdminCompanyAttendance;
 use App\Http\Controllers\Web\SuperAdmin\CompanyPlaceController as SuperAdminCompanyPlace;
-// use App\Http\Controllers\Web\SuperAdmin\CompanyPermissionController as SuperAdminCompanyPermission;
+use App\Http\Controllers\Web\SuperAdmin\PermitController as SuperAdminPermit;
 
 use App\Http\Controllers\Web\SuperAdmin\PayrollPeriodController as SuperAdminPayrollPeriod;
 use App\Http\Controllers\Web\SuperAdmin\PayrollController as SuperAdminPayroll;
@@ -141,11 +141,10 @@ Route::prefix('permit')->name('permit.')->middleware(['auth'])->group(function (
     Route::put('confirm/{permit}', [PermitController::class, 'confirm'])->name('confirm');
     Route::delete('destroy/{permit}', [PermitController::class, 'destroy'])->name('destroy');
 });
-// 
+// ALTERNATE
 Route::prefix('alternation')->name('alternation.')->middleware(['auth'])->group(function () {
     Route::get('/', [PermitController::class, 'alternationIndex'])->name('index');
     Route::get('show/{permit}', [PermitController::class, 'alternationShow'])->name('show');
-    // Route::get('confirmation/{permit}', [PermitController::class, 'alternationconfirmation'])->name('confirmation');
     Route::put('confirm/{permit}', [PermitController::class, 'alternationConfirm'])->name('confirm');
 });
 // SCHEDULE
@@ -291,6 +290,12 @@ Route::group(['prefix' => 'superadmin', 'as' => 'superadmin.', 'middleware' => [
     Route::prefix('env')->name('env.')->group(function () {
         Route::get('/', [SuperAdminEnv::class, 'index'])->name('index');
         Route::put('update', [SuperAdminEnv::class, 'update'])->name('update');
+    });
+
+    Route::prefix('permit')->name('permit.')->middleware(['auth'])->group(function () {
+        Route::get('/', [SuperAdminPermit::class, 'index'])->name('index');
+        Route::get('show/{permit}', [SuperAdminPermit::class, 'show'])->name('show');
+        Route::put('confirm/{permit}', [SuperAdminPermit::class, 'confirm'])->name('confirm');
     });
 });
 

@@ -48,6 +48,14 @@
         <span class="">Payroll</span>
     </a>
 </li>
+<li class="sidebar-list">
+    <a class="sidebar-link sidebar-title link-nav" href="{{ route('superadmin.permit.index') }}">
+        <svg class="stroke-icon">
+            <use href="{{ asset('assets/svg/icon-sprite.svg#stroke-chat') }}"></use>
+        </svg>
+        <span class="">Perizinan</span>
+    </a>
+</li>
 <li class="sidebar-main-title">
     <div>
         <h6 class="">Tools</h6>

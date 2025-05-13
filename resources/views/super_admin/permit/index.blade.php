@@ -1,6 +1,6 @@
 @extends('layouts.simple.master')
 
-@section('title', 'Data Pergantian')
+@section('title', 'Data Perizinan')
 
 @section('css')
     <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/vendors/jquery.dataTables.css') }}">
@@ -29,7 +29,7 @@
 
 @section('main_content')
     <div class="container-fluid">
-        @include('layouts.components.breadcrumb', ['header' => 'Data Pergantian'])
+        @include('layouts.components.breadcrumb', ['header' => 'Data Perizinan'])
     </div>
     <div class="container-fluid">
         <div class="row">
@@ -37,18 +37,19 @@
                 <div class="card">
                     <div class="card-header">
                         <div class="d-flex justify-content-between">
-                            <h5>Data Pergantian</h5>
+                            <h5>Data Perizinan</h5>
+                            {{-- Tambahkan tombol pengajuan izin jika diperlukan --}}
                         </div>
                     </div>
                     <div class="card-body">
                         <div class="table-responsive custom-scrollbar table-striped"
-                            data-intro="Data pergantian akan ditampilkan disini">
+                            data-intro="Data perizinan akan ditampilkan disini">
                             <div class="col-12 table-responsive">
                                 <table class="display callback-table dataTable" id="permitTable" style="width: 100%;"
                                     aria-describedby="permitTable_info">
                                     <thead>
                                         <tr>
-                                            <th>Jadwal yang digantikan</th>
+                                            <th>Karyawan izin</th>
                                             <th>Jenis Izin</th>
                                             <th>Keterangan</th>
                                             <th>Pengganti</th>
@@ -59,8 +60,7 @@
                                     <tbody>
                                         @foreach ($permits as $permit)
                                             <tr>
-                                                <td>{{ formatDate($permit->employeeCompanySchedule->date, 'l, d F Y') }}
-                                                </td>
+                                                <td>{{ $permit->employee->fullname ?? '-' }}</td>
                                                 <td>{{ $permit->type ?? '-' }}</td>
                                                 <td>{{ $permit->reason ?? '-' }}</td>
                                                 <td>
@@ -80,10 +80,19 @@
                                                     @endif
                                                 </td>
                                                 <td>
-                                                    <a href="{{ route('alternation.show', $permit->id) }}"
+                                                    {{-- Show detail button --}}
+                                                    <a href="{{ route('superadmin.permit.show', $permit->id) }}"
                                                         class="btn btn-sm px-3 btn-primary" title="Lihat Detail">
                                                         <i class="fa fa-eye"></i>
                                                     </a>
+                                                    @if ($permit->alternate_schedule_id == null)
+                                                        @include('layouts.components.delete', [
+                                                            'route' => route('permit.destroy', [$permit->id]),
+                                                            'title' => 'Hapus izin ini.',
+                                                            'message' =>
+                                                                'Apakah anda yakin ingin menghapus izin ini?',
+                                                        ])
+                                                    @endif
                                                 </td>
                                             </tr>
                                         @endforeach

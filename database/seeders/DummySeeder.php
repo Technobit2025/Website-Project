@@ -146,17 +146,17 @@ class DummySeeder extends Seeder
                 ]);
 
                 // Schedule
-                $days = Carbon::now()->daysInMonth;
-                for ($j = 1; $j < rand(1, $days); $j++) {
-                    CompanySchedule::create([
-                        'company_id' => $company->id,
-                        'company_shift_id' => CompanyShift::inRandomOrder()->first()->id,
-                        'employee_id' => $employee->id,
-                        'date' => Carbon::now()->startOfMonth()->addDays($j - 1)->format('Y-m-d'),
-                        'created_at' => now(),
-                        'updated_at' => now(),
-                    ]);
-                }
+                // $days = Carbon::now()->daysInMonth;
+                // for ($j = 1; $j < rand(1, $days); $j++) {
+                //     CompanySchedule::create([
+                //         'company_id' => $company->id,
+                //         'company_shift_id' => CompanyShift::inRandomOrder()->first()->id,
+                //         'employee_id' => $employee->id,
+                //         'date' => Carbon::now()->startOfMonth()->addDays($j - 1)->format('Y-m-d'),
+                //         'created_at' => now(),
+                //         'updated_at' => now(),
+                //     ]);
+                // }
 
                 // Attendance
                 // for ($k = 1; $k <= rand(1, $days); $k++) {
