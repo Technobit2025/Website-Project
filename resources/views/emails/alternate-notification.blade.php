@@ -228,7 +228,7 @@
                                     @endif
 
                                     <div style="text-align: center;">
-                                        <a class="btn" href="{{ url('/alternate/show/' . $permit->id) }}">Lihat Detail
+                                        <a class="btn" href="{{ url('/alternation/show/' . $permit->id) }}">Lihat Detail
                                             &amp; Setujui Izin</a>
                                     </div>
                                     <p style="margin-top: 24px; color: #888; font-size: 13px;">
