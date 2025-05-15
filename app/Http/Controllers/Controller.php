@@ -3,8 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Routing\Controller as BaseController;
 
-abstract class Controller
+abstract class Controller extends BaseController
 {
     /**
      * **Dokumentasi Penamaan Controller**
@@ -56,4 +57,6 @@ abstract class Controller
      *      PascalCase/snake_case/lowercase
      *      AdministrationAdmin/student_registrant/addlist.blade.php
      */
+
+     
 }
