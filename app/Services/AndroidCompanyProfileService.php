@@ -31,10 +31,10 @@ class AndroidCompanyProfileService
             'logo' => $this->getLogoUrl($companyPlace),
             'name' => $companyPlace->name,
             'description' => $companyPlace->description,
-            'email' => 'info@arunika.co.id', // Hardcoded atau ambil dari table lain jika ada
-            'phone' => '+62 812 1234 5678',   // Sama seperti di atas
+            'email' => $companyPlace->email ?? '-',
+            'phone' => $companyPlace->phone ?? '-',
             'location' => $companyPlace->address,
-            'website' => 'https://www.arunika.co.id'
+            'website' => $companyPlace->website ?? '-'
         ];
     }
 
