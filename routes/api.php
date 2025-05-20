@@ -89,6 +89,7 @@ Route::prefix('v1')->name('api.v1.')->group(function () {
 
             Route::post('patroli', [AndroidPatrolController::class, 'store']);
             Route::get('get-patroli', [AndroidPatrolController::class, 'index']);
+            Route::get('histori-patroli', [AndroidPatrolController::class, 'history']);
         });
     });
 

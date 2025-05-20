@@ -10,13 +10,21 @@ class StorePatrolRequest extends FormRequest
         return true;
     }
 
-    public function rules(): array
+    public function rules()
     {
         return [
-            'shift_id'  => 'required|exists:shifts,id',
-            'place_id'  => 'required|exists:company_places,id',
-            'kondisi'   => 'required|string',
-            'catatan'   => 'nullable|string',
+            'photo_base64' => 'required|string', // Pastikan base64 ada
+            'filename'      => 'required|string', // Pastikan nama file ada
+            'shift_id'      => 'required|integer',
+            'place_id'      => 'required|integer',
+            'catatan'       => 'nullable|string',
         ];
     }
-}
+        public function messages()
+    {
+        return [
+            'photo_base64.required' => 'Foto tidak boleh kosong.',
+            'filename.required'     => 'Nama file tidak boleh kosong.',
+        ];
+    }
+}   
