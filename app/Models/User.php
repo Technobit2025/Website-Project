@@ -26,6 +26,7 @@ class User extends Authenticatable
         'active',
         'photo',
         'role_id',
+        'employee_id',
     ];
     protected $hidden = [
         'password',
@@ -77,4 +78,5 @@ class User extends Authenticatable
     {
         return $this->hasOne(Employee::class);
     }
+    
 }
