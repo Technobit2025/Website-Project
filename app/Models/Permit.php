@@ -8,6 +8,23 @@ class Permit extends Model
 {
     protected $guarded = [];
 
+    protected $table = 'permits';
+
+    protected $fillable = [
+        'employee_id',
+        'alternate_id',
+        'employee_schedule_id',
+        'alternate_schedule_id',
+        'date',
+        'permission',
+        'employee_is_confirmed',
+        'alternate_is_confirmed',
+        'status',
+        'type',
+        'reason',
+        'created_at',
+        'updated_at',
+    ];
 
     public function employee()
     {

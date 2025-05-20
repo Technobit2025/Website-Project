@@ -35,6 +35,7 @@ use App\Http\Controllers\API\V1\Company\AndroidHistoryAttendanceController;
 use App\Http\Controllers\API\V1\Company\AndroidPermitsController;
 use App\Http\Controllers\API\V1\Company\AndroidPatrolController;
 use App\Http\Controllers\Api\V1\Company\AndroidCompanyProfileController;
+use App\Http\Controllers\Api\V1\Company\AndroidUserPermitController;
 
 // API Route
 Route::prefix('v1')->name('api.v1.')->group(function () {
@@ -87,11 +88,15 @@ Route::prefix('v1')->name('api.v1.')->group(function () {
             Route::get('history-presensi', [AndroidHistoryAttendanceController::class, 'getHistoryByEmployee']);
             Route::post('perizinan', [AndroidPermitsController::class, 'store']);
             Route::delete('perizinan/{id}', [AndroidPermitsController::class, 'destroy']);
+             Route::get('get-perizinan', [AndroidUserPermitController::class, 'index']);
 
             Route::post('patroli', [AndroidPatrolController::class, 'store']);
             Route::get('get-patroli', [AndroidPatrolController::class, 'index']);
             Route::get('histori-patroli', [AndroidPatrolController::class, 'history']);
+
             Route::get('company-profile', [AndroidCompanyProfileController::class, 'show']);
+
+           
 
         });
     });
