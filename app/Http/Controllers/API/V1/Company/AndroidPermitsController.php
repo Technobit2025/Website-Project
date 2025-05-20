@@ -3,8 +3,8 @@
 namespace App\Http\Controllers\API\V1\Company;
 
 use App\Http\Controllers\Controller;
-use App\Services\AndroidPermitsService;
 use Illuminate\Http\Request;
+use App\Services\AndroidPermitsService;
 
 class AndroidPermitsController extends Controller
 {
@@ -15,46 +15,32 @@ class AndroidPermitsController extends Controller
         $this->permitService = $permitService;
     }
 
-    // Menyimpan permit
+    public function index()
+    {
+        $user = auth()->user();
+        $result = $this->permitService->getPermitsByUser($user->id);
+
+        return response()->json($result);
+    }
+
     public function store(Request $request)
     {
-        $user = $request->user(); // user dari sanctum token
-        $data = $this->permitService->createPermit($request, $user);
+        $user = auth()->user();
+        $result = $this->permitService->createPermit($request->all(), $user->id);
 
         return response()->json([
             'success' => true,
-            'data' => $data
+            'data' => $result
         ]);
     }
 
-    // Menghapus permit
-    public function destroy($id, Request $request)
+    public function destroy(Request $request)
     {
-        $user = $request->user();
-        $result = $this->permitService->deletePermit($id, $user->id);
+        $user = auth()->user();
+        $permit_id = $request->id;
 
-        if (!$result['success']) {
-            return response()->json([
-                'success' => false,
-                'message' => $result['message']
-            ], 404);
-        }
+        $result = $this->permitService->deletePermit($permit_id, $user->id);
 
-        return response()->json([
-            'success' => true,
-            'message' => $result['message']
-        ]);
-    }
-
-    // Menampilkan semua permit milik user
-    public function index(Request $request)
-    {
-        $user = $request->user();
-        $permits = $this->permitService->getUserPermits($user->id);
-
-        return response()->json([
-            'success' => true,
-            'data' => $permits
-        ]);
+        return response()->json($result);
     }
 }

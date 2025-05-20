@@ -3,47 +3,79 @@
 namespace App\Services;
 
 use App\Models\Permit;
-use Illuminate\Support\Facades\Validator;
+use App\Models\Employee;
 
 class AndroidPermitsService
 {
-    public function createPermit($request, $user)
+    public function getPermitsByUser($user_id)
     {
-        $validator = Validator::make($request->all(), [
-            'date' => 'required|date',
-            'permission' => 'required|in:izin,sakit,cuti',
-            'alasan' => 'nullable|string'
-        ]);
+        $employee = Employee::where('user_id', $user_id)->first();
 
-        if ($validator->fails()) {
-            abort(422, $validator->errors()->first());
+        if (!$employee) {
+            return [
+                'status' => false,
+                'message' => 'Employee not found for this user.'
+            ];
         }
 
-        $reason = $request->permission;
-        if ($request->filled('alasan')) {
-            $reason .= ' - ' . $request->alasan;
+        $permits = Permit::where('employee_id', $employee->id)->get();
+
+        if ($permits->isEmpty()) {
+            return [
+                'status' => false,
+                'message' => 'No permits found for this employee.'
+            ];
         }
 
-        return Permit::create([
-            'employee_id' => $user->id,
-            'date' => $request->date,
-            'reason' => $reason,
-            'employeeIsConfirmed' => 0,
-            'alternateIsConfirmed' => 0,
-            'IsConfirmed' => 0,
-        ]);
+        return [
+            'status' => true,
+            'data' => $permits
+        ];
     }
 
-    public function deletePermit($id, $userId)
+    public function createPermit($data, $user_id)
     {
-        $permit = Permit::where('id', $id)
-                        ->where('employee_id', $userId)
+        $employee = Employee::where('user_id', $user_id)->first();
+
+        if (!$employee) {
+            return [
+                'success' => false,
+                'message' => 'Employee not found for this user.'
+            ];
+        }
+
+        $permit = new Permit();
+        $permit->employee_id = $employee->id;
+        $permit->date = $data['date'] ?? now()->toDateString();
+        $permit->reason = $data['reason'] ?? null;
+        $permit->save();
+
+        return [
+            'success' => true,
+            'message' => 'Permit successfully created.',
+            'data' => $permit
+        ];
+    }
+
+    public function deletePermit($permit_id, $user_id)
+    {
+        $employee = Employee::where('user_id', $user_id)->first();
+
+        if (!$employee) {
+            return [
+                'success' => false,
+                'message' => 'Employee not found for this user.'
+            ];
+        }
+
+        $permit = Permit::where('id', $permit_id)
+                        ->where('employee_id', $employee->id)
                         ->first();
 
         if (!$permit) {
             return [
                 'success' => false,
-                'message' => 'Permit not found or unauthorized'
+                'message' => 'Permit not found for this employee.'
             ];
         }
 
@@ -51,12 +83,7 @@ class AndroidPermitsService
 
         return [
             'success' => true,
-            'message' => 'Permit deleted successfully'
+            'message' => 'Permit successfully deleted.'
         ];
-    }
-
-    public function getUserPermits($userId)
-    {
-        return Permit::where('employee_id', $userId)->get();
     }
 }
