@@ -34,7 +34,7 @@ use App\Http\Controllers\API\V1\Company\AndroidPresensiController;
 use App\Http\Controllers\API\V1\Company\AndroidHistoryAttendanceController;
 use App\Http\Controllers\API\V1\Company\AndroidPermitsController;
 use App\Http\Controllers\API\V1\Company\AndroidPatrolController;
-use App\Http\Controllers\Api\V1\Company\AndroidCompanyProfileController;
+use App\Http\Controllers\API\V1\Company\AndroidCompanyProfileController;
 // use App\Http\Controllers\Api\V1\Company\AndroidUserPermitController;
 
 // API Route
