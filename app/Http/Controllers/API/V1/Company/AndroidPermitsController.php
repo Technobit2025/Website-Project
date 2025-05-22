@@ -43,4 +43,39 @@ class AndroidPermitsController extends Controller
 
         return response()->json($result);
     }
+
+    public function getPermitsByEmployee(Request $request)
+    {
+        $user = auth()->user();
+        $employeeId = $user->employee->id;  // Mengambil employee_id dari relasi user-employee
+
+        $result = $this->permitService->getPermitsByEmployee($employeeId);
+
+        return response()->json([
+            'success' => true,
+            'data' => $result
+        ]);
+    }
+
+    public function getSchedulesByEmployee(Request $request)
+    {
+        $user = auth()->user();
+        $employeeId = $user->employee->id;  // Mengambil employee_id dari relasi user-employee
+
+        $result = $this->permitService->getSchedulesByEmployee($employeeId);
+
+        return response()->json([
+            'success' => true,
+            'data' => $result
+        ]);
+    }
+
+    public function updateConfirmationStatus(Request $request)
+{
+    $user = auth()->user();
+    $result = $this->permitService->updateConfirmationStatus($request->all(), $user->id);
+
+    return response()->json($result);
+}
+
 }
