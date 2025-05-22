@@ -89,6 +89,9 @@ Route::prefix('v1')->name('api.v1.')->group(function () {
             Route::post('perizinan', [AndroidPermitsController::class, 'store']);
             Route::delete('perizinan', [AndroidPermitsController::class, 'destroy']);
              Route::get('perizinan', [AndroidPermitsController::class, 'index']);
+             Route::get('schedules', [AndroidPermitsController::class, 'getSchedulesByEmployee']);
+             Route::get('permits', [AndroidPermitsController::class, 'getPermitsByEmployee']);
+              Route::put('permits/confirm', [AndroidPermitsController::class, 'updateConfirmationStatus']);
 
             Route::post('patroli', [AndroidPatrolController::class, 'store']);
             Route::get('get-patroli', [AndroidPatrolController::class, 'index']);
