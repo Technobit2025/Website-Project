@@ -90,4 +90,16 @@ class AndroidPermitsController extends Controller
             'data' => $result
         ]);
     }
+    public function getApprovedPermitsForAlternate(Request $request)
+    {
+        $user = auth()->user();
+        $employeeId = $user->employee->id;
+
+        $result = $this->permitService->getApprovedPermitsForAlternate($employeeId);
+
+        return response()->json([
+            'success' => true,
+            'data' => $result
+        ]);
+    }
 }

@@ -94,6 +94,7 @@ Route::prefix('v1')->name('api.v1.')->group(function () {
             Route::get('permits', [AndroidPermitsController::class, 'getPermitsByEmployee']);
             Route::put('permits/confirm', [AndroidPermitsController::class, 'updateConfirmationStatus']);
             Route::get('permits/alternate', [AndroidPermitsController::class, 'getPermitsByAlternate']);
+            Route::get('permits/alternate/approved', [AndroidPermitsController::class, 'getApprovedPermitsForAlternate']);
 
             Route::post('patroli', [AndroidPatrolController::class, 'store']);
             Route::get('get-patroli', [AndroidPatrolController::class, 'index']);

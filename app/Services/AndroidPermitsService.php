@@ -185,4 +185,9 @@ class AndroidPermitsService
     {
         return DB::select('CALL get_permits_by_alternate_id(?)', [$alternateId]);
     }
+
+    public function getApprovedPermitsForAlternate($employeeId)
+    {
+        return DB::select('CALL get_permits_for_alternate_employee(?)', [$employeeId]);
+    }
 }
