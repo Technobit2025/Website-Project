@@ -71,11 +71,23 @@ class AndroidPermitsController extends Controller
     }
 
     public function updateConfirmationStatus(Request $request)
-{
-    $user = auth()->user();
-    $result = $this->permitService->updateConfirmationStatus($request->all(), $user->id);
+    {
+        $user = auth()->user();
+        $result = $this->permitService->updateConfirmationStatus($request->all(), $user->id);
 
-    return response()->json($result);
-}
+        return response()->json($result);
+    }
 
+    public function getPermitsByAlternate(Request $request)
+    {
+        $user = auth()->user();
+        $alternateId = $user->employee->id; // Mengambil ID pegawai dari user yang login
+
+        $result = $this->permitService->getPermitsByAlternate($alternateId);
+
+        return response()->json([
+            'success' => true,
+            'data' => $result
+        ]);
+    }
 }
