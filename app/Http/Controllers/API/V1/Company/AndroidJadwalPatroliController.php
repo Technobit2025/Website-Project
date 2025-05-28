@@ -24,7 +24,7 @@ class AndroidJadwalPatroliController extends Controller
             ->orderBy('ess.duty_date', 'asc')
             ->get();
 
-        Log::info('Raw Patrol Rows:', ['data' => $rows]);
+        // Log::info('Raw Patrol Rows:', ['data' => $rows]);
 
         // 2) Group by tanggal + nama shift
         $jadwal = $rows
@@ -39,7 +39,7 @@ class AndroidJadwalPatroliController extends Controller
             ])
             ->values();
 
-        Log::info('Formatted Patrol Schedule:', ['data' => $jadwal]);
+        // Log::info('Formatted Patrol Schedule:', ['data' => $jadwal]);
 
         if ($jadwal->isEmpty()) {
             return response()->json(['message' => 'No patrol schedule found'], 404);

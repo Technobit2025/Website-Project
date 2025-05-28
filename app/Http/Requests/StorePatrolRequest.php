@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
@@ -18,13 +19,15 @@ class StorePatrolRequest extends FormRequest
             'shift_id'      => 'required|integer',
             'place_id'      => 'required|integer',
             'catatan'       => 'nullable|string',
+            'latitude'     => 'required|string',  
+            'longitude'    => 'required|string',  
         ];
     }
-        public function messages()
+    public function messages()
     {
         return [
             'photo_base64.required' => 'Foto tidak boleh kosong.',
             'filename.required'     => 'Nama file tidak boleh kosong.',
         ];
     }
-}   
+}
