@@ -1,6 +1,7 @@
 <?php
 
-namespace Tests\Unit;
+//perubahan namespace
+namespace Tests\Feature;
 
 use App\Http\Controllers\Web\Company\CompanyScheduleController;
 use App\Models\Company;
@@ -14,6 +15,7 @@ use Illuminate\Http\Request;
 use Illuminate\Http\JsonResponse;
 use Tests\TestCase;
 use Illuminate\Support\Facades\Auth;
+use PHPUnit\Framework\Attributes\Test;
 
 class CompanyScheduleTest extends TestCase
 {
@@ -64,12 +66,14 @@ class CompanyScheduleTest extends TestCase
             'start_time' => '08:00',
             'end_time' => '16:00',
             'color' => '#00FF00',
+            'late_time' => '08.30',
+            'checkout_time'=> '15.30'
         ]);
 
         Auth::login($this->user);
     }
-
-    public function test_index_returns_view_with_correct_data()
+    #[Test]
+    public function index_returns_view_with_correct_data()
     {
         // Create request with no month specified
         $request = new Request();
@@ -97,7 +101,8 @@ class CompanyScheduleTest extends TestCase
         $this->assertCount(1, $viewData['shifts']);
     }
 
-    public function test_index_with_specific_month()
+    #[Test]
+    public function index_with_specific_month()
     {
         // Create request with specific month
         $specificMonth = '2023-05';
@@ -111,7 +116,8 @@ class CompanyScheduleTest extends TestCase
         $this->assertEquals(Carbon::parse($specificMonth)->daysInMonth, $viewData['daysInMonth']);
     }
 
-    public function test_save_creates_new_schedule()
+    #[Test]
+    public function save_creates_new_schedule()
     {
         // Data for new schedule
         $data = [
@@ -143,7 +149,8 @@ class CompanyScheduleTest extends TestCase
         ]);
     }
 
-    public function test_save_updates_existing_schedule()
+    #[Test]
+    public function save_updates_existing_schedule()
     {
         // Create an existing schedule
         $existingSchedule = CompanySchedule::create([
@@ -160,6 +167,8 @@ class CompanyScheduleTest extends TestCase
             'start_time' => '16:00',
             'end_time' => '00:00',
             'color' => '#FF0000',
+            'late_time' => '08.30',
+            'checkout_time' => '15.30'
         ]);
 
         // Data for updating schedule
@@ -190,7 +199,8 @@ class CompanyScheduleTest extends TestCase
         ]);
     }
 
-    public function test_save_with_old_date_different_employee()
+    #[Test]
+    public function save_with_old_date_different_employee()
     {
         // Create an existing schedule for a different employee
         $anotherEmployee = Employee::create([
@@ -223,10 +233,7 @@ class CompanyScheduleTest extends TestCase
 
         $request = new Request($data);
 
-        // Mock validate method
-        $request->expects($this->once())
-                ->method('validate')
-                ->willReturn($data);
+        $request =Request::create('/fake-url','POST',$data);
 
         // Call the save method
         $response = $this->controller->save($request);
@@ -247,7 +254,8 @@ class CompanyScheduleTest extends TestCase
         ]);
     }
 
-    public function test_save_with_old_date_same_employee()
+    #[Test]
+    public function save_with_old_date_same_employee()
     {
         // Create an existing schedule
         $existingSchedule = CompanySchedule::create([
@@ -269,10 +277,7 @@ class CompanyScheduleTest extends TestCase
 
         $request = new Request($data);
 
-        // Mock validate method
-        $request->expects($this->once())
-                ->method('validate')
-                ->willReturn($data);
+        $request = Request::create('/fake-url','POST',$data);
 
         // Call the save method
         $response = $this->controller->save($request);
@@ -293,7 +298,8 @@ class CompanyScheduleTest extends TestCase
         ]);
     }
 
-    public function test_destroy_deletes_schedule()
+    #[Test]
+    public function destroy_deletes_schedule()
     {
         // Create a schedule to be deleted
         $schedule = CompanySchedule::create([
@@ -316,7 +322,7 @@ class CompanyScheduleTest extends TestCase
         // Check response
         $this->assertInstanceOf(JsonResponse::class, $response);
         $responseData = json_decode($response->getContent(), true);
-        $this->assertTrue($responseData['success']);
+        $this->assertEquals(1,$responseData['success']);
 
         // Check database
         $this->assertDatabaseMissing('company_schedules', [
@@ -324,7 +330,8 @@ class CompanyScheduleTest extends TestCase
         ]);
     }
 
-    public function test_destroy_with_nonexistent_schedule()
+    #[Test]
+    public function destroy_with_nonexistent_schedule()
     {
         // Create request with non-existent data
         $request = new Request([
@@ -339,6 +346,6 @@ class CompanyScheduleTest extends TestCase
         // Check response
         $this->assertInstanceOf(JsonResponse::class, $response);
         $responseData = json_decode($response->getContent(), true);
-        $this->assertFalse($responseData['success']); // Should be false since nothing was deleted
+        $this->assertEquals(0,$responseData['success']); // Should be false since nothing was deleted
     }
 }

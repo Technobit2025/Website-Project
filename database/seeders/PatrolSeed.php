@@ -99,7 +99,7 @@ class PatrolSeed extends Seeder
                 'created_at' => now(),
                 'updated_at' => now()
             ],
-            [
+            [    
                 'employee_id' => 2, // Budi
                 'partner_employee_id' => 1, // Andi
                 'company_shift_id' => 2, // Shift Malam
