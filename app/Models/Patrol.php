@@ -14,7 +14,7 @@ class Patrol extends Model
         'shift_id',
         'place_id',
         'patrol_location',
-        'status',
+        'kondisi',
         'catatan',
         'photo',
         'reviewed_by',

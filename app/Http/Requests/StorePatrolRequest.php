@@ -19,8 +19,9 @@ class StorePatrolRequest extends FormRequest
             'shift_id'      => 'required|integer',
             'place_id'      => 'required|integer',
             'catatan'       => 'nullable|string',
-            'latitude'     => 'required|string',  
-            'longitude'    => 'required|string',  
+            'latitude'      => 'required|string',
+            'longitude'     => 'required|string',
+            'kondisi'       => 'required|string',
         ];
     }
     public function messages()
