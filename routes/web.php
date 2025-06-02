@@ -64,6 +64,7 @@ use App\Http\Controllers\Web\SuperAdmin\CompanyScheduleController as SuperAdminC
 use App\Http\Controllers\Web\SuperAdmin\CompanyAttendanceController as SuperAdminCompanyAttendance;
 use App\Http\Controllers\Web\SuperAdmin\CompanyPlaceController as SuperAdminCompanyPlace;
 use App\Http\Controllers\Web\SuperAdmin\PermitController as SuperAdminPermit;
+use App\Http\Controllers\Web\SuperAdmin\PatrolController as SuperAdminPatrol;
 
 use App\Http\Controllers\Web\SuperAdmin\PayrollPeriodController as SuperAdminPayrollPeriod;
 use App\Http\Controllers\Web\SuperAdmin\PayrollController as SuperAdminPayroll;
@@ -95,6 +96,7 @@ use App\Http\Controllers\Web\Danru\HomeController as DanruHome;
 use App\Http\Controllers\Web\Danru\CompanyController as DanruCompany;
 use App\Http\Controllers\Web\Danru\CompanyScheduleController as DanruCompanySchedule;
 use App\Http\Controllers\Web\Danru\PermitController as DanruPermit;
+use App\Http\Controllers\Web\Danru\PatrolController as DanruPatrol;
 
 // INDEX REDIRECT TO LOGIN
 Route::get('/', function () {
@@ -226,6 +228,12 @@ Route::group(['prefix' => 'superadmin', 'as' => 'superadmin.', 'middleware' => [
         Route::get('edit/{employee}', [SuperAdminEmployee::class, 'salaryEdit'])->name('edit');
         Route::put('update/{employee}', [SuperAdminEmployee::class, 'salaryUpdate'])->name('update');
         Route::delete('destroy/{employee}', [SuperAdminEmployee::class, 'salaryDestroy'])->name('destroy');
+    });
+
+    // PATROL
+    Route::prefix('patrol')->name('patrol.')->group(function(){
+        Route::get('/',[SuperAdminPatrol::class,'index'])->name('index');
+        Route::get('/export-pdf',[SuperAdminPatrol::class,'exportPdf'])->name('exportPdf');
     });
 
     // PAYROLL
@@ -413,5 +421,10 @@ Route::group(['prefix' => 'danru', 'as' => 'danru.', 'middleware' => ['auth', 'c
         Route::delete('destroy/{permit}', [DanruPermit::class, 'destroy'])->name('destroy');
         Route::get('jadwal/{employee}', [DanruPermit::class, 'getJadwal'])->name('jadwal');
         Route::post('send-mail/{permit}', [DanruPermit::class, 'sendMail'])->name('sendMail');
+    });
+
+    Route::prefix('patrol')->name('patrol.')->group(function(){
+        Route::get('/',[DanruPatrol::class, 'index'])->name('index');
+        Route::get('/export-pdf',[DanruPatrol::class,'exportPdf'])->name('exportPdf');
     });
 });

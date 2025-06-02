@@ -18,7 +18,7 @@ class CompanyPlaceController extends Controller
         }
         $company = Company::findOrFail($user->employee->company_id);
         $companyPlaces = CompanyPlace::where('company_id', $company->id)->get();
-        return view('company.company.place.index', compact('companyPlaces', 'company'));
+        return view('company.place.index', compact('companyPlaces', 'company'));
     }
 
     public function create()
@@ -28,7 +28,7 @@ class CompanyPlaceController extends Controller
             abort(403);
         }
         $company = Company::findOrFail($user->employee->company_id);
-        return view('company.company.place.create', compact('company'));
+        return view('company.place.create', compact('company'));
     }
     public function store(Request $request)
     {
@@ -48,7 +48,7 @@ class CompanyPlaceController extends Controller
 
         CompanyPlace::create($validated);
 
-        return redirect()->route('company.company.place.index')->with('success', 'Lokasi berhasil ditambahkan.');
+        return redirect()->route('company.place.index')->with('success', 'Lokasi berhasil ditambahkan.');
     }
 
     public function show($id)
@@ -58,7 +58,7 @@ class CompanyPlaceController extends Controller
             abort(403);
         }
         $companyPlace = CompanyPlace::findOrFail($id);
-        return view('company.company.place.show', compact('companyPlace'));
+        return view('company.place.show', compact('companyPlace'));
     }
 
     public function edit($id)
@@ -68,7 +68,7 @@ class CompanyPlaceController extends Controller
             abort(403);
         }
         $companyPlace = CompanyPlace::findOrFail($id);
-        return view('company.company.place.edit', compact('companyPlace'));
+        return view('company.place.edit', compact('companyPlace'));
     }
 
     public function update(Request $request, $id)
@@ -90,7 +90,7 @@ class CompanyPlaceController extends Controller
         $companyPlace = CompanyPlace::findOrFail($id);
         $companyPlace->update($request->all());
 
-        return redirect()->route('company.company.place.index')->with('success', 'Company place updated successfully.');
+        return redirect()->route('company.place.index')->with('success', 'Company place updated successfully.');
     }
 
     public function destroy($id)
@@ -102,6 +102,6 @@ class CompanyPlaceController extends Controller
         $companyPlace = CompanyPlace::findOrFail($id);
         $companyPlace->delete();
 
-        return redirect()->route('company.company.place.index')->with('success', 'Company place deleted successfully.');
+        return redirect()->route('company.place.index')->with('success', 'Company place deleted successfully.');
     }
 }

@@ -1,6 +1,6 @@
 <?php
-
-namespace Tests\Unit;
+//perubahan namespace
+namespace Tests\Feature;
 
 use App\Http\Controllers\Web\Company\CompanyShiftController;
 use App\Http\Requests\CompanyShiftRequest;
@@ -13,6 +13,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Tests\TestCase;
 use Mockery;
+use PHPUnit\Framework\Attributes\Test;
 
 class CompanyShiftTest extends TestCase
 {
@@ -24,39 +25,39 @@ class CompanyShiftTest extends TestCase
     protected $employee;
 
     protected function setUp(): void
-{
-    parent::setUp();
+    {
+        parent::setUp();
 
-    $this->controller = new CompanyShiftController();
+        $this->controller = new CompanyShiftController();
 
-    $this->company = Company::create([
-        'name' => 'Test Company',
-        'email' => 'company@example.com',
-    ]);
+        $this->company = Company::create([
+            'name' => 'Test Company',
+            'email' => 'company@example.com',
+        ]);
 
-    $this->user = User::create([
-        'name' => 'Test User',
-        'username' => 'testuser',
-        'email' => 'test@example.com',
-        'password' => bcrypt('password'),
-    ]);
+        $this->user = User::create([
+            'name' => 'Test User',
+            'username' => 'testuser',
+            'email' => 'test@example.com',
+            'password' => bcrypt('password'),
+        ]);
 
-    $this->employee = Employee::create([
-        'user_id' => $this->user->id,
-        'fullname' => 'Test User',
-        'gender' => 'male',
-        'birth_date' => '2000-01-01',
-        'id_number' => '1234567890',
-        'employment_status' => 'permanent',
-        'hire_date' => now()->toDateString(),
-        // Tambahkan jika company_id memang ada di migration:
-        'company_id' => $this->company->id,
-    ]);
+        $this->employee = Employee::create([
+            'user_id' => $this->user->id,
+            'fullname' => 'Test User',
+            'gender' => 'male',
+            'birth_date' => '2000-01-01',
+            'id_number' => '1234567890',
+            'employment_status' => 'permanent',
+            'hire_date' => now()->toDateString(),
+            // Tambahkan jika company_id memang ada di migration:
+            'company_id' => $this->company->id,
+        ]);
 
-    Auth::login($this->user);
-}
+        Auth::login($this->user);
+    }
 
-    /** @test */
+    #[Test]
     public function index_returns_view_with_shifts()
     {
         // Create shifts manually
@@ -66,12 +67,14 @@ class CompanyShiftTest extends TestCase
             $shift->name = "Shift 1";
             $shift->start_time = "08:00";
             $shift->end_time = "16:00";
-            $shift->color = "#FF0000"; // tambahkan ini
+            $shift->color = "#FF0000";
+            $shift->late_time = '08.30';
+            $shift->checkout_time = '15.30';
             $shift->save();
         }
 
         $response = $this->controller->index();
-
+        dd($response->getData());
         $this->assertEquals('company.shift.index', $response->getName());
         $this->assertArrayHasKey('shifts', $response->getData());
         $this->assertArrayHasKey('company', $response->getData());
@@ -119,6 +122,8 @@ class CompanyShiftTest extends TestCase
     //     $this->assertEquals(route('company.shift.index'), $response->getTargetUrl());
     //     $this->assertArrayHasKey('success', session()->all());
     // }
+
+    #[Test]
     public function store_creates_shift_and_redirects()
     {
     // Mock CompanyShiftRequest dengan Mockery
@@ -130,6 +135,8 @@ class CompanyShiftTest extends TestCase
                     'start_time' => '08:00',
                     'end_time' => '16:00',
                     'color' => '#FF0000',
+                    'late_time' => '08.30',
+                    'checkout_time' => '15.30'
                 ]);
     
     // Panggil method store dengan mock request
@@ -146,7 +153,7 @@ class CompanyShiftTest extends TestCase
     $this->assertArrayHasKey('success', session()->all());
     }
 
-    /** @test */
+    #[Test]
     public function show_returns_view_with_shift()
     {
         // Create shift manually
@@ -155,7 +162,9 @@ class CompanyShiftTest extends TestCase
         $shift->name = "Shift 1";
         $shift->start_time = "08:00";
         $shift->end_time = "16:00";
-        $shift->color = "#FF0000"; // tambahkan ini
+        $shift->color = "#FF0000"; 
+        $shift->late_time = '08.30';
+        $shift->checkout_time = '15.30';
         $shift->save();
 
         $response = $this->controller->show($shift);
@@ -165,7 +174,7 @@ class CompanyShiftTest extends TestCase
         $this->assertEquals($shift->id, $response->getData()['companyShift']->id);
     }
 
-    /** @test */
+    #[Test]
     public function edit_returns_view_with_shift()
     {
         // Create shift manually
@@ -174,10 +183,12 @@ class CompanyShiftTest extends TestCase
         $shift->name = "Shift 1";
         $shift->start_time = "08:00";
         $shift->end_time = "16:00";
-        $shift->color = "#FF0000"; // tambahkan ini
+        $shift->color = "#FF0000"; 
+        $shift->late_time = '08.30';
+        $shift->checkout_time = '15.30';
         $shift->save();
         $response = $this->controller->edit($shift);
-
+        
         $this->assertEquals('company.shift.edit', $response->getName());
         $this->assertArrayHasKey('companyShift', $response->getData());
         $this->assertEquals($shift->id, $response->getData()['companyShift']->id);
@@ -217,6 +228,7 @@ class CompanyShiftTest extends TestCase
     //     $this->assertEquals(route('company.shift.index'), $response->getTargetUrl());
     //     $this->assertArrayHasKey('success', session()->all());
     // }
+    #[Test]
     public function update_updates_shift_and_redirects()
 {
     // Create shift manually
@@ -226,6 +238,8 @@ class CompanyShiftTest extends TestCase
     $shift->start_time = "08:00";
     $shift->end_time = "16:00";
     $shift->color = "#FF0000";
+    $shift->late_time = '08.30';
+    $shift->checkout_time = '15.30';
     $shift->save();
 
     // Update data langsung menggunakan model
@@ -252,7 +266,7 @@ class CompanyShiftTest extends TestCase
     $this->assertArrayHasKey('success', session()->all());
 }
 
-    /** @test */
+    #[Test]
     public function destroy_deletes_shift_and_redirects()
     {
         // Create shift manually
@@ -261,7 +275,9 @@ class CompanyShiftTest extends TestCase
         $shift->name = "Shift 1";
         $shift->start_time = "08:00";
         $shift->end_time = "16:00";
-        $shift->color = "#FF0000"; // tambahkan ini
+        $shift->color = "#FF0000"; 
+        $shift->late_time = '08.30';
+        $shift->checkout_time = '15.30';
         $shift->save();
 
         $shiftId = $shift->id;
