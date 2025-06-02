@@ -48,7 +48,7 @@ class AndroidPatrolService
             'shift_id'         => $data['shift_id'],
             'place_id'         => $data['place_id'],
             'patrol_location'  => 'Auto from QR',
-            'status'           => 'pending',
+            'status'           => $data['kondisi']?? null,
             'catatan'          => $data['catatan'] ?? null,
             'photo'            => $photoUrl,
             'latitude'         => $data['latitude'],
