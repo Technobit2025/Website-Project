@@ -19,7 +19,9 @@ class Patrol extends Model
         'photo',
         'reviewed_by',
         'reviewed_at',
- 
+        'latitude',
+        'longitude',
+
     ];
 
     public function employee()

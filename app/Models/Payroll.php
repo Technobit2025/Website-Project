@@ -20,4 +20,8 @@ class Payroll extends Model
     {
         return $this->hasMany(PayrollComponent::class);
     }
+    public function components()
+    {
+        return $this->hasMany(PayrollComponent::class, 'payroll_id');
+    }
 }
