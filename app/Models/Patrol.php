@@ -19,7 +19,9 @@ class Patrol extends Model
         'photo',
         'reviewed_by',
         'reviewed_at',
- 
+        'latitude',
+        'longitude',
+
     ];
 
     public function employee()
@@ -27,10 +29,10 @@ class Patrol extends Model
         return $this->belongsTo(User::class, 'employee_id');
     }
 
-public function shift()
-{
-    return $this->belongsTo(CompanyShift::class, 'shift_id');
-}
+    public function shift()
+    {
+        return $this->belongsTo(CompanyShift::class, 'shift_id');
+    }
     public function place()
     {
         return $this->belongsTo(CompanyPlace::class, 'place_id');

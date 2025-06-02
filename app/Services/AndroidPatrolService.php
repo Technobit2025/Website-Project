@@ -51,6 +51,8 @@ class AndroidPatrolService
             'status'           => 'pending',
             'catatan'          => $data['catatan'] ?? null,
             'photo'            => $photoUrl,
+            'latitude'         => $data['latitude'],
+            'longitude'        => $data['longitude'],
         ]);
 
         logger('Patrol berhasil dibuat dengan ID: ' . $patrol->id);
