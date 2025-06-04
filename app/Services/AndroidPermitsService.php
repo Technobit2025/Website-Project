@@ -50,6 +50,7 @@ class AndroidPermitsService
         $permit->employee_id = $employee->id;
         $permit->date = $data['date'] ?? now()->toDateString();
         $permit->reason = $data['reason'] ?? null;
+        $permit->permission = $data['permission'] ?? 'not confirmed';
         $permit->save();
 
         return [
