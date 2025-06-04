@@ -60,7 +60,6 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        @foreach ($companies as $company)
                                             <tr>
                                                 {{-- <td style="width: 5% !important;">{{ $company->id }}</td> --}}
                                                 <td>{{ $company->name ?? '-' }}</td>
@@ -81,7 +80,6 @@
                                                     </div>
                                                 </td>
                                             </tr>
-                                        @endforeach
                                     </tbody>
                                 </table>
                             </div>

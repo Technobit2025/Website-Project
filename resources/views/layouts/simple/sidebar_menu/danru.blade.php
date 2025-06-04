@@ -16,8 +16,8 @@
 </li>
 <li class="sidebar-list">
     <a class="sidebar-link sidebar-title link-nav" href="{{ route('danru.patrol.index') }}">
-        <svg class="stroke-icon">
-            <use href="{{ asset('assets/svg/icon-sprite.svg#stroke-chat') }}"></use>
+         <svg class="stroke-icon">
+                        <use href="{{asset('assets/svg/icon-sprite.svg#stroke-job-search')}}"></use>    
         </svg>
         <span class="">Patroli</span>
     </a>

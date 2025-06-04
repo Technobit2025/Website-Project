@@ -15,8 +15,10 @@ class CompanyController extends Controller
      */
     public function index()
     {
-        $companies = Company::all();
-        return view('danru.company.index', compact('companies'));
+        $companyId = auth()->user()->employee->company_id;
+        $company = Company::where('id', $companyId)->first();
+        // dd($company);
+        return view('danru.company.index', compact('company'));
     }
 
     public function show(Company $company)
