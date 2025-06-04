@@ -63,7 +63,7 @@ class AndroidPatrolService
     public function getMyPatrols()
     {
         return Patrol::with(['place', 'shift'])
-            ->where('employee_id', Auth::id())
+            ->where('employee_id', Auth::user()->employee->id)
             ->latest()
             ->get();
     }
