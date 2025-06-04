@@ -103,6 +103,7 @@ class AndroidPermitsService
 
     public function updateConfirmationStatus($data, $user_id)
     {
+        // Mengambil data pegawai berdasarkan user_id
         $employee = Employee::where('user_id', $user_id)->first();
 
         if (!$employee) {
@@ -112,6 +113,7 @@ class AndroidPermitsService
             ];
         }
 
+        // Mengambil permit berdasarkan ID
         $permit = Permit::where('id', $data['permit_id'])->first();
 
         if (!$permit) {
@@ -121,7 +123,7 @@ class AndroidPermitsService
             ];
         }
 
-        // Validasi enum
+        // Validasi status yang valid
         $allowed = ['approved', 'rejected'];
         if (!in_array($data['status'], $allowed)) {
             return [
@@ -130,11 +132,12 @@ class AndroidPermitsService
             ];
         }
 
-        // Cek apakah yang mengubah adalah employee atau alternate
+        // Logika konfirmasi status
         if ($permit->employee_id == $employee->id) {
             $permit->employee_is_confirmed = $data['status'];
         } elseif ($permit->alternate_id == $employee->id) {
-            $permit->alternate_is_confirmed = $data['status'];
+            // Hanya mengupdate alternate_is_confirmed
+            $permit->alternate_is_confirmed = 'approved'; // Mengubah status menjadi 'approved'
         } else {
             return [
                 'success' => false,
@@ -142,37 +145,38 @@ class AndroidPermitsService
             ];
         }
 
+        // Simpan perubahan
         // Update status jadwal jika keduanya menyetujui
-        if (
-            $permit->employee_is_confirmed === 'approved' &&
-            $permit->alternate_is_confirmed === 'approved'
-        ) {
-            DB::beginTransaction();
-            try {
-                $permit->status = 'approved';
+        //     if (
+        //         $permit->employee_is_confirmed === 'approved' &&
+        //         $permit->alternate_is_confirmed === 'approved'
+        //     ) {
+        //         DB::beginTransaction();
+        //         try {
+        //             $permit->status = 'approved';
 
-                // Update jadwal alternate
-                $alternate = Employee::find($permit->alternate_id);
-                $alternate->schedule_id = $permit->employee_schedule_id;
-                $alternate->save();
+        //             // Update jadwal alternate
+        //             $alternate = Employee::find($permit->alternate_id);
+        //             $alternate->schedule_id = $permit->employee_schedule_id;
+        //             $alternate->save();
 
-                $permit->save();
+        //             $permit->save();
 
-                DB::commit();
-                return [
-                    'success' => true,
-                    'message' => 'Permit approved by both parties. Schedule updated.',
-                    'data' => $permit
-                ];
-            } catch (\Exception $e) {
-                DB::rollBack();
-                return [
-                    'success' => false,
-                    'message' => 'Failed to update schedule.',
-                    'error' => $e->getMessage()
-                ];
-            }
-        }
+        //             DB::commit();
+        //             return [
+        //                 'success' => true,
+        //                 'message' => 'Permit approved by both parties. Schedule updated.',
+        //                 'data' => $permit
+        //             ];
+        //         } catch (\Exception $e) {
+        //             DB::rollBack();
+        //             return [
+        //                 'success' => false,
+        //                 'message' => 'Failed to update schedule.',
+        //                 'error' => $e->getMessage()
+        //             ];
+        //         }
+        //     }
 
         $permit->save();
 
@@ -182,6 +186,7 @@ class AndroidPermitsService
             'data' => $permit
         ];
     }
+
     public function getPermitsByAlternate($alternateId)
     {
         return DB::select('CALL get_permits_by_alternate_id(?)', [$alternateId]);
