@@ -14,8 +14,8 @@ class AndroidPresensiController extends Controller
     {
         $validated = $request->validate([
             'status'           => ['required', 'string', Rule::in(['Present', 'WFH', 'Sick Leave', 'Leave', 'Late', 'Leave Early'])],
-            'photo_data'       => ['nullable', 'string', Rule::requiredIf($request->status !== 'Leave Early')],
-            'filename'         => ['nullable', 'string', Rule::requiredIf($request->status !== 'Leave Early')],
+                'photo_data'       => ['nullable', 'string', Rule::requiredIf($request->status !== 'Leave Early')],
+                'filename'         => ['nullable', 'string', Rule::requiredIf($request->status !== 'Leave Early')],
             'company_place_id' => ['nullable', 'integer'],
             'latitude'         => ['nullable', 'numeric'],
             'longitude'        => ['nullable', 'numeric'],

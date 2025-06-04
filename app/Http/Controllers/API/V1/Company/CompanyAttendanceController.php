@@ -7,14 +7,14 @@ use Illuminate\Support\Facades\Auth;
 use App\Models\CompanyAttendance;
 use App\Models\CompanyPlace;
 use App\Models\Employee;
-use App\Services\PresensiService;
+use App\Services\AndroidPresensiService;
 use App\DTO\PresensiData;
 
 class CompanyAttendanceController extends Controller
 {
     protected $presensiService;
 
-    public function __construct(PresensiService $presensiService)
+    public function __construct(AndroidPresensiService $presensiService)
     {
         $this->presensiService = $presensiService;
     }
