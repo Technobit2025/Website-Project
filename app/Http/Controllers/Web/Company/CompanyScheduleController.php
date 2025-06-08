@@ -14,25 +14,30 @@ use Illuminate\Support\Facades\Log;
 
 class CompanyScheduleController extends Controller
 {
-    public function index(Company $company, Request $request)
+    public function index(Request $request)
     {
-        $companyId = $company->id;
-        $companyName = $company->name;
-        $employees = Employee::where('company_id', $companyId)->get();
-        $shifts = CompanyShift::where('company_id', $companyId)->get();
-        if ($request->has('month')) {
-            $currentMonth = $request->input('month');
-        } else {
-            $currentMonth = Carbon::now()->format('Y-m');
-        }
-        $schedules = CompanySchedule::whereMonth('date', Carbon::parse($currentMonth)->month)
-            ->whereYear('date', Carbon::parse($currentMonth)->year)
-            ->get();
+    $companyId = auth()->user()->employee->company_id;
+    $company = Company::findOrFail($companyId);
 
-        $daysInMonth = Carbon::parse($currentMonth)->daysInMonth;
+    $companyName = $company->name;
+    $employees = Employee::where('company_id', $companyId)->get();
+    $shifts = CompanyShift::where('company_id', $companyId)->get();
 
-        return view('super_admin.company.schedule.index', compact('employees', 'companyName', 'shifts', 'schedules', 'currentMonth', 'daysInMonth', 'companyId'));
+    $currentMonth = $request->input('month', Carbon::now()->format('Y-m'));
+
+    $schedules = CompanySchedule::where('company_id', $companyId)
+        ->whereMonth('date', Carbon::parse($currentMonth)->month)
+        ->whereYear('date', Carbon::parse($currentMonth)->year)
+        ->get();
+
+    $daysInMonth = Carbon::parse($currentMonth)->daysInMonth;
+
+    return view('company.schedule.index', compact(
+        'employees', 'companyName', 'shifts', 'schedules',
+        'currentMonth', 'daysInMonth', 'companyId'
+    ));
     }
+
 
     public function save(Request $request)
     {
@@ -78,7 +83,7 @@ class CompanyScheduleController extends Controller
             'company_id' => $request->company_id,
             'employee_id' => $request->employee_id
         ])->where('date', $request->date)->delete();
-
+ 
         return response()->json(['success' => $deleted]);
     }
 }

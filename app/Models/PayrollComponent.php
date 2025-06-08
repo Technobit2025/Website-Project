@@ -12,4 +12,8 @@ class PayrollComponent extends Model
     {
         return $this->hasMany(Payroll::class);
     }
+     public function payroll()
+    {
+        return $this->belongsTo(Payroll::class, 'payroll_id');
+    }
 }

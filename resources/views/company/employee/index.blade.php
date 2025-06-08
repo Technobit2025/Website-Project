@@ -61,14 +61,14 @@
                                                 <td>{{ $employee->address ?? '-' }}</td>
                                                 <td>
                                                     <div class="d-flex gap-2">
-                                                        <a href="{{ route('company.employee.show', $employee->id) }}"
+                                                        {{-- <a href="{{ route('company.employee.show', $employee->id) }}"
                                                             class="btn btn-info btn-sm px-3" data-bs-toggle="tooltip"
                                                             data-bs-placement="top" data-bs-title="Lihat Karyawan">
                                                             <i class="fa-solid fa-eye"></i>
-                                                        </a>
+                                                        </a> --}}
                                                         @include('layouts.components.delete', [
                                                             'route' => route(
-                                                                'company.company.employee.destroy',
+                                                                'company.employee.destroy',
                                                                 [$company->id, $employee->id]),
                                                             'title' => 'Hapus Karyawan dari Perusahaan',
                                                             'message' =>
@@ -86,7 +86,7 @@
                     </div>
                 </div>
                 <div class="d-flex gap-2">
-                    <a href="{{ route('company.index') }}" class="btn btn-secondary"><i class="fa fa-arrow-left"></i>
+                    <a href="{{ route('company.employee.index') }}" class="btn btn-secondary"><i class="fa fa-arrow-left"></i>
                         Kembali</a>
                 </div>
             </div>

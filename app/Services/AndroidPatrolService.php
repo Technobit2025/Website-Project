@@ -48,9 +48,11 @@ class AndroidPatrolService
             'shift_id'         => $data['shift_id'],
             'place_id'         => $data['place_id'],
             'patrol_location'  => 'Auto from QR',
-            'status'           => 'pending',
+            'status'           => $data['kondisi']?? null,
             'catatan'          => $data['catatan'] ?? null,
             'photo'            => $photoUrl,
+            'latitude'         => $data['latitude'],
+            'longitude'        => $data['longitude'],
         ]);
 
         logger('Patrol berhasil dibuat dengan ID: ' . $patrol->id);
@@ -61,7 +63,7 @@ class AndroidPatrolService
     public function getMyPatrols()
     {
         return Patrol::with(['place', 'shift'])
-            ->where('employee_id', Auth::id())
+            ->where('employee_id', Auth::user()->employee->id)
             ->latest()
             ->get();
     }

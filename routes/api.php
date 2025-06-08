@@ -19,6 +19,7 @@
  * 
  **/
 
+use App\Http\Controllers\API\AndroidSalaryDetailController as APIAndroidSalaryDetailController;
 use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\API\V1\Auth\AuthController;
@@ -35,6 +36,7 @@ use App\Http\Controllers\API\V1\Company\AndroidHistoryAttendanceController;
 use App\Http\Controllers\API\V1\Company\AndroidPermitsController;
 use App\Http\Controllers\API\V1\Company\AndroidPatrolController;
 use App\Http\Controllers\API\V1\Company\AndroidCompanyProfileController;
+use App\Http\Controllers\API\V1\Company\AndroidSalaryDetailController;
 // use App\Http\Controllers\Api\V1\Company\AndroidUserPermitController;
 
 // API Route
@@ -87,21 +89,23 @@ Route::prefix('v1')->name('api.v1.')->group(function () {
             Route::get('jadwal-patroli', [AndroidJadwalPatroliController::class, 'getJadwalPatroli']);
 
             Route::get('history-presensi', [AndroidHistoryAttendanceController::class, 'getHistoryByEmployee']);
+
             Route::post('perizinan', [AndroidPermitsController::class, 'store']);
             Route::delete('perizinan', [AndroidPermitsController::class, 'destroy']);
-             Route::get('perizinan', [AndroidPermitsController::class, 'index']);
-             Route::get('schedules', [AndroidPermitsController::class, 'getSchedulesByEmployee']);
-             Route::get('permits', [AndroidPermitsController::class, 'getPermitsByEmployee']);
-              Route::put('permits/confirm', [AndroidPermitsController::class, 'updateConfirmationStatus']);
+            Route::get('perizinan', [AndroidPermitsController::class, 'index']);
+            Route::get('schedules', [AndroidPermitsController::class, 'getSchedulesByEmployee']);
+            Route::get('permits', [AndroidPermitsController::class, 'getPermitsByEmployee']);
+            Route::put('permits/confirm', [AndroidPermitsController::class, 'updateConfirmationStatus']);
+            Route::get('permits/alternate', [AndroidPermitsController::class, 'getPermitsByAlternate']);
+            Route::get('permits/alternate/approved', [AndroidPermitsController::class, 'getApprovedPermitsForAlternate']);
 
             Route::post('patroli', [AndroidPatrolController::class, 'store']);
             Route::get('get-patroli', [AndroidPatrolController::class, 'index']);
             Route::get('histori-patroli', [AndroidPatrolController::class, 'history']);
 
+            Route::get('salary-detail', [AndroidSalaryDetailController::class, 'index']);
+
             Route::get('company-profile', [AndroidCompanyProfileController::class, 'show']);
-
-           
-
         });
     });
 

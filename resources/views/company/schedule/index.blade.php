@@ -53,7 +53,7 @@
                             oldDate
                         });
 
-                        fetch('{{ route('superadmin.company.schedule.destroy') }}', {
+                        fetch('{{ route('company.schedule.destroy') }}', {
                             method: 'POST',
                             headers: {
                                 'Content-Type': 'application/json',
@@ -85,7 +85,7 @@
                         return; // stop eksekusi biar gak lanjut save
                     }
 
-                    fetch('{{ route('superadmin.company.schedule.save') }}', {
+                    fetch('{{ route('company.schedule.save') }}', {
                         method: 'POST',
                         headers: {
                             'Content-Type': 'application/json',
@@ -132,7 +132,7 @@
 
         $('#month').change(function() {
             window.location.href =
-                "{{ route('superadmin.company.schedule.index', ['company' => $companyId]) }}?month=" + $(this)
+                "{{ route('company.schedule.index', ['company' => $companyId]) }}?month=" + $(this)
                 .val();
         });
     </script>
@@ -159,7 +159,7 @@
                                     <input type="month" name="month" id="month" class="form-control w-auto"
                                         value="{{ request('month') ?? date('Y-m') }}">
 
-                                    <a href="{{ route('superadmin.company.schedule.index', ['company' => $companyId]) }}"
+                                    <a href="{{ route('company.schedule.index', ['company' => $companyId]) }}"
                                         class="btn btn-secondary">
                                         <i class="fa fa-refresh"></i>
                                         Reset
@@ -236,7 +236,7 @@
                             </div>
                         </div>
                         <div class="d-flex gap-2">
-                            <a href="{{ route('superadmin.company.index') }}" class="btn btn-secondary"><i class="fa fa-arrow-left"></i>
+                            <a href="{{ route('company.schedule.index') }}" class="btn btn-secondary"><i class="fa fa-arrow-left"></i>
                                 Kembali</a>
                         </div>
 
