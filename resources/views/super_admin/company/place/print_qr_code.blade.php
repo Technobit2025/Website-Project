@@ -18,8 +18,10 @@
         <div class="row mb-4">
             <div class="col-12 d-flex justify-content-between align-items-center">
                 <div class="text-center d-flex align-items-center gap-2">
-                    <img src="{{ $companyPlace->company->logo }}" alt="{{ $companyPlace->company->name }}"
-                        class="img-fluid rounded" style="height: 50px; margin-bottom: 15px;">
+                    @if ($companyPlace->company->logo)
+                        <img src="{{ $companyPlace->company->logo }}" alt="{{ $companyPlace->company->name }}"
+                            class="img-fluid rounded" style="height: 50px; margin-bottom: 15px;">
+                    @endif
                     <h5 class="fw-semibold">{{ $companyPlace->company->name }}</h5>
                 </div>
                 <div class="text-end">
@@ -31,7 +33,7 @@
         <div class="row mb-4">
             <div class="col-12 text-center">
                 <div class="p-3">
-                    {!! $qr !!}
+                    {{ generateQrCode($companyPlace) }}
                 </div>
             </div>
         </div>

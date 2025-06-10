@@ -42,7 +42,8 @@ use App\Http\Controllers\API\V1\Company\AndroidSalaryDetailController;
 // API Route
 Route::prefix('v1')->name('api.v1.')->group(function () {
     // AUTHENTICATION
-    Route::post('login', [AuthController::class, 'login'])->middleware('guest')->name('login');
+    // Route::post('login', [AuthController::class, 'login'])->middleware('guest')->name('login');
+    Route::post('login', [AuthController::class, 'login'])->name('login');
 
     // WITH MIDDLEWARE
     Route::middleware('auth:sanctum')->group(function () {

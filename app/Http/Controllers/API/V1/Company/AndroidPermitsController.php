@@ -73,10 +73,16 @@ class AndroidPermitsController extends Controller
     public function updateConfirmationStatus(Request $request)
     {
         $user = auth()->user();
-        $result = $this->permitService->updateConfirmationStatus($request->all(), $user->id);
+
+        // Mengambil data dari request
+        $data = $request->all();
+
+        // Mengirim data ke service
+        $result = $this->permitService->updateConfirmationStatus($data, $user->id);
 
         return response()->json($result);
     }
+
 
     public function getPermitsByAlternate(Request $request)
     {

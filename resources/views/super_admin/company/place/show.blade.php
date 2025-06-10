@@ -15,7 +15,7 @@
                     </div>
                     <div class="card-body">
                         <div class="">
-                            {{ generateQrCode($companyPlace->code) }}
+                            {{ generateQrCode($companyPlace) }}
                         </div>
                         <h5 class="mb-2">Data Lokasi</h5>
                         <div class="row mb-2">
