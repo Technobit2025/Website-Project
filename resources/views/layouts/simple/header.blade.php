@@ -69,6 +69,19 @@
                     </div>
                 </li> --}}
                 <li>
+                    <div class="guide book">
+                        <a href="#">
+                                {{-- <svg class="stroke-icon">
+                                    <use href="{{asset('assets/svg/icon-sprite.svg#stroke-blog')}}"></use>
+                                </svg>  --}}
+                            <svg class="fill-icon">
+                                <use href="{{asset('assets/svg/icon-sprite.svg#fill-blog')}}"></use>
+                            </svg>
+                        </a>
+                    </div>
+                </li>
+                
+                <li>
                     <div class="mode"><svg>
                             <use href="{{ asset('assets/svg/icon-sprite.svg#moon') }}"></use>
                         </svg></div>
