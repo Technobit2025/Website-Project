@@ -11,8 +11,8 @@ class Employee extends Model
         'user_id',
         'schedule_id', // Pastikan schedule_id termasuk dalam atribut yang dapat diisi
         // atribut lain
-    ];
-
+    ];          
+        
     public function user()
     {
         return $this->belongsTo(User::class);
