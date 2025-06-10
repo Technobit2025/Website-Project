@@ -42,7 +42,7 @@ class EmployeeController extends Controller
         Employee::create(array_merge($validatedEmployee, [
             'user_id' => $user->id,
         ]));
-
+        
         return redirect()->route('superadmin.employee.index')->with('success', 'Karyawan berhasil ditambahkan!');
     }
 

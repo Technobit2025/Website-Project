@@ -65,8 +65,8 @@
                                     <tbody>
                                         @foreach ($permits as $permit)
                                             <tr>
-                                                <td>{{ formatDate($permit->employeeCompanySchedule->date, 'l, d F Y') }}
-                                                </td>
+                                                {{-- <td>{{ formatDate($permit->employeeCompanySchedule->date, 'l, d F Y') }}</td> --}}
+                                                <td>{{ formatDate(optional($permit->employeeCompanySchedule)->date ?? $permit->date, 'l, d F Y') }}</td>
                                                 <td>{{ $permit->type ?? '-' }}</td>
                                                 <td>{{ $permit->reason ?? '-' }}</td>
                                                 <td>

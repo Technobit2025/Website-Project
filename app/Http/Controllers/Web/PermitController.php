@@ -93,10 +93,15 @@ class PermitController extends Controller
             'reason' => 'required|string|max:1000',
         ]);
 
+        $schedule = CompanySchedule::find($validated['employee_schedule_id']);
+        if (!$schedule) {
+        return redirect()->back()->with('error', 'Jadwal tidak ditemukan.');
+        }
         $permit = Permit::create([
             'employee_id' => $employee->id,
             'employee_schedule_id' => $validated['employee_schedule_id'],
             'type' => $validated['type'],
+            'date' => $schedule->date,
             'reason' => $validated['reason'],
         ]);
 
