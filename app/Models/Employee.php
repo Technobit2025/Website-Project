@@ -17,7 +17,7 @@ class Employee extends Model
     {
         return $this->belongsTo(User::class);
     }
-    public function payrolls(): HasMany
+    public function payrolls()
     {
         return $this->hasMany(Payroll::class);
     }
