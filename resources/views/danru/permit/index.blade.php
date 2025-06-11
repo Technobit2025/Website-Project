@@ -66,7 +66,8 @@
                                             <tr>
                                                 <td>{{ $permit->employee->fullname ?? '-' }}</td>
                                                 <td>{{ attendanceType($permit->type) ?? '-' }}</td>
-                                                <td>{{ formatDate($permit->employeeCompanySchedule->date, 'l, d F Y') . ' (' . $permit->employeeShift()?->name . ')' }}
+                                                {{-- <td>{{ formatDate($permit->employeeCompanySchedule->date, 'l, d F Y') . ' (' . $permit->employeeShift()?->name . ')' }} --}}
+                                                <td>{{ formatDate(optional($permit->employeeCompanySchedule)->date ?? $permit->date, 'l, d F Y') }}</td>
                                                     {{-- <td>{{ $permit->alternate->fullname ?? '-' }}</td> --}}
                                                 <td>
                                                     @if ($permit->alternate && $permit->alternate->fullname)
