@@ -27,7 +27,7 @@ class PatrolController extends Controller
         $companyId = auth()->user()->employee->company_id;
         // dd($companyId);
 
-        $patrols = Patrol::whereHas('place', function ($query) use ($companyId) {
+        $patrols = Patrol::whereHas('employee', function ($query) use ($companyId) {
             $query->where('company_id', $companyId);
          })->get();
         // dd($patrols);
