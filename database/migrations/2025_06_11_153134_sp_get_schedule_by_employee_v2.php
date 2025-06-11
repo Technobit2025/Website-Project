@@ -12,15 +12,24 @@ return new class extends Migration
      */
     public function up(): void
     {
-DB::unprepared("
+        DB::unprepared("
 
-CREATE PROCEDURE sp_get_employee_schedules_filtered (
+CREATE PROCEDURE sp_get_employee_schedules_filtered_with_logs (
     IN p_company_id BIGINT,
     IN p_employee_id BIGINT,
     IN p_start_date DATE,
     IN p_end_date DATE
 )
 BEGIN
+    DECLARE EXIT HANDLER FOR SQLEXCEPTION
+    BEGIN
+        -- Jika terjadi error SQL umum
+        INSERT INTO schedule_error_logs (message, context)
+        VALUES ('Unhandled SQL Exception in sp_get_employee_schedules_filtered', CONCAT('company_id:', p_company_id, ', employee_id:', p_employee_id));
+        RESIGNAL;
+    END;
+
+    -- SELECT utama
     SELECT
         cs.date AS tanggal,
         CASE DAYOFWEEK(cs.date)
@@ -35,6 +44,7 @@ BEGIN
         cs.start_time AS jam_mulai,
         cs.end_time AS jam_selesai,
 
+        -- Subquery lokasi
         (
             SELECT cp.name
             FROM company_attendances ca
@@ -45,6 +55,7 @@ BEGIN
             LIMIT 1
         ) AS lokasi,
 
+        -- Subquery rekan tugas
         (
             SELECT GROUP_CONCAT(e2.fullname SEPARATOR ', ')
             FROM company_schedules cs2
@@ -57,22 +68,26 @@ BEGIN
         ) AS rekan_tugas
 
     FROM company_schedules cs
+    JOIN employees e ON cs.employee_id = e.id
     WHERE
         (p_company_id IS NULL OR cs.company_id = p_company_id)
         AND (p_employee_id IS NULL OR cs.employee_id = p_employee_id)
         AND (p_start_date IS NULL OR cs.date >= p_start_date)
         AND (p_end_date IS NULL OR cs.date <= p_end_date)
+        AND e.active = 1
     ORDER BY cs.date DESC, cs.start_time ASC;
 END
 ");
-
     }
+// check error pakai query ini :
+// SELECT * FROM schedule_error_logs ORDER BY created_at DESC;
+
 
     /**
      * Reverse the migrations.
      */
     public function down(): void
     {
-        //
+       DB::unprepared("DROP PROCEDURE IF EXISTS sp_get_employee_schedules_filtered_with_logs");
     }
 };
