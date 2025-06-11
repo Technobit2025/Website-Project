@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Employee extends Model
 {
     protected $guarded = [];
+
     // protected $fillable = [
     //     'user_id',
     //     'schedule_id', // Pastikan schedule_id termasuk dalam atribut yang dapat diisi
@@ -14,11 +15,13 @@ class Employee extends Model
     //     'company_id',
     // ];
 
+
+   
     public function user()
     {
         return $this->belongsTo(User::class);
     }
-    public function payrolls(): HasMany
+    public function payrolls()
     {
         return $this->hasMany(Payroll::class);
     }
