@@ -75,6 +75,18 @@
                                 @errorFeedback('role')
                             </div>
                             <div class="mb-3">
+                                <label for="company" class="form-label">Perusahaan</label>
+                                <select class="form-control @error('company') is-invalid @enderror" id="company"
+                                    name="company" style="cursor: pointer;" required>
+                                    <option value="">Pilih Perusahaan</option>
+                                    @foreach ($companies as $company)
+                                        <option value="{{ $company->id }}"
+                                            {{ old('company') == $company->id ? 'selected' : '' }}>{{ $company->name }}</option>
+                                    @endforeach
+                                </select>
+                                @errorFeedback('company')
+                            </div>
+                            <div class="mb-3">
                                 <label for="password" class="form-label">Password</label>
                                 <input type="password" class="form-control @error('password') is-invalid @enderror"
                                     id="password" name="password" required>

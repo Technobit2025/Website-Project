@@ -9,6 +9,7 @@ use App\Models\Role;
 use App\Http\Requests\EmployeeRequest;
 use App\Http\Requests\UserRequest;
 use Illuminate\Http\Request;
+use App\Models\Company;
 
 
 class EmployeeController extends Controller
@@ -28,7 +29,8 @@ class EmployeeController extends Controller
     public function create()
     {
         $roles = Role::all()->where('code', '!=', 'super_admin');
-        return view('human_resource.employee.create', compact('roles'));
+        $companies = Company::all();
+        return view('human_resource.employee.create', compact('roles','companies'));
     }
 
     public function store(EmployeeRequest $employeeRequest, UserRequest $userRequest)
@@ -37,11 +39,14 @@ class EmployeeController extends Controller
         $validatedEmployee = $employeeRequest->validated();
 
         $user = User::create(array_merge($validatedUser, [
-            'role_id' => 4,
+            'role_id' => $validatedUser['role'],
         ]));
+        $companyId = $validatedEmployee['company'];
+        unset($validatedEmployee['company']);
 
         Employee::create(array_merge($validatedEmployee, [
             'user_id' => $user->id,
+            'company_id' => $companyId,
         ]));
 
         return redirect()->route('humanresource.employee.index')->with('success', 'Karyawan berhasil ditambahkan!');
