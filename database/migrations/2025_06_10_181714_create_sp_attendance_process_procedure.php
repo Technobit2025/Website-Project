@@ -51,12 +51,14 @@ proc: BEGIN
             UPDATE company_attendances
             SET checked_out_at = v_now,
                 updated_at = v_now,
-                status = 'Leave Early'
+                status = 'Leave Early',
+                user_note = NULLIF(TRIM(p_user_note), '')
             WHERE id = v_attendance_id;
         ELSE
             UPDATE company_attendances
             SET checked_out_at = v_now,
-                updated_at = v_now
+                updated_at = v_now,
+                user_note = NULLIF(TRIM(p_user_note), '')
             WHERE id = v_attendance_id;
         END IF;
 
@@ -111,14 +113,13 @@ proc: BEGIN
         SET MESSAGE_TEXT = 'Presensi hari ini sudah lengkap';
     END IF;
 
-    -- Simpan check-in
+    -- Simpan check-in (tanpa user_note)
     INSERT INTO company_attendances (
         employee_id,
         company_place_id,
         checked_in_at,
         status,
         photo_path,
-        user_note,
         created_at,
         updated_at
     )
@@ -128,11 +129,11 @@ proc: BEGIN
         v_now,
         v_status,
         p_photo_path,
-        NULLIF(TRIM(p_user_note), ''),
         v_now,
         v_now
     );
-END
+END;
+
 
         ");
     }
