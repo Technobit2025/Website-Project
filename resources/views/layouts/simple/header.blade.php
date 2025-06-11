@@ -70,7 +70,7 @@
                 </li> --}}
                 <li>
                     <div class="guide book">
-                        <a href="#">
+                        <a target="_blank" href="https://drive.google.com/file/d/1yJ0hsFGt5ABW1oYHAXUcdmhBiMZ5mBj2/view?usp=sharing ">
                                 {{-- <svg class="stroke-icon">
                                     <use href="{{asset('assets/svg/icon-sprite.svg#stroke-blog')}}"></use>
                                 </svg>  --}}
