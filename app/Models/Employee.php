@@ -7,11 +7,12 @@ use Illuminate\Database\Eloquent\Model;
 class Employee extends Model
 {
     protected $guarded = [];
-    protected $fillable = [
-        'user_id',
-        'schedule_id', // Pastikan schedule_id termasuk dalam atribut yang dapat diisi
-        // atribut lain
-    ];
+    // protected $fillable = [
+    //     'user_id',
+    //     'schedule_id', // Pastikan schedule_id termasuk dalam atribut yang dapat diisi
+    //     // atribut lain
+    //     'company_id',
+    // ];
 
     public function user()
     {

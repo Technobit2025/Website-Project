@@ -48,7 +48,7 @@ class EmployeeRequest extends FormRequest
             'salary' => 'nullable|numeric|min:0',
             'bank_name' => 'nullable|string|max:255',
             'bank_account_number' => 'nullable|string|max:50',
-
+            'company'=> 'required|exists:companies,id',
             // absen
             'active' => 'boolean',
         ];
