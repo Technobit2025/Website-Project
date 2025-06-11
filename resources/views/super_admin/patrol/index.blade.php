@@ -139,9 +139,10 @@
                                                 {{-- <td style="width: 5% !important;">{{ $employee->id }}</td> --}}
                                                <td style="overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">{{ $patrol->employee->fullname }}</td>
                                                 <td>{{$patrol->shift->name}}</td>
-                                                <td>{{$patrol->place->name}}</td>
+                                                <td>{{$patrol->place->name}}</td>   
                                                 <td>{{$patrol->patrol_location}}</td>
-                                                <td><img src="{{ asset('storage/' . $patrol->photo)}}" alt="foto" width="120"></td>
+                                                {{-- <td><img src="{{ asset('storage/' . $patrol->photo)}}" alt="foto" width="120"></td> --}}
+                                                <td><img src="{{ $patrol->photo_base64 }}" alt="foto" width="120" ></td>
                                                 <td style="overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">{{ $patrol->latitude }}</td>
                                                 <td style="overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">{{ $patrol->longitude }}</td>
                                                 <td>{{ $patrol->status}}</td>

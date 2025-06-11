@@ -60,7 +60,7 @@
             @foreach($patrols as $patrol)
                 <tr>
                     <td class="text-center">{{$loop->iteration}}</td>
-                    <td>{{ $patrol->employee->name }}</td>
+                    <td>{{ $patrol->employee->fullname }}</td>
                     <td >{{$patrol->shift->name}}</td>
                     <td >{{$patrol->place->name}}</td>
                     <td>{{$patrol->patrol_location}}</td>
