@@ -8,7 +8,7 @@ class AndroidScheduleService
 {
     public function getFilteredSchedules(?int $companyId, ?int $employeeId, ?string $startDate, ?string $endDate): array
     {
-        $results = DB::select('CALL sp_get_employee_schedules_filtered(?, ?, ?, ?)', [
+        $results = DB::select('CALL sp_get_employee_schedules_filtered_with_logs(?, ?, ?, ?)', [
             $companyId,
             $employeeId,
             $startDate,
