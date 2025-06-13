@@ -103,7 +103,7 @@ class AndroidPresensiController extends Controller
 
             return response()->json([
                 'success' => false,
-                'message' => 'Gagal memproses presensi',
+                'message' => 'Gagal memproses presensi karena jadwal tidak ada',
                 'error' => $e->getMessage(),
             ], 500);
         }
