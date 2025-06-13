@@ -38,6 +38,7 @@ use App\Http\Controllers\API\V1\Company\AndroidPatrolController;
 use App\Http\Controllers\API\V1\Company\AndroidCompanyProfileController;
 use App\Http\Controllers\API\V1\Company\AndroidSalaryDetailController;
 use App\Http\Controllers\API\V1\Company\AndroidScheduleController;
+use App\Http\Controllers\API\V1\Company\AndroidCompanyLocationController;
 // use App\Http\Controllers\Api\V1\Company\AndroidUserPermitController;
 
 // API Route
@@ -107,6 +108,7 @@ Route::prefix('v1')->name('api.v1.')->group(function () {
             Route::get('salary-detail', [AndroidSalaryDetailController::class, 'index']);
 
             Route::get('company-profile', [AndroidCompanyProfileController::class, 'show']);
+            Route::get('company-location', [AndroidCompanyLocationController::class,'index']);
         });
     });
 
