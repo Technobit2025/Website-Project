@@ -48,11 +48,12 @@ class AndroidPatrolService
             'shift_id'         => $data['shift_id'],
             'place_id'         => $data['place_id'],
             'patrol_location'  => 'Auto from QR',
-            'status'           => $data['kondisi']?? null,
+            'status'           => $data['status']?? null,
             'catatan'          => $data['catatan'] ?? null,
             'photo'            => $photoUrl,
             'latitude'         => $data['latitude'],
             'longitude'        => $data['longitude'],
+            'kondisi'          => $data['kondisi'] 
         ]);
 
         logger('Patrol berhasil dibuat dengan ID: ' . $patrol->id);
