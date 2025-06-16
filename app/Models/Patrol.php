@@ -21,6 +21,7 @@ class Patrol extends Model
         'reviewed_at',
         'latitude',
         'longitude',
+        'status_lokasi',
 
     ];
 
