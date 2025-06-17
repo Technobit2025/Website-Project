@@ -38,4 +38,36 @@ class PatrolController extends Controller
         return $pdf->stream("data-patroli.pdf",['Attachment'=>0]);
         exit();
     }
+    public function edit(Patrol $patrol)
+    {
+        return view('danru.patrol.edit',compact('patrol'));
+    }
+    public function update(Request $request, Patrol $patrol)
+    {
+        $validated = $request->validate([
+            'shift' => 'required|in:Pagi,Siang,Malam',
+            'catatan' => 'nullable|string|max:255',
+        ], [
+            'shift.required' => 'Shift wajib dipilih.',
+            'shift.in' => 'Shift tidak valid.',
+            'catatan.string' => 'Catatan harus berupa teks.',
+            'catatan.max' => 'Catatan tidak boleh lebih dari 255 karakter.',
+        ]);
+
+        // Ambil ID shift dari nama shift yang dipilih
+        $shift = \App\Models\CompanyShift::where('name', $validated['shift'])
+        ->where('company_id', $patrol->employee->company_id)
+        ->first();
+
+        if (!$shift) {
+            return back()->with('error', 'Shift tidak ditemukan di database.');
+        }
+
+        $patrol->update([
+            'shift_id' => $shift->id,
+            'catatan' => $validated['catatan'],
+        ]);
+
+        return redirect()->route('danru.patrol.index')->with('success', 'Data patroli berhasil diperbarui.');
+    }
 }

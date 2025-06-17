@@ -6,6 +6,7 @@
     <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/vendors/jquery.dataTables.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/vendors/dataTables.bootstrap5.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/vendors/prism.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/css/vendors/responsive.dataTables.min.css') }}">
 @endsection
 
 @section('scripts')
@@ -13,15 +14,18 @@
     <script src="{{ asset('assets/js/datatable/datatables/dataTables1.js') }}"></script>
     <script src="{{ asset('assets/js/datatable/datatables/dataTables.bootstrap5.js') }}"></script>
     <script src="{{ asset('assets/js/tooltip-init.js') }}"></script>
+    <script src="{{ asset('assets/js/datatable/datatables/dataTables.responsive.min.js') }}"></script>
     <script>
         $(document).ready(function() {
             $('#adminTable').DataTable({
                 autoWidth: false,
+                responsive: true,
                 columnDefs:[
                     {width:"100px", targets:0},
-                    {width:"90px", targets:1},
-                    {width:"90px",targets:2},
-                    {width:"90px", targets:5},
+                    {width:"100px", targets:1},
+                    {width:"100px",targets:2},
+                    {width:"100px", targets:5},
+                    {width:"100px", targets:6},
                     {width:"100px", targets:7},
                 ],
                 language: {
@@ -112,12 +116,12 @@
                         <div class="d-flex justify-content-between">
                             <h5>Data Karyawan</h5>
                             <a href="{{route('superadmin.patrol.exportPdf')}}" target="_blank" class="btn btn-primary">Export PDF</a>
-                        </div>
+                        </div>  
                     </div>
                     <div class="card-body">
                         <div class="table-responsive custom-scrollbar table-striped">
                             <div class="col-12 table-responsive">
-                                <table class="display callback-table dataTable" id="adminTable" style="width: 100%;"
+                                <table style="width:100%;" class="display callback-table dataTable" id="adminTable" 
                                     aria-describedby="employeeTable_info">
                                     <thead>
                                         <tr>
@@ -130,7 +134,7 @@
                                             <th>latitude</th>
                                             <th>longitude</th>
                                             <th>status</th>
-                                            {{-- <th>Aksi</th> --}}
+                                            <th>Aksi</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -142,37 +146,36 @@
                                                 <td>{{$patrol->place->name}}</td>   
                                                 <td>{{$patrol->patrol_location}}</td>
                                                 {{-- <td><img src="{{ asset('storage/' . $patrol->photo)}}" alt="foto" width="120"></td> --}}
-                                                <td><img src="{{ $patrol->photo_base64 }}" alt="foto" width="120" ></td>
+                                                 <td style="overflow: visible; white-space: normal;">
+                                                    <img src="{{ $patrol->photo_base64 }}" alt="foto" style="max-width: 100px; height: auto; display: block;">
+                                                </td>
                                                 <td style="overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">{{ $patrol->latitude }}</td>
                                                 <td style="overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">{{ $patrol->longitude }}</td>
                                                 <td>{{ $patrol->status}}</td>
-                                                {{-- <td><span
-                                                        class="badge {{ $employee->active ? 'badge-success' : 'badge-danger' }}">{{ $employee->active ? 'Aktif' : 'Tidak Aktif' }}</span>
-                                                </td>
                                                 <td>
                                                     <div class="d-flex gap-2">
-                                                        <a href="{{ route('superadmin.employee.show', $employee->id) }}"
+                                                        {{-- <a href="{{ route('superadmin.employee.show', $employee->id) }}"
                                                             class="btn btn-info btn-sm px-3" data-bs-toggle="tooltip"
                                                             data-bs-placement="top" data-bs-title="Lihat Karyawan">
                                                             <i class="fa-solid fa-eye"></i>
-                                                        </a>
+                                                        </a> --}}
 
-                                                        <a href="{{ route('superadmin.employee.edit', $employee->id) }}"
+                                                        <a href="{{ route('superadmin.patrol.edit', $patrol->id) }}"
                                                             class="btn btn-warning btn-sm px-3" data-bs-toggle="tooltip"
                                                             data-bs-placement="top" data-bs-title="Ubah Karyawan">
                                                             <i class="fa-solid fa-pen-to-square"></i>
                                                         </a>
-                                                        @include('layouts.components.delete', [
+                                                        {{-- @include('layouts.components.delete', [
                                                             'route' => route(
                                                                 'superadmin.employee.destroy',
                                                                 $employee->id),
                                                             'title' => 'Hapus Karyawan',
                                                             'message' =>
                                                                 'Apakah anda yakin ingin menghapus karyawan ini?',
-                                                        ])
+                                                        ]) --}}
                                                     </div>
 
-                                                </td> --}}
+                                                </td>
                                             </tr>
                                         @endforeach
                                     </tbody>

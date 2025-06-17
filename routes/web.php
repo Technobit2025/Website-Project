@@ -234,6 +234,9 @@ Route::group(['prefix' => 'superadmin', 'as' => 'superadmin.', 'middleware' => [
     Route::prefix('patrol')->name('patrol.')->group(function(){
         Route::get('/',[SuperAdminPatrol::class,'index'])->name('index');
         Route::get('/export-pdf',[SuperAdminPatrol::class,'exportPdf'])->name('exportPdf');
+        Route::get('edit/{patrol}',[SuperAdminPatrol::class, 'edit'])->name('edit');
+        Route::put('update/{patrol}', [SuperAdminPatrol::class, 'update'])->name('update');
+
     });
 
     // PAYROLL
@@ -426,5 +429,7 @@ Route::group(['prefix' => 'danru', 'as' => 'danru.', 'middleware' => ['auth', 'c
     Route::prefix('patrol')->name('patrol.')->group(function(){
         Route::get('/',[DanruPatrol::class, 'index'])->name('index');
         Route::get('/export-pdf',[DanruPatrol::class,'exportPdf'])->name('exportPdf');
+        Route::get('edit/{patrol}',[DanruPatrol::class, 'edit'])->name('edit');
+        Route::put('update/{patrol}', [DanruPatrol::class, 'update'])->name('update');
     });
 });
