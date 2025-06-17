@@ -55,8 +55,12 @@
                                                 @csrf
                                                 <div class="mb-3">
                                                     <label for="shiftName" class="form-label">Nama Shift</label>
-                                                    <input type="text" class="form-control" id="shiftName" name="name"
-                                                        required>
+                                                    <select class="form-control" name="name" id="shiftName">
+                                                        <option value="">Nama Shift</option>
+                                                        <option value="Pagi">Pagi</option>
+                                                        <option value="Siang">Siang</option>
+                                                        <option value="Malam">Malam</option>
+                                                    </select>
                                                 </div>
                                                 <div class="mb-3">
                                                     <label for="startTime" class="form-label">Jam Mulai</label>

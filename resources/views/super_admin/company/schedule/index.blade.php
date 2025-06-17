@@ -179,7 +179,7 @@
                                             @endfor
                                         </tr>
                                     </thead>
-                                    <tbody>
+                                    {{-- <tbody>
                                         @foreach ($employees as $employee)
                                             <tr data-employee="{{ $employee->id }}">
                                                 <td>{{ $employee->fullname }}</td>
@@ -210,8 +210,40 @@
                                             </tr>
                                         @endforeach
 
+                                    </tbody> --}}
+                                    <tbody>
+                                        @foreach ($employees as $employee)
+                                            <tr data-employee="{{ $employee->id }}">
+                                                <td>{{ $employee->fullname }}</td>
+                                                @for ($day = 1; $day <= $daysInMonth; $day++)
+                                                    @php
+                                                        $date = $currentMonth . '-' . str_pad($day, 2, '0', STR_PAD_LEFT);
+                                                        $schedulesPerDay = $schedules
+                                                            ->where('employee_id', $employee->id)
+                                                            ->where('date', $date);
+                                                    @endphp
+                                                    <td class="dropzone" data-date="{{ $date }}" data-employee="{{ $employee->id }}">
+                                                        @foreach ($schedulesPerDay as $schedule)
+                                                            @php
+                                                                $shift = $shifts->firstWhere('id', $schedule->company_shift_id);
+                                                            @endphp
+                                                            @if ($shift)
+                                                                <div class="shift btn mb-1"
+                                                                    data-shift="{{ $shift->id }}"
+                                                                    data-date="{{ $date }}"
+                                                                    data-employee="{{ $employee->id }}"
+                                                                    style="background-color: {{ $shift->color }}">
+                                                                    {{ $shift->name }}
+                                                                </div>
+                                                            @endif
+                                                        @endforeach
+                                                    </td>
+                                                @endfor
+                                            </tr>
+                                        @endforeach
                                     </tbody>
-                                </table>
+
+                                </table>    
                             </div>
                         </div>
                     </div>
