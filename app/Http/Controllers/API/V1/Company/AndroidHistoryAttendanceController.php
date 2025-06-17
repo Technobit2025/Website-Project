@@ -42,6 +42,8 @@ class AndroidHistoryAttendanceController extends Controller
                 'lokasi' => $item->lokasi,
                 'shift' => $item->shift,
                 'foto' => $item->foto,
+                'masuk_shift' => $item->masuk_shift ? $item->masuk_shift . ' WIB' : null,
+                'keluar_shift' => $item->keluar_shift ? $item->keluar_shift . ' WIB' : null,
             ];
         }, $results);
 
