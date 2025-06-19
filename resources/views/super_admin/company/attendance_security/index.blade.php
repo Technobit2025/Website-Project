@@ -38,7 +38,7 @@
 
 @section('main_content')
     <div class="container-fluid">
-        @include('layouts.components.breadcrumb', ['header' => 'Data Patroli'])
+        @include('layouts.components.breadcrumb', ['header' => 'Data Presensi'])
     </div>
     <div class="container-fluid">
         {{-- <div class="row">
