@@ -206,6 +206,11 @@ Route::group(['prefix' => 'superadmin', 'as' => 'superadmin.', 'middleware' => [
 
             Route::get('print-qr-code/{companyPlace}', [SuperAdminCompanyPlace::class, 'printQrCode'])->name('printQrCode');
         });
+        Route::prefix('attendanceSecurity')->name('attendanceSecurity.')->group(function () {
+            Route::get('/{company}',[SuperAdminCompanyAttendance::class,'indexSecurity'])->name('index');
+            Route::get('edit/{attendance}',[SuperAdminCompanyAttendance::class, 'editSecurity'])->name('edit');
+            Route::put('update/{attendance}', [SuperAdminCompanyAttendance::class, 'updateSecurity'])->name('update');
+        });
     });
 
     // EMPLOYEE
@@ -237,7 +242,7 @@ Route::group(['prefix' => 'superadmin', 'as' => 'superadmin.', 'middleware' => [
         Route::get('edit/{patrol}',[SuperAdminPatrol::class, 'edit'])->name('edit');
         Route::put('update/{patrol}', [SuperAdminPatrol::class, 'update'])->name('update');
 
-    });
+    });    
 
     // PAYROLL
     Route::prefix('payroll')->name('payroll.')->group(function () {

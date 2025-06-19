@@ -34,7 +34,7 @@
                                         <option value="Siang" {{ old('shift', $patrol->shift->name ?? '') == 'Siang' ? 'selected' : '' }}>Siang</option>
                                         <option value="Malam" {{ old('shift', $patrol->shift->name ?? '') == 'Malam' ? 'selected' : '' }}>Malam</option>
                                     </select>
-                                    @errorFeedback('catatan')
+                                    @errorFeedback('shift')
                                 </div>
                             <div class="mb-3">
                                 <label for="catatan" class="form-label">Catatan</label>

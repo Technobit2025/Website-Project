@@ -165,6 +165,11 @@
                                                             data-bs-placement="top" data-bs-title="Presensi Perusahaan">
                                                             <i class="fa-solid fa-clock"></i>
                                                         </a>
+                                                        <a href="{{ route('superadmin.company.attendanceSecurity.index', $company->id) }}"
+                                                            class="btn btn-secondary btn-sm px-3" data-bs-toggle="tooltip"
+                                                            data-bs-placement="top" data-bs-title="Presensi Satpam Perusahaan">
+                                                            <i class="fa-solid fa-file-signature"></i>
+                                                        </a>
                                                         @include('layouts.components.delete', [
                                                             'route' => route(
                                                                 'superadmin.company.destroy',

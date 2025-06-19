@@ -10,6 +10,7 @@ use App\Models\CompanyShift;
 use App\Models\Employee;
 use App\Models\CompanyAttendance;
 use Carbon\Carbon;
+use App\Models\User;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 
@@ -82,4 +83,58 @@ class CompanyAttendanceController extends Controller
 
         return response()->json(['success' => $deleted]);
     }
+    public function indexSecurity(Company $company, Request $request)
+    {
+        $companyId = $company->id;
+        $currentMonth = $request->input('month', Carbon::now()->format('Y-m'));
+
+        // Ambil hanya employee dengan user.role = 'security'
+        $securityEmployeeIds = Employee::where('company_id', $companyId)
+            ->whereHas('user.role', function ($query) {
+                $query->where('name', 'security');
+            })
+            ->pluck('id'); // hanya ambil ID-nya
+
+        // Ambil data absensi dari security saja
+        $attendances = CompanyAttendance::with(['employee.user.role', 'companyPlace']) // eager load
+            ->whereIn('employee_id', $securityEmployeeIds)
+            ->whereMonth('checked_in_at', Carbon::parse($currentMonth)->month)
+            ->whereYear('checked_in_at', Carbon::parse($currentMonth)->year)
+            ->get();
+
+        $daysInMonth = Carbon::parse($currentMonth)->daysInMonth;
+        $companyName = $company->name;
+
+        return view('super_admin.company.attendance_security.index', compact(
+            'attendances',
+            'companyName',
+            'currentMonth',
+            'daysInMonth',
+            'companyId'
+        ));
+    }
+    public function editSecurity(CompanyAttendance $attendance)
+    {
+        return view('super_admin.company.attendance_security.edit',compact('attendance'));
+    }
+    public function updateSecurity(Request $request, CompanyAttendance $attendance)
+    {
+        $validated = $request->validate([
+            'status' => 'required|string|max:50',
+            'note' => 'nullable|string|max:255',
+            'user_note' => 'nullable|string|max:255',
+        ]);
+
+        // Update data attendance
+        $attendance->status = $validated['status'];
+        $attendance->note = $validated['note'] ?? null;
+        $attendance->user_note = $validated['user_note'] ?? null;
+        $attendance->save();
+        $companyId = optional($attendance->employee)->company_id;
+
+        return redirect()
+            ->route('superadmin.company.attendanceSecurity.index', ['company' => $companyId])
+            ->with('success', 'Data presensi berhasil diperbarui.');
+    }
+
 }
