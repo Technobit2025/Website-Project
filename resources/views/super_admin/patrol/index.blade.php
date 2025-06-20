@@ -7,6 +7,7 @@
     <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/vendors/dataTables.bootstrap5.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/vendors/prism.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/css/vendors/responsive.dataTables.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('vendor/lightbox2/css/lightbox.css') }}"  />
 @endsection
 
 @section('scripts')
@@ -15,6 +16,7 @@
     <script src="{{ asset('assets/js/datatable/datatables/dataTables.bootstrap5.js') }}"></script>
     <script src="{{ asset('assets/js/tooltip-init.js') }}"></script>
     <script src="{{ asset('assets/js/datatable/datatables/dataTables.responsive.min.js') }}"></script>
+    <script src="{{ asset('vendor/lightbox2/js/lightbox-plus-jquery.js') }}"></script>
     <script>
         $(document).ready(function() {
             $('#adminTable').DataTable({
@@ -133,7 +135,8 @@
                                             <th>Foto</th>
                                             <th>latitude</th>
                                             <th>longitude</th>
-                                            <th>status</th>
+                                            <th>Kondisi</th>
+                                            <th>Catatan</th>
                                             <th>Aksi</th>
                                         </tr>
                                     </thead>
@@ -146,12 +149,15 @@
                                                 <td>{{$patrol->place->name}}</td>   
                                                 <td>{{$patrol->patrol_location}}</td>
                                                 {{-- <td><img src="{{ asset('storage/' . $patrol->photo)}}" alt="foto" width="120"></td> --}}
-                                                 <td style="overflow: visible; white-space: normal;">
-                                                    <img src="{{ $patrol->photo_base64 }}" alt="foto" style="max-width: 100px; height: auto; display: block;">
+                                                <td style="overflow: visible; white-space: normal;">
+                                                    <a href="{{ $patrol->photo_base64 }}" data-lightbox="patrol-{{ $loop->index }}" data-title="Foto patroli">
+                                                        <img src="{{ $patrol->photo_base64 }}" alt="foto" style="max-width: 100px; height: auto; display: block;" />
+                                                    </a>
                                                 </td>
                                                 <td style="overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">{{ $patrol->latitude }}</td>
                                                 <td style="overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">{{ $patrol->longitude }}</td>
-                                                <td>{{ $patrol->status}}</td>
+                                                <td>{{ $patrol->kondisi}}</td>
+                                                <td>{{ $patrol->catatan}}</td>
                                                 <td>
                                                     <div class="d-flex gap-2">
                                                         {{-- <a href="{{ route('superadmin.employee.show', $employee->id) }}"
