@@ -44,11 +44,11 @@
                 <th>Nama</th>
                 <th>Shift</th>
                 <th>Tempat</th>
-                <th>lokasi patroli</th>
                 <th>Foto</th>
                 <th>Latitude</th>
                 <th>Longitude</th>
                 <th>Status</th>
+                <th>Catatan</th>
             </tr>
         </thead>
         <tbody>
@@ -60,14 +60,15 @@
             @foreach($patrols as $patrol)
                 <tr>
                     <td class="text-center">{{$loop->iteration}}</td>
-                    <td>{{ $patrol->employee->name }}</td>
+                    <td>{{ $patrol->employee->fullname }}</td>
                     <td >{{$patrol->shift->name}}</td>
                     <td >{{$patrol->place->name}}</td>
                     <td>{{$patrol->patrol_location}}</td>
                     <td><img src="{{ $patrol->photo_base64 }}" alt="foto" ></td>
                     <td>{{ $patrol->latitude }}</td>
                     <td>{{ $patrol->longitude }}</td>
-                    <td>{{$patrol->status}}</td>
+                    <td>{{$patrol->kondisi}}</td>
+                    <td>{{$patrol->catatan}}</td>
                 </tr>
             @endforeach
         </tbody>
