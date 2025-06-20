@@ -54,7 +54,8 @@ class EmployeeController extends Controller
     public function edit(Employee $employee)
     {
         $roles = Role::where('code', '!=', 'super_admin')->where('code', '!=', 'company')->get();
-        return view('super_admin.employee.edit', compact('employee', 'roles'));
+        $companies = Company::all();
+        return view('super_admin.employee.edit', compact('employee', 'roles','companies'));
     }
 
     public function update(EmployeeRequest $employeeRequest, UserRequest $userRequest, Employee $employee)
@@ -63,7 +64,13 @@ class EmployeeController extends Controller
         $validatedEmployee = $employeeRequest->validated();
 
         $employee->user->update($validatedUser);
-        $employee->update($validatedEmployee);
+        $companyId = $validatedEmployee['company']; // pastikan pakai 'company_id', bukan 'company'
+        unset($validatedEmployee['company']);
+
+        // Update employee
+        $employee->update(array_merge($validatedEmployee, [
+        'company_id' => $companyId,
+    ]));
 
         return redirect()->route('superadmin.employee.index')->with('success', 'Karyawan berhasil diubah!');
     }

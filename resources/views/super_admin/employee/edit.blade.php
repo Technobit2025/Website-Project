@@ -38,6 +38,19 @@
                                 @errorFeedback('email')
                             </div>
                             <div class="mb-3">
+                                <label for="company" class="form-label">Perusahaan</label>
+                                <select class="form-control @error('company') is-invalid @enderror" id="company"
+                                    name="company" style="cursor: pointer;" required>
+                                    <option value="">Pilih Perusahaan</option>
+                                    @foreach ($companies as $company)
+                                        <option value="{{ $company->id }}"
+                                            {{ old('company', $employee->company_id) == $company->id ? 'selected' : '' }}>
+                                            {{ $company->name }}</option>
+                                    @endforeach
+                                </select>
+                                @errorFeedback('role_id')
+                            </div>
+                            <div class="mb-3">
                                 <label for="role_id" class="form-label">Role</label>
                                 <select class="form-control @error('role_id') is-invalid @enderror" id="role_id"
                                     name="role_id" style="cursor: pointer;" required>
