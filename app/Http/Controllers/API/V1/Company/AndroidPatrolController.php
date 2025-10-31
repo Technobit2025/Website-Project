@@ -6,6 +6,8 @@ use App\Http\Requests\StorePatrolRequest;
 use App\Services\AndroidPatrolService;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
+use App\Models\CompanyPlace;
+use App\Models\EmployeeShiftSchedule;
 
 class AndroidPatrolController extends Controller
 {
@@ -53,5 +55,45 @@ public function history(Request $request)
     ]);
 }
 
+public function patrolByNfc(Request $request)
+    {
+        $request->validate([
+            'nfcTagUid' => 'required|string',
+        ]);
 
+        $employee = $request->user()->employee;
+
+        // Find the current shift for the employee
+        $today = now()->toDateString();
+        $schedule = EmployeeShiftSchedule::where('employee_id', $employee->id)
+            ->whereDate('date', $today)
+            ->first();
+
+        if (!$schedule) {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'No shift found for today.',
+            ], 404);
+        }
+
+        // Find the patrol spot with the given NFC tag that is part of the current shift
+        $spot = CompanyPlace::where('nfc_tag_uid', $request->nfcTagUid)
+            ->whereHas('shift', function ($query) use ($schedule) {
+                $query->where('id', $schedule->company_shift_id);
+            })
+            ->first();
+
+        if ($spot) {
+            return response()->json([
+                'status' => 'success',
+                'message' => 'NFC Tag UID compatible with database',
+                'data' => $spot,
+            ]);
+        }
+
+        return response()->json([
+            'status' => 'error',
+            'message' => 'NFC Tag UID not found for the current shift.',
+        ], 404);
+    }
 }

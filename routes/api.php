@@ -40,6 +40,9 @@ use App\Http\Controllers\API\V1\Company\AndroidSalaryDetailController;
 use App\Http\Controllers\API\V1\Company\AndroidScheduleController;
 use App\Http\Controllers\API\V1\Company\AndroidCompanyLocationController;
 use App\Http\Controllers\API\V1\Company\AndroidJadwalEmployeeController;
+use App\Http\Controllers\API\V1\Company\CompanyController;
+use App\Http\Controllers\API\V1\Company\PatrolSpotController;
+use App\Http\Controllers\API\V1\NfcController;
 // use App\Http\Controllers\Api\V1\Company\AndroidUserPermitController;
 
 // API Route
@@ -74,6 +77,15 @@ Route::prefix('v1')->name('api.v1.')->group(function () {
             Route::post('check-in', [CompanyAttendanceController::class, 'checkIn'])->name('checkIn'); // check-in
             Route::post('check-out', [CompanyAttendanceController::class, 'checkOut'])->name('checkOut'); // check-out
         });
+
+        Route::get('companies', [CompanyController::class, 'index'])->name('companies.index');
+        Route::get('companies/{id}/patrol-spots', [PatrolSpotController::class, 'index'])->name('companies.patrol-spots.index');
+        Route::get('patrol-spots/{id}', [PatrolSpotController::class, 'show'])->name('patrol-spots.show');
+        Route::post('patrol-spots/{id}', [PatrolSpotController::class, 'update'])->name('patrol-spots.update');
+        Route::post('patrol-spots/{id}/verify', [PatrolSpotController::class, 'verifyNfc'])->name('patrol-spots.verify');
+        Route::post('check-nfc', [NfcController::class, 'checkNfc'])->name('check-nfc');
+        Route::get('profile-supervisor', [ProfileController::class, 'getSupervisorProfile'])->name('profile-supervisor.show');
+        Route::post('profile-supervisor', [ProfileController::class, 'updateSupervisorProfile'])->name('profile-supervisor.update');
     });
 
     // --- Mulai Baris Kode Android -----
@@ -113,6 +125,7 @@ Route::prefix('v1')->name('api.v1.')->group(function () {
             Route::get('company-location', [AndroidCompanyLocationController::class,'index']);
 
             Route::get('jadwal-employee', [AndroidJadwalEmployeeController::class, 'getJadwal']);
+            Route::post('patroli-nfc', [AndroidPatrolController::class, 'patrolByNfc']);
         });
     });
 

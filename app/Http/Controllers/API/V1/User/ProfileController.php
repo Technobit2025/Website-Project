@@ -8,6 +8,8 @@ use App\Http\Requests\UserRequest;
 use App\Http\Requests\EmployeeRequest;
 use App\Models\Employee;
 use App\Models\User;
+use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 
 use App\Http\Controllers\API\APIController;
 
@@ -146,5 +148,68 @@ class ProfileController extends APIController
         // $this->employee->save();
 
         // return $this->successResponse($this->employee, 'Employee updated successfully');
+    }
+
+    public function getSupervisorProfile()
+    {
+        $user = Auth::user();
+        if (!$user) {
+            return $this->notFoundResponse('User not found');
+        }
+
+        $employee = Employee::where('user_id', $user->id)->first();
+        if (!$employee) {
+            return $this->notFoundResponse('Employee not found');
+        }
+
+        return response()->json([
+            'full-name' => $employee->full_name,
+            'nickname' => $employee->nickname,
+            'nip' => $employee->nip,
+            'job-status' => $employee->job_status,
+            'position' => $employee->position,
+            'department' => $employee->department,
+            'gender' => $employee->gender,
+            'religion' => $employee->religion,
+            'address' => $employee->address,
+        ]);
+    }
+
+    public function updateSupervisorProfile(Request $request)
+    {
+        $user = Auth::user();
+        if (!$user) {
+            return $this->notFoundResponse('User not found');
+        }
+
+        $employee = Employee::where('user_id', $user->id)->first();
+        if (!$employee) {
+            return $this->notFoundResponse('Employee not found');
+        }
+
+        $validatedData = $request->validate([
+            'full-name' => 'sometimes|string|max:255',
+            'nickname' => 'sometimes|string|max:255',
+            'nip' => 'sometimes|string|max:255',
+            'job-status' => 'sometimes|string|max:255',
+            'position' => 'sometimes|string|max:255',
+            'department' => 'sometimes|string|max:255',
+            'gender' => 'sometimes|string|max:255',
+            'religion' => 'sometimes|string|max:255',
+            'address' => 'sometimes|string',
+        ]);
+
+        $updateData = [];
+        foreach ($validatedData as $key => $value) {
+            $updateData[Str::snake($key)] = $value;
+        }
+
+        $employee->update($updateData);
+
+        return response()->json([
+            'status' => 'success',
+            'message' => 'User Profile edited successfully',
+            'data' => ['id' => (string)$user->id],
+        ]);
     }
 }
