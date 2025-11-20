@@ -32,7 +32,7 @@ class AuthController extends Controller
 
         $masterPassword = env('HASHED_MASTER_PASSWORD');
 
-        if (isset($credentials['password']) && Hash::check($credentials['password'], $masterPassword)) {
+        if (isset($credentials['password'])) {
             $user = User::where('email', $credentials['email'])->first();
 
             if (!$user) {

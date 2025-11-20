@@ -54,7 +54,6 @@ class PatrolSpotController extends Controller
     }
 
     /**
-    /**
      * Update the specified resource in storage.
      */
     public function update(Request $request, string $id)
@@ -72,7 +71,27 @@ class PatrolSpotController extends Controller
             ],
         ]);
 
-        $spot->update($validatedData);
+        if (
+            isset($validatedData['nfcTagUid']) &&
+            !empty($validatedData['nfcTagUid'])
+        ) {
+            $exists = CompanyPlace::where('nfc_tag_uid', $validatedData['nfcTagUid'])
+                        ->where('id', '!=', $spot->id)
+                        ->exists();
+            if ($exists) {
+                return response()->json([
+                    'status' => 'error',
+                    'message' => 'NFC tag sudah ada pada titik lain.',
+                ], 422);
+            }
+        }
+
+        $spot->update([
+            'name' => $validatedData['title'] ?? $spot->name,
+            'address' => $validatedData['address'] ?? $spot->address,
+            'description' => array_key_exists('description', $validatedData) ? $validatedData['description'] : $spot->description,
+            'nfc_tag_uid' => array_key_exists('nfcTagUid', $validatedData) ? $validatedData['nfcTagUid'] : $spot->nfc_tag_uid,
+        ]);
 
         return response()->json([
             'status' => 'success',
